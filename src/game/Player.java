@@ -1,8 +1,6 @@
 package game;
 
 import acm.graphics.*;
-import acm.util.*;
-import acm.program.*;
 
 public class Player {
 	
