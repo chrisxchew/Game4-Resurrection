@@ -29,7 +29,7 @@ public class Main extends GraphicsProgram {
 
     	drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
+        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
         
         add(tileLabel);
 
@@ -72,24 +72,24 @@ public class Main extends GraphicsProgram {
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
 
-            tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
             return true;
         }
         if (game.getPlayer().getX() < 0) {
             game.moveTiles(-1, 0);
 
-            tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
             return true;
         }
 
         if (game.getPlayer().getY() < 0) {
             game.moveTiles(0, 1);
-            tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
             return true;
         }
         if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
             game.moveTiles(0, -1);
-            tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
             return true;
         }else {
         	return false;

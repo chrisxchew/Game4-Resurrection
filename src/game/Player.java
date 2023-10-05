@@ -1,7 +1,9 @@
 package game;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import acm.graphics.*;
 
@@ -12,7 +14,7 @@ public class Player {
     private GCompound playerGCompound;
     private int x;
     private int y;
-    private int[] tile = new int[2];
+    private List<Integer> tile = new ArrayList<Integer>(2);
     private int playerHeight;
     private int playerWidth;
 
@@ -78,8 +80,10 @@ public class Player {
         playerGCompound.setLocation(spawnx, spawny);
         this.x = spawnx;
         this.y = spawny;
-        this.tile[0] = 0;
-        this.tile[1] = 0;
+        this.tile.add(null);
+        this.tile.add(null);
+        this.tile.set(0, 0);
+        this.tile.set(1, 0);
         playerWidth = 50;
         playerHeight = 50;
     }
@@ -93,10 +97,6 @@ public class Player {
     public void moveY(int val) {
         this.y += val;
         playerGCompound.move(0, val);
-    }
-
-    public String getTileID() {
-    	return Arrays.toString(this.tile);
     }
     
     public double getHealth() {
@@ -147,11 +147,11 @@ public class Player {
         this.playerGCompound.setLocation(this.playerGCompound.getLocation().getX(), y);
     }
 
-    public int[] getTile() {
+    public List<Integer> getTile() {
         return tile;
     }
 
-    public void setTile(int[] tile) {
+    public void setTile(List<Integer> tile) {
         this.tile = tile;
     }
     
