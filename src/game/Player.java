@@ -1,5 +1,8 @@
 package game;
 
+import java.awt.Color;
+import java.util.Arrays;
+
 import acm.graphics.*;
 
 public class Player {
@@ -65,7 +68,13 @@ public class Player {
     */
     public Player(int spawnx, int spawny) {
         playerGCompound = new GCompound();
-        playerGCompound.add(new GOval(50, 50));
+        
+        //remove after testing
+        GOval oval = new GOval(50, 50);
+        oval.setFillColor(Color.black);
+        oval.setFilled(true);
+        
+        playerGCompound.add(oval);
         playerGCompound.setLocation(spawnx, spawny);
         this.x = spawnx;
         this.y = spawny;
@@ -76,7 +85,6 @@ public class Player {
     }
 
     //moves player G Compound to player x and player y
-
     public void moveX(int val) {
         this.x += val;
         playerGCompound.move(val, 0);
@@ -87,6 +95,10 @@ public class Player {
         playerGCompound.move(0, val);
     }
 
+    public String getTileID() {
+    	return Arrays.toString(this.tile);
+    }
+    
     public double getHealth() {
         return health;
     }
