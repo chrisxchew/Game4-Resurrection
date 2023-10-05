@@ -7,6 +7,9 @@ public class Player {
 	private double health;
 	private double speed;
 	private GCompound playerGCompound;
+	private int x;
+	private int y;
+	private int[] tile = new int[2];
 	
 	/*
 	Do we want to make a coord or location class?
@@ -58,14 +61,31 @@ public class Player {
 	*/
 	public Player(int spawnx, int spawny) {
 		playerGCompound = new GCompound();
-		playerGCompound.add(new GOval(50,50));
+		playerGCompound.add(new GOval(spawnx,spawny,50,50));
+		this.x = spawnx;
+		this.y = spawny;
+		this.tile[0] = 0;
+		this.tile[1] = 0;
 	}
+	
+	//moves player G Compound to player x and player y
+
+	
 
 
+	public void moveX(int val) {
+		this.x += val;
+		playerGCompound.move(val, 0);
+	}
+	
+	public void moveY(int val) {
+		this.y += val;
+		playerGCompound.move(0, val);
+	}
+	
 	public double getHealth() {
 		return health;
 	}
-
 
 	public void setHealth(double health) {
 		this.health = health;
@@ -96,7 +116,32 @@ public class Player {
 		this.playerGCompound = playerGCompound;
 	}
 	
+	public int getX() {
+		return x;
+	}
 
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public int[] getTile() {
+		return tile;
+	}
+
+	public void setTile(int[] tile) {
+		this.tile = tile;
+	}
 	
 }
 
