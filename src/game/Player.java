@@ -10,8 +10,12 @@ public class Player {
     private int x;
     private int y;
     private int[] tile = new int[2];
+    private int playerHeight;
+    private int playerWidth;
 
-    /*
+
+
+	/*
     Do we want to make a coord or location class?
     We are gonna be dealing with x-y values a lot, this could possibly be helpful.
     It will involve a lot of switching, especially for calling functions
@@ -67,6 +71,8 @@ public class Player {
         this.y = spawny;
         this.tile[0] = 0;
         this.tile[1] = 0;
+        playerWidth = 50;
+        playerHeight = 50;
     }
 
     //moves player G Compound to player x and player y
@@ -136,5 +142,21 @@ public class Player {
     public void setTile(int[] tile) {
         this.tile = tile;
     }
+    
+    public int getPlayerHeight() {
+		return playerHeight;
+	}
+
+	public void setPlayerHeight(int playerHeight) {
+		this.playerHeight = playerHeight;
+	}
+
+	public int getPlayerWidth() {
+		return playerWidth;
+	}
+
+	public void setPlayerWidth(int playerWidth) {
+		this.playerWidth = playerWidth;
+	}
 
 }

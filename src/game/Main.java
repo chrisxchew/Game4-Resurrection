@@ -7,8 +7,10 @@ import acm.graphics.*;
 import acm.program.*;
 
 public class Main extends GraphicsProgram {
-    Window window = new Window(1000, 500);
-    Game game = new Game();
+	static int windowHeight = 500;
+	static int windowWidth = 1000;
+    Window window = new Window(windowWidth, windowHeight);
+    Game game = new Game(windowWidth, windowHeight);
 
     private ArrayList < String > key_manager = new ArrayList < String > ();
 
@@ -25,7 +27,7 @@ public class Main extends GraphicsProgram {
 
             //for testing		
             //TODO for production, add window dexterity
-            if (game.getPlayer().getX() > 950) {
+            if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
                 game.moveTiles(1, 0);
 
                 tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
@@ -43,7 +45,7 @@ public class Main extends GraphicsProgram {
                 tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
 
             }
-            if (game.getPlayer().getY() > 450) {
+            if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
                 game.moveTiles(0, -1);
                 tileLabel.setLabel((game.getPlayer().getTile()[0]) + ", " + String.valueOf(game.getPlayer().getTile()[1]));
 
@@ -53,7 +55,7 @@ public class Main extends GraphicsProgram {
             System.out.print(" ; ");
             System.out.println(game.getPlayer().getY());
 
-            tileLabel.setLocation(500, 250);
+            tileLabel.setLocation(windowWidth/2, windowHeight/2);
 
             handleKeyStrokes();
             pause(1);

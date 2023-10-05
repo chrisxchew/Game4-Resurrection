@@ -3,9 +3,12 @@ package game;
 public class Game {
 
     private Player player;
-
-    public Game() {
+    private int screenWidth;
+    private int screenHeight;
+    public Game(int screenWidth, int screenHeight) {
         player = new Player(500, 250);
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
     }
     public Player getPlayer() {
         return player;
@@ -20,17 +23,17 @@ public class Game {
         if (x == 1) {
             this.player.setX(1);
         }
-        if (x == -1) {
-            //TODO Add window dexterity
-            this.player.setX(949);
+        else if (x == -1) {
+            this.player.setX(screenWidth - player.getPlayerWidth() - 1);
         }
-        if (y == -1) {
-            //TODO Add window dexterity
+        else if (y == -1) {
             this.player.setY(1);
         }
-        if (y == 1) {
-            this.player.setY(449);
+        else if (y == 1) {
+            this.player.setY(screenHeight - player.getPlayerHeight()-1);
         }
-
+        else {
+        	System.out.println("function usage: (0,1), (1,0)");
+        }
     }
 }
