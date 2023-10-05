@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import acm.graphics.*;
@@ -9,6 +10,7 @@ import acm.graphics.*;
 public class Tile {
 	private int screenWidth;
 	private int screenHeight;
+	private List<Integer> key;
 	private ArrayList<GRect> rects = new ArrayList<GRect>();
 	public ArrayList<GRect> getRects() {
 		return rects;
@@ -16,7 +18,7 @@ public class Tile {
 	public void setRects(ArrayList<GRect> rects) {
 		this.rects = rects;
 	}
-	public Tile(int screenWidth, int screenHeight) {
+	public Tile(int screenWidth, int screenHeight, List<Integer> key) {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		for(int i = 0; i < screenWidth/10; i++) {
@@ -35,7 +37,17 @@ public class Tile {
 				rects.add(rectToAdd);
 			}
 		}
+		
+		this.key = key;
 	}
-	
+	public List<Integer> getKey() {
+		return key;
+	}
+	public void setKey(List<Integer> key) {
+		this.key = key;
+	}
+	public String toString() {
+		return(String.valueOf(key.get(0)) + " , " + String.valueOf(key.get(1)));
+	}
 
 }
