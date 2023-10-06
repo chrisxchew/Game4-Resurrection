@@ -3,7 +3,7 @@ package game;
 import java.util.*;
 
 public class Game {
-
+//balls
     private Player player;
     private int screenWidth;
     private int screenHeight;
