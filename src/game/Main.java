@@ -1,5 +1,5 @@
 package game;
-
+import structures.Rock;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -64,8 +64,8 @@ public class Main extends GraphicsProgram {
     }
 
     public void drawTiles() {
-    	for(GRect rect : game.getCurrentTile().getRects()) {
-    		add(rect);
+    	for(GObject object : game.getCurrentTile().getObjects()) {
+    		add(object);
     	}
     }
     
