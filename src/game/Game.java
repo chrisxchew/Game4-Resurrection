@@ -14,7 +14,7 @@ public class Game {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         List<Integer> id = Arrays.asList(new Integer[]{0,0});
-        tiles.put(id, new Tile(screenWidth,screenHeight, id));
+        tiles.put(id, new Tile(screenWidth,screenHeight, id,null));
         System.out.println(tiles);
 
         
@@ -30,10 +30,10 @@ public class Game {
     	return tiles.get(player.getTile());
     }
     
-    public ArrayList<Tile> getNeighbors(Tile tile){
+    public ArrayList<Tile> getNeighbors(List<Integer> tile){
     	ArrayList<Tile> output = new ArrayList<Tile>();
-    	int index0 = tile.getKey().get(0);
-    	int index1 = tile.getKey().get(1);
+    	int index0 = tile.get(0);
+    	int index1 = tile.get(1);
     	output.add(tiles.get(
     			new ArrayList<Integer>(Arrays.asList(index0+1,index1)))
     			);
@@ -54,7 +54,7 @@ public class Game {
     	key.add(this.player.getTile().get(1)+y);
         this.player.setTile(key);
         if(tiles.get(player.getTile())==null) {
-        	tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile()));
+        	tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile(), getNeighbors(player.getTile())));
         }
         if (x == 1) {
             this.player.setX(1);

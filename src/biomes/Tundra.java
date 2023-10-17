@@ -12,5 +12,7 @@ public class Tundra extends Biome{
 		getColorRanges()[5] = 254;
 		
 		biomeName = "tundra";
+		
+		temp = 20;
 	}
 }

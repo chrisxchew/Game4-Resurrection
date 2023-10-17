@@ -12,5 +12,7 @@ public class Moor extends Biome{
 		getColorRanges()[5] = 50;
 		
 		biomeName = "moor";
+		
+		temp = 50;
 	}
 }

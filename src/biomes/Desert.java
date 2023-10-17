@@ -12,5 +12,7 @@ public class Desert extends Biome{
 		getColorRanges()[5] = 90;
 		
 		biomeName = "desert";
+		
+		temp = 100;
 	}
 }
