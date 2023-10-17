@@ -1,8 +1,5 @@
 package biomes;
 
-import java.awt.Color;
-import java.util.Random;
-
 import game.Biome;
 
 public class Moor extends Biome{
@@ -13,5 +10,7 @@ public class Moor extends Biome{
 		getColorRanges()[3] = 154;
 		getColorRanges()[4] = 40;
 		getColorRanges()[5] = 50;
+		
+		biomeName = "moor";
 	}
 }

@@ -22,6 +22,7 @@ public class Tile {
 	public void setObjects(ArrayList<GObject> objects) {
 		this.objects = objects;
 	}
+
 	public Tile(int screenWidth, int screenHeight, List<Integer> key) {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
@@ -72,6 +73,12 @@ public class Tile {
 	}
 	public String toString() {
 		return(String.valueOf(key.get(0)) + " , " + String.valueOf(key.get(1)));
+	}
+	public Biome getBiome() {
+		return biome;
+	}
+	public void setBiome(Biome biome) {
+		this.biome = biome;
 	}
 
 }

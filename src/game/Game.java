@@ -3,7 +3,7 @@ package game;
 import java.util.*;
 
 public class Game {
-//balls
+
     private Player player;
     private int screenWidth;
     private int screenHeight;
@@ -15,6 +15,8 @@ public class Game {
         this.screenHeight = screenHeight;
         List<Integer> id = Arrays.asList(new Integer[]{0,0});
         tiles.put(id, new Tile(screenWidth,screenHeight, id));
+        System.out.println(tiles);
+
         
     }
     public Player getPlayer() {
@@ -28,10 +30,22 @@ public class Game {
     	return tiles.get(player.getTile());
     }
     
-    //TODO
-    //returns a tiles neighbors if they exist
     public ArrayList<Tile> getNeighbors(Tile tile){
     	ArrayList<Tile> output = new ArrayList<Tile>();
+    	int index0 = tile.getKey().get(0);
+    	int index1 = tile.getKey().get(1);
+    	output.add(tiles.get(
+    			new ArrayList<Integer>(Arrays.asList(index0+1,index1)))
+    			);
+    	output.add(tiles.get(
+    			new ArrayList<Integer>(Arrays.asList(index0-1, index1)))
+    			);
+    	output.add(tiles.get(
+    			new ArrayList<Integer>(Arrays.asList(index0, index1+1)))
+    			);
+    	output.add(tiles.get(
+    			new ArrayList<Integer>(Arrays.asList(index0, index1-1)))
+    			);
     	return output;
     }
     public void moveTiles(int x, int y) {
@@ -39,15 +53,9 @@ public class Game {
     	key.add(this.player.getTile().get(0)+x);
     	key.add(this.player.getTile().get(1)+y);
         this.player.setTile(key);
-        System.out.println(player.getTile().toString());
         if(tiles.get(player.getTile())==null) {
         	tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile()));
         }
-        for(Tile tile : getNeighbors(tiles.get(player.getTile()))) {
-            System.out.println(tile.toString());
-        }
-        System.out.println(tiles.toString());
-
         if (x == 1) {
             this.player.setX(1);
         }
@@ -63,6 +71,8 @@ public class Game {
         else {
         	System.out.println("moveTiles function usage: (0,1), (1,0)");
         }
+        
+        
     }
 	public Dictionary<List<Integer>, Tile> getTiles() {
 		return tiles;
