@@ -23,43 +23,50 @@ public class Main extends GraphicsProgram {
     
     //for testing
     GLabel tileLabel;
-
+    private Enemy test = new Enemy();
     @Override
     public void run() {
 
         addKeyListeners();
-
+        
     	drawTiles();
         add(game.getPlayer().getPlayerGCompound());
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
         
         add(tileLabel);
-
+        add(test.getBody());
         while (true) {
+
             if(checkTileCrossing()) {
             	removeAll();
             	drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
+
+
             }
-            tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
             handleKeyStrokes();
-            pause(1);
+        	test.chace(game.getPlayer().getX(),game.getPlayer().getY());
+            tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
+
+            pause(4);
+
+
         }
     }
 
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-1);
+            game.getPlayer().moveY(-2);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(1);
+            game.getPlayer().moveY(2);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-1);
+            game.getPlayer().moveX(-2);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(1);
+            game.getPlayer().moveX(2);
         }
     }
 
