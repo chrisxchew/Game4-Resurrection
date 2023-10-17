@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Random;
 import structures.Rock;
 import acm.graphics.*;
+import biomes.Desert;
+import biomes.Moor;
 
 public class Tile {
 	private int screenWidth;
 	private int screenHeight;
+	private Biome biome;
 	private List<Integer> key;
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
 	private ArrayList<Structure> structures = new ArrayList<Structure>();
@@ -22,17 +25,26 @@ public class Tile {
 	public Tile(int screenWidth, int screenHeight, List<Integer> key) {
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
+		Random r = new Random();
+		int r1 = r.nextInt(100);
+		if(r1 > 50) {
+			biome = new Moor();
+		}else {
+			biome = new Desert();
+		}
 		for(int i = 0; i < screenWidth/10; i++) {
 			for(int k = 0; k < screenHeight/10; k++) {
 				GRect rectToAdd = new GRect(10,10);
 				
-				//For testing, remove in prod
-				Random rand = new Random();
-				int rand_int1 = rand.nextInt(50) + 40;
-				int rand_int2 = rand.nextInt(40);
+				//choose biome randomly, remove in prod
+
+				
+				int rr = r.nextInt(biome.getColorRanges()[1] - biome.getColorRanges()[0]) + biome.getColorRanges()[0];
+				int rg = r.nextInt(biome.getColorRanges()[3] - biome.getColorRanges()[2]) + biome.getColorRanges()[2];
+				int rb = r.nextInt(biome.getColorRanges()[5] - biome.getColorRanges()[4]) + biome.getColorRanges()[4];
 				rectToAdd.setFilled(true);
-				rectToAdd.setColor(new Color(rand_int1, 153, rand_int2));
-				rectToAdd.setFillColor(new Color(rand_int1, 153, rand_int2));
+				rectToAdd.setColor(new Color(rr, rg, rb));
+				rectToAdd.setFillColor(new Color(rr, rg, rb));
 				
 				rectToAdd.setLocation(i*10, k*10);
 				objects.add(rectToAdd);
