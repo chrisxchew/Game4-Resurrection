@@ -1,17 +1,14 @@
 package game;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.Rock;
 import acm.graphics.*;
-
 public class Tile {
     int screenWidth;
     int screenHeight;
     private Biome biome;
-
     private List < Integer > key;
     private ArrayList < GObject > objects = new ArrayList < GObject > ();
     private ArrayList < Structure > structures = new ArrayList < Structure > ();
@@ -22,7 +19,6 @@ public class Tile {
     public void setObjects(ArrayList < GObject > objects) {
         this.objects = objects;
     }
-
     public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -31,10 +27,12 @@ public class Tile {
         for (int i = 0; i < screenWidth / 10; i++) {
             for (int k = 0; k < screenHeight / 10; k++) {
                 GRect rectToAdd = new GRect(10, 10);
-                
-                int rr = r.nextInt(biome.getColorRanges()[1] - biome.getColorRanges()[0]) + biome.getColorRanges()[0];
-                int rg = r.nextInt(biome.getColorRanges()[3] - biome.getColorRanges()[2]) + biome.getColorRanges()[2];
-                int rb = r.nextInt(biome.getColorRanges()[5] - biome.getColorRanges()[4]) + biome.getColorRanges()[4];
+                int rr = r.nextInt(biome.getColorRanges()[1] - biome.getColorRanges()[0]) + biome
+                    .getColorRanges()[0];
+                int rg = r.nextInt(biome.getColorRanges()[3] - biome.getColorRanges()[2]) + biome
+                    .getColorRanges()[2];
+                int rb = r.nextInt(biome.getColorRanges()[5] - biome.getColorRanges()[4]) + biome
+                    .getColorRanges()[4];
                 rectToAdd.setFilled(true);
                 rectToAdd.setColor(new Color(rr, rg, rb));
                 rectToAdd.setFillColor(new Color(rr, rg, rb));
@@ -42,13 +40,12 @@ public class Tile {
                 objects.add(rectToAdd);
             }
         }
-        for(int i = 0; i < 10; i++) {
-        	if(r.nextInt(100) < 20) {
-        		Enemy e = new Enemy(r.nextInt(screenWidth-50)+50, r.nextInt(screenHeight-50)+50);
-        		enemies.add(e);
-        	}
+        for (int i = 0; i < 10; i++) {
+            if (r.nextInt(100) < 20) {
+                Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
+                enemies.add(e);
+            }
         }
-
         generateStrutures();
         this.key = key;
     }
@@ -71,7 +68,7 @@ public class Tile {
         this.key = key;
     }
     public String toString() {
-        return (String.valueOf("["+key.get(0)) + " , " + String.valueOf(key.get(1)+"]"));
+        return (String.valueOf("[" + key.get(0)) + " , " + String.valueOf(key.get(1) + "]"));
     }
     public Biome getBiome() {
         return biome;
@@ -79,15 +76,14 @@ public class Tile {
     public void setBiome(Biome biome) {
         this.biome = biome;
     }
-	public ArrayList < Enemy > getEnemies() {
-		return enemies;
-	}
-
-    private Biome rollBiomes(ArrayList<Tile> knownNeighbors) {
-    	Biome biome = new Biome();
+    public ArrayList < Enemy > getEnemies() {
+        return enemies;
+    }
+    private Biome rollBiomes(ArrayList < Tile > knownNeighbors) {
+        Biome biome = new Biome();
         int matchingBiomes = 0;
         int needToMatch = 0;
-        if(knownNeighbors == null) {
+        if (knownNeighbors == null) {
             biome = biome.chooseRandomBiome();
             return biome;
         }
@@ -109,5 +105,4 @@ public class Tile {
         }
         return biome;
     }
-
 }

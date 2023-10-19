@@ -38,9 +38,11 @@ public class Enemy {
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
     	if(!this.unloaded) {
 	    	if((this.x - targetx) != 0 ) {
+	    		/*
 	    		for(Enemy enemy : enemies) {
-		    		//logic for collisions
+		    		logic for collisions
 	    		}
+	    		*/
 		        moveX(((this.x - targetx)/(Math.abs(this.x - targetx))) * -0.5);
 	    	}
 	    	if((this.y - targety) != 0) {

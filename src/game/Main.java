@@ -1,39 +1,30 @@
 package game;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import acm.graphics.*;
 import acm.program.*;
 import userinterface.Inventory;
-
 public class Main extends GraphicsProgram {
     static int windowHeight = 500;
     static int windowWidth = 1000;
     Window window = new Window(windowWidth, windowHeight);
     Game game = new Game(windowWidth, windowHeight);
-
     private ArrayList < String > key_manager = new ArrayList < String > ();
-
     public void init() {
         setSize(windowWidth, windowHeight);
         requestFocus();
     }
-
     //Hi...
-
     //for testing
     GLabel tileLabel;
     Inventory inventory = new Inventory(40, windowHeight);
-
     @Override
     public void run() {
-
         addKeyListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-
-        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
-
+        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
+            game.getPlayer().getTile().get(1)));
         add(tileLabel);
         for (Enemy e: game.getCurrentTile().getEnemies()) {
             add(e.getBody());
@@ -42,7 +33,6 @@ public class Main extends GraphicsProgram {
         while (true) {
             if (checkTileCrossing()) {
                 removeAll();
-
                 drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
@@ -52,18 +42,14 @@ public class Main extends GraphicsProgram {
                 }
             }
             for (Enemy e: game.getCurrentTile().getEnemies()) {
-                e.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter().getY(), game.getCurrentTile().getEnemies());
+                e.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
+                    .getY(), game.getCurrentTile().getEnemies());
             }
-
             handleKeyStrokes();
-
             tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
-
             pause(1);
-
         }
     }
-
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
             game.getPlayer().moveY(-1);
@@ -78,43 +64,40 @@ public class Main extends GraphicsProgram {
             game.getPlayer().moveX(1);
         }
     }
-
     public void drawTiles() {
         for (GObject object: game.getCurrentTile().getObjects()) {
             add(object);
         }
     }
-
     public boolean checkTileCrossing() {
         //remove tile label lines for production
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
-
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
+                .getPlayer().getTile().get(1)));
             return true;
         }
         if (game.getPlayer().getX() < 0) {
             game.moveTiles(-1, 0);
-
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
+                .getPlayer().getTile().get(1)));
             return true;
         }
-
         if (game.getPlayer().getY() < 0) {
             game.moveTiles(0, 1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
+                .getPlayer().getTile().get(1)));
             return true;
         }
         if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
             game.moveTiles(0, -1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
+            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
+                .getPlayer().getTile().get(1)));
             return true;
         } else {
             return false;
         }
-
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -154,7 +137,6 @@ public class Main extends GraphicsProgram {
             key_manager.remove("d");
         }
     }
-
     public static void main(String[] args) {
         new Main().start();
     }
