@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import acm.graphics.*;
+import userinterface.Inventory;
 
 public class Player {
 
@@ -16,15 +17,19 @@ public class Player {
     private List<Integer> tile = new ArrayList<Integer>(2);
     private int playerHeight;
     private int playerWidth;
+    private Item currentlyEquippedItem;
+    private Inventory inventory;
 
-
-    public Player(int spawnx, int spawny) {
+    public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
         playerGCompound = new GCompound();
-        
+        this.inventory = new Inventory(40, screenHeight);
         //remove after testing
         GOval oval = new GOval(50, 50);
         oval.setFillColor(Color.black);
         oval.setFilled(true);
+        Item item = new Item();
+        this.currentlyEquippedItem = item;
+        playerGCompound.add(currentlyEquippedItem.getItemBody());
         
         playerGCompound.add(oval);
         playerGCompound.setLocation(spawnx, spawny);
@@ -37,6 +42,8 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
     }
+    
+    
     
     public GPoint getPlayerCenter() {
     	GPoint output = new GPoint();
@@ -127,6 +134,18 @@ public class Player {
 
 	public void setPlayerWidth(int playerWidth) {
 		this.playerWidth = playerWidth;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public Item getCurrentlyEquippedItem() {
+		return currentlyEquippedItem;
+	}
+
+	public void setCurrentlyEquippedItem(Item currentlyEquippedItem) {
+		this.currentlyEquippedItem = currentlyEquippedItem;
 	}
 
 }

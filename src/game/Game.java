@@ -6,7 +6,7 @@ public class Game {
     private int screenHeight;
     private Dictionary < List < Integer > , Tile > tiles = new Hashtable < > ();
     public Game(int screenWidth, int screenHeight) {
-        player = new Player(screenWidth / 2, screenHeight / 2);
+        player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         List < Integer > id = Arrays.asList(new Integer[] {

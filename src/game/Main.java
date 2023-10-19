@@ -19,7 +19,6 @@ public class Main extends GraphicsProgram {
     //Hi...
     //for testing
     GLabel tileLabel;
-    Inventory inventory = new Inventory(40, windowHeight);
     @Override
     public void run() {
         addKeyListeners();
@@ -72,11 +71,11 @@ public class Main extends GraphicsProgram {
     }
     public void calculateDisplayingInventory() {
     	if(inventoryDisplayed && canChangeInventoryDisplayed) {
-    		remove(inventory.getGraphicalInterface());
+    		remove(this.game.getPlayer().getInventory().getGraphicalInterface());
     		inventoryDisplayed = false;
     		canChangeInventoryDisplayed = false;
     	}else if(canChangeInventoryDisplayed){
-            add(inventory.getGraphicalInterface());
+            add(this.game.getPlayer().getInventory().getGraphicalInterface());
             inventoryDisplayed = true;
             canChangeInventoryDisplayed = false;
     	}
