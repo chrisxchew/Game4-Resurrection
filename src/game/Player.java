@@ -29,9 +29,10 @@ public class Player {
         oval.setFilled(true);
         Item item = new Item();
         this.currentlyEquippedItem = item;
+        playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         
-        playerGCompound.add(oval);
+
         playerGCompound.setLocation(spawnx, spawny);
         this.x = spawnx;
         this.y = spawny;

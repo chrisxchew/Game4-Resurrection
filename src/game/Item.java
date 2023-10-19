@@ -8,8 +8,12 @@ public class Item {
 		itemBody = new GCompound();
 		
 		//remove in prod
-		GRect rect = new GRect(5,5);
-		itemBody.add(rect);
+		GImage image = new GImage("src/images/k00tvpmql6d41.png");
+		image.setLocation(image.getLocation().getX()-50,image.getLocation().getY()+65);
+
+		image.setSize(100,100);
+		image.rotate(90);
+		itemBody.add(image);
 	}
 	public GCompound getItemBody() {
 		return itemBody;
