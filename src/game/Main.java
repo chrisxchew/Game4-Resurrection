@@ -1,10 +1,10 @@
 package game;
-import structures.Rock;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import acm.graphics.*;
 import acm.program.*;
+import userinterface.Inventory;
 
 public class Main extends GraphicsProgram {
     static int windowHeight = 500;
@@ -19,37 +19,41 @@ public class Main extends GraphicsProgram {
         requestFocus();
     }
 
-    // Hi...
+    //Hi...
     
     //for testing
     GLabel tileLabel;
     private Enemy test = new Enemy();
+	Inventory inventory = new Inventory(40, windowHeight);
+	
     @Override
     public void run() {
 
         addKeyListeners();
-        
     	drawTiles();
         add(game.getPlayer().getPlayerGCompound());
+
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
         
         add(tileLabel);
         add(test.getBody());
+        add(inventory.getGraphicalInterface());
         while (true) {
-
             if(checkTileCrossing()) {
+            	
             	removeAll();
             	drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
-
+                add(inventory.getGraphicalInterface());
 
             }
+            test.tickai(game.getPlayer().getPlayerCenter().getX(),game.getPlayer().getPlayerCenter().getY());
             handleKeyStrokes();
-        	test.chace(game.getPlayer().getX(),game.getPlayer().getY());
+        	
             tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
 
-            pause(4);
+            pause(1);
 
 
         }
@@ -57,16 +61,16 @@ public class Main extends GraphicsProgram {
 
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-2);
+            game.getPlayer().moveY(-1);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(2);
+            game.getPlayer().moveY(1);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-2);
+            game.getPlayer().moveX(-1);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(2);
+            game.getPlayer().moveX(1);
         }
     }
 

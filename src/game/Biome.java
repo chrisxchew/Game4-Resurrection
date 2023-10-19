@@ -23,9 +23,7 @@ public class Biome {
         int i = r.nextInt(100);
         if (i < 33) {
             return new Desert();
-        } 
-        else if (i < 66) {
-
+        } else if (i < 66) {
             return new Tundra();
         } else return new Moor();
     }

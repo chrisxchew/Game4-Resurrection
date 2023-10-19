@@ -8,8 +8,8 @@ import structures.Rock;
 import acm.graphics.*;
 
 public class Tile {
-    private int screenWidth;
-    private int screenHeight;
+    int screenWidth;
+    int screenHeight;
     private Biome biome;
 
     private List < Integer > key;
@@ -41,6 +41,11 @@ public class Tile {
                 objects.add(rectToAdd);
             }
         }
+
+        generateStrutures();
+        this.key = key;
+    }
+    public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
             if (rnd.nextInt(50) == 5) {
@@ -50,10 +55,7 @@ public class Tile {
                     objects.add(obj);
                 }
             }
-
         }
-
-        this.key = key;
     }
     public List < Integer > getKey() {
         return key;
@@ -62,7 +64,7 @@ public class Tile {
         this.key = key;
     }
     public String toString() {
-        return (String.valueOf(key.get(0)) + " , " + String.valueOf(key.get(1)));
+        return (String.valueOf("["+key.get(0)) + " , " + String.valueOf(key.get(1)+"]"));
     }
     public Biome getBiome() {
         return biome;
@@ -92,7 +94,6 @@ public class Tile {
                         matchingBiomes++;
                     }
                 }
-
             }
         }
         return biome;

@@ -2,7 +2,6 @@ package game;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import acm.graphics.*;
@@ -38,7 +37,13 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
     }
-
+    
+    public GPoint getPlayerCenter() {
+    	GPoint output = new GPoint();
+    	output.setLocation(this.x+(playerWidth/2), this.y+(playerHeight/2));
+    	return output;
+    }
+    
     //moves player G Compound to player x and player y
     public void moveX(int val) {
         this.x += val;
@@ -57,7 +62,9 @@ public class Player {
     public void setHealth(double health) {
         this.health = health;
     }
-
+    
+    
+    
     //Deals damage to the player, 
     //deducting amount "damage" from the players health
     public void dealDamage(double damage) {
