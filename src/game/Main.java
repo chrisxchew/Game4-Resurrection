@@ -1,9 +1,8 @@
 package game;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import acm.graphics.*;
 import acm.program.*;
-import userinterface.Inventory;
 public class Main extends GraphicsProgram {
     static int windowHeight = 500;
     static int windowWidth = 1000;
@@ -22,6 +21,7 @@ public class Main extends GraphicsProgram {
     @Override
     public void run() {
         addKeyListeners();
+        addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
@@ -113,6 +113,10 @@ public class Main extends GraphicsProgram {
         } else {
             return false;
         }
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+    	this.game.getPlayer().attackPressed();
     }
     @Override
     public void keyPressed(KeyEvent e) {

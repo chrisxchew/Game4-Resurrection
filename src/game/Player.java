@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import acm.graphics.*;
+import items.*;
 import userinterface.Inventory;
 
 public class Player {
@@ -19,7 +20,7 @@ public class Player {
     private int playerWidth;
     private Item currentlyEquippedItem;
     private Inventory inventory;
-
+    private boolean facingRight = false;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
@@ -27,7 +28,7 @@ public class Player {
         GOval oval = new GOval(50, 50);
         oval.setFillColor(Color.black);
         oval.setFilled(true);
-        Item item = new Item();
+        Item item = new Sword();
         this.currentlyEquippedItem = item;
         playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
@@ -44,7 +45,11 @@ public class Player {
         playerHeight = 50;
     }
     
-    
+    public void attackPressed() {
+    	if(this.getCurrentlyEquippedItem() instanceof Sword) {
+    		((Sword) this.getCurrentlyEquippedItem()).attackEvent();
+    	}
+    }
     
     public GPoint getPlayerCenter() {
     	GPoint output = new GPoint();
@@ -54,6 +59,20 @@ public class Player {
     
     //moves player G Compound to player x and player y
     public void moveX(int val) {
+    	if(val > 0) {
+    		if(facingRight == false) {
+        		//this.getPlayerGCompound().rotate(180);
+    		}
+    		this.facingRight = true;
+
+    	}
+    	if(val < 0) {
+    		if(facingRight == true) {
+        		//this.getPlayerGCompound().rotate(180);
+    		}
+    		this.facingRight = false;
+
+    	}
         this.x += val;
         playerGCompound.move(val, 0);
     }
