@@ -15,6 +15,7 @@ public class Tile {
     private List < Integer > key;
     private ArrayList < GObject > objects = new ArrayList < GObject > ();
     private ArrayList < Structure > structures = new ArrayList < Structure > ();
+    private ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -40,6 +41,12 @@ public class Tile {
                 rectToAdd.setLocation(i * 10, k * 10);
                 objects.add(rectToAdd);
             }
+        }
+        for(int i = 0; i < 10; i++) {
+        	if(r.nextInt(100) < 20) {
+        		Enemy e = new Enemy(r.nextInt(screenWidth-50)+50, r.nextInt(screenHeight-50)+50);
+        		enemies.add(e);
+        	}
         }
 
         generateStrutures();
@@ -72,6 +79,10 @@ public class Tile {
     public void setBiome(Biome biome) {
         this.biome = biome;
     }
+	public ArrayList < Enemy > getEnemies() {
+		return enemies;
+	}
+
     private Biome rollBiomes(ArrayList<Tile> knownNeighbors) {
     	Biome biome = new Biome();
         int matchingBiomes = 0;

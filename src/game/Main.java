@@ -20,41 +20,46 @@ public class Main extends GraphicsProgram {
     }
 
     //Hi...
-    
+
     //for testing
     GLabel tileLabel;
-    private Enemy test = new Enemy();
-	Inventory inventory = new Inventory(40, windowHeight);
-	
+    Inventory inventory = new Inventory(40, windowHeight);
+
     @Override
     public void run() {
 
         addKeyListeners();
-    	drawTiles();
+        drawTiles();
         add(game.getPlayer().getPlayerGCompound());
 
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
-        
+
         add(tileLabel);
-        add(test.getBody());
+        for (Enemy e: game.getCurrentTile().getEnemies()) {
+            add(e.getBody());
+        }
         add(inventory.getGraphicalInterface());
         while (true) {
-            if(checkTileCrossing()) {
-            	
-            	removeAll();
-            	drawTiles();
+            if (checkTileCrossing()) {
+                removeAll();
+
+                drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
                 add(inventory.getGraphicalInterface());
-
+                for (Enemy e: game.getCurrentTile().getEnemies()) {
+                    add(e.getBody());
+                }
             }
-            test.tickai(game.getPlayer().getPlayerCenter().getX(),game.getPlayer().getPlayerCenter().getY());
+            for (Enemy e: game.getCurrentTile().getEnemies()) {
+                e.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter().getY(), game.getCurrentTile().getEnemies());
+            }
+
             handleKeyStrokes();
-        	
+
             tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
 
             pause(1);
-
 
         }
     }
@@ -75,13 +80,13 @@ public class Main extends GraphicsProgram {
     }
 
     public void drawTiles() {
-    	for(GObject object : game.getCurrentTile().getObjects()) {
-    		add(object);
-    	}
+        for (GObject object: game.getCurrentTile().getObjects()) {
+            add(object);
+        }
     }
-    
+
     public boolean checkTileCrossing() {
-    	//remove tile label lines for production
+        //remove tile label lines for production
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
 
@@ -104,10 +109,10 @@ public class Main extends GraphicsProgram {
             game.moveTiles(0, -1);
             tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game.getPlayer().getTile().get(1)));
             return true;
-        }else {
-        	return false;
+        } else {
+            return false;
         }
-        
+
     }
 
     @Override
