@@ -7,6 +7,8 @@ import userinterface.Inventory;
 public class Main extends GraphicsProgram {
     static int windowHeight = 500;
     static int windowWidth = 1000;
+    private boolean inventoryDisplayed = false;
+    private boolean canChangeInventoryDisplayed = true;
     Window window = new Window(windowWidth, windowHeight);
     Game game = new Game(windowWidth, windowHeight);
     private ArrayList < String > key_manager = new ArrayList < String > ();
@@ -29,14 +31,13 @@ public class Main extends GraphicsProgram {
         for (Enemy e: game.getCurrentTile().getEnemies()) {
             add(e.getBody());
         }
-        add(inventory.getGraphicalInterface());
+
         while (true) {
             if (checkTileCrossing()) {
                 removeAll();
                 drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
-                add(inventory.getGraphicalInterface());
                 for (Enemy e: game.getCurrentTile().getEnemies()) {
                     add(e.getBody());
                 }
@@ -63,6 +64,22 @@ public class Main extends GraphicsProgram {
         if (key_manager.contains("d")) {
             game.getPlayer().moveX(1);
         }
+        if(key_manager.contains("e")) {
+        	calculateDisplayingInventory();
+        }else {
+        	canChangeInventoryDisplayed = true;
+        }
+    }
+    public void calculateDisplayingInventory() {
+    	if(inventoryDisplayed && canChangeInventoryDisplayed) {
+    		remove(inventory.getGraphicalInterface());
+    		inventoryDisplayed = false;
+    		canChangeInventoryDisplayed = false;
+    	}else if(canChangeInventoryDisplayed){
+            add(inventory.getGraphicalInterface());
+            inventoryDisplayed = true;
+            canChangeInventoryDisplayed = false;
+    	}
     }
     public void drawTiles() {
         for (GObject object: game.getCurrentTile().getObjects()) {
@@ -121,6 +138,11 @@ public class Main extends GraphicsProgram {
                 key_manager.add("d");
             }
         }
+        if (keyCode == KeyEvent.VK_E) {
+            if (!key_manager.contains("e")) {
+                key_manager.add("e");
+            }
+        }
     }
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -135,6 +157,9 @@ public class Main extends GraphicsProgram {
         }
         if (keyCode == KeyEvent.VK_D) {
             key_manager.remove("d");
+        }
+        if (keyCode == KeyEvent.VK_E) {
+            key_manager.remove("e");
         }
     }
     public static void main(String[] args) {

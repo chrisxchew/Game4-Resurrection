@@ -15,7 +15,7 @@ public class Inventory {
 		this.inventory = new ArrayList<Item>();
 		for(int i = 0; i < inventorySize/10; i++) {
 			for(int j = 0; j < 10; j++) {
-				Color c = new Color(0, 0, 0, 0.75f);
+				Color c = new Color(0, 0, 0, 75);
 				GRect box = new GRect(j*inventoryInterfaceBoxSize, screenHeight-25-(i*inventoryInterfaceBoxSize), inventoryInterfaceBoxSize, inventoryInterfaceBoxSize);
 				box.setColor(c);
 				box.setFillColor(c);
