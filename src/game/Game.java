@@ -14,7 +14,6 @@ public class Game {
             0
         });
         tiles.put(id, new Tile(screenWidth, screenHeight, id, null));
-        System.out.println(tiles);
     }
     public Player getPlayer() {
         return player;

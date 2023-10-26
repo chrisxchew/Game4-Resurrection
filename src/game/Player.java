@@ -21,6 +21,8 @@ public class Player {
     private Item currentlyEquippedItem;
     private Inventory inventory;
     private boolean facingRight = false;
+    GRect collisionRect;
+    GRect collisionRect2;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
@@ -34,6 +36,13 @@ public class Player {
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         
 
+        collisionRect = new GRect(50,50);
+        collisionRect2 = new GRect(50,50);
+        playerGCompound.add(collisionRect);
+        playerGCompound.add(collisionRect2);
+        collisionRect.move(50, 0);
+        collisionRect2.move(-50, 0);
+        
         playerGCompound.setLocation(spawnx, spawny);
         this.x = spawnx;
         this.y = spawny;
@@ -44,10 +53,30 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
     }
-    
-    public void attackPressed() {
+    public boolean collidingWithEnemy(Enemy e) {
+        if (
+            e.getBody().getY() > this.y &&
+            e.getBody().getY() < this.y + 50
+        ) {
+            if ((e.getBody().getX() > this.x + 50 &&
+                    e.getBody().getX() < this.x + 100) ||
+                (e.getBody().getX() > this.x - 50 &&
+                    e.getBody().getX() < this.x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void attackPressed(Game game) {
     	if(this.getCurrentlyEquippedItem() instanceof Sword) {
-    		((Sword) this.getCurrentlyEquippedItem()).attackEvent();
+    		for(Enemy e : game.getCurrentTile().getEnemies()) {
+    			if(collidingWithEnemy(e)) {
+     				e.knockback(-7);
+     				e.setHealth(e.getHealth()-1);
+    			}
+    		}
+    		
+    		((Sword) this.getCurrentlyEquippedItem()).attackEvent(null);
     	}
     }
     
@@ -61,14 +90,14 @@ public class Player {
     public void moveX(int val) {
     	if(val > 0) {
     		if(facingRight == false) {
-        		//this.getPlayerGCompound().rotate(180);
+        		this.currentlyEquippedItem.getItemBody().rotate(90);
     		}
     		this.facingRight = true;
 
     	}
     	if(val < 0) {
     		if(facingRight == true) {
-        		//this.getPlayerGCompound().rotate(180);
+        		this.currentlyEquippedItem.getItemBody().rotate(90);
     		}
     		this.facingRight = false;
 
@@ -76,7 +105,7 @@ public class Player {
         this.x += val;
         playerGCompound.move(val, 0);
     }
-
+    
     public void moveY(int val) {
         this.y += val;
         playerGCompound.move(0, val);

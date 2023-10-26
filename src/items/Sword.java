@@ -1,6 +1,9 @@
 package items;
 
+import java.util.ArrayList;
+
 import acm.graphics.*;
+import game.Enemy;
 import game.Item;
 
 public class Sword extends Item implements Melee{
@@ -14,8 +17,7 @@ public class Sword extends Item implements Melee{
 	}
 
 	@Override
-	public void attackEvent() {
-		System.out.println(((GCompound) this.getItemBody().getParent()).getLocation());
+	public void attackEvent(ArrayList<Enemy> enemies) {
 		
 	}
 }
