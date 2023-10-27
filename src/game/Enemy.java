@@ -55,7 +55,7 @@ public class Enemy implements ActionListener{
     }
     @Override
 	public void actionPerformed(ActionEvent e) {
-    	velocityMultiplier-=1;
+    	velocityMultiplier-=0.5;
     	if(velocityMultiplier <= -2) {
     		this.timer.stop();
     		velocityMultiplier = -2;

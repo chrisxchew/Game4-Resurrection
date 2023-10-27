@@ -32,14 +32,13 @@ public class Player {
         oval.setFilled(true);
         Item item = new Sword();
         this.currentlyEquippedItem = item;
+        this.inventory.getInventory().add(item);
         playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         
 
         collisionRect = new GRect(50,50);
         collisionRect2 = new GRect(50,50);
-        playerGCompound.add(collisionRect);
-        playerGCompound.add(collisionRect2);
         collisionRect.move(50, 0);
         collisionRect2.move(-50, 0);
         
@@ -90,14 +89,14 @@ public class Player {
     public void moveX(int val) {
     	if(val > 0) {
     		if(facingRight == false) {
-        		this.currentlyEquippedItem.getItemBody().rotate(90);
+        		//this.currentlyEquippedItem.getItemBody().rotate(90);
     		}
     		this.facingRight = true;
 
     	}
     	if(val < 0) {
     		if(facingRight == true) {
-        		this.currentlyEquippedItem.getItemBody().rotate(90);
+        		//this.currentlyEquippedItem.getItemBody().rotate(90);
     		}
     		this.facingRight = false;
 
