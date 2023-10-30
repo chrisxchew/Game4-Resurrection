@@ -10,13 +10,14 @@ import javax.swing.Timer;
 import acm.graphics.*;
 
 public class Enemy implements ActionListener{
+	protected ArrayList<Item> drops = new ArrayList<Item>();
 	protected GCompound bodyCompound;
     private double x;
     private double y;
     private int health = 5;
     Timer timer;
     double velocityMultiplier = -2;
-    private boolean unloaded = false;
+    protected boolean unloaded = false;
     public Enemy(int x, int y) {
     	bodyCompound = new GCompound();
     	this.x = x;
@@ -69,10 +70,21 @@ public class Enemy implements ActionListener{
     		velocityMultiplier = -2;
     	}
     }
+    
+    protected void deathEvent() {
+		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
+			if(this.bodyCompound.getElement(i) instanceof GPolygon){
+				((GPolygon) this.bodyCompound.getElement(i)).setFillColor(Color.black);	
+			}
+			this.unloaded=true;
+		}
+    }
+    
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
     	if(!this.unloaded) {
     		if(this.health <= 0) {
-    			this.bodyCompound.getElement(0).setColor(Color.black);
+    			deathEvent();
+
     		}else {
         		if((this.x - targetx) != 0 ) {
     		        moveX(((this.x - targetx)/(Math.abs(this.x - targetx))) * velocityMultiplier);
