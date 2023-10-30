@@ -10,7 +10,7 @@ import javax.swing.Timer;
 import acm.graphics.*;
 
 public class Enemy implements ActionListener{
-	private GCompound bodyCompound;
+	protected GCompound bodyCompound;
     private double x;
     private double y;
     private int health = 5;
@@ -26,13 +26,13 @@ public class Enemy implements ActionListener{
     	this.timer = new Timer(10, this);
     }
 
-	private void addObjectsToCompound(int x, int y) {
+	protected void addObjectsToCompound(int x, int y) {
     	GPolygon body;
         body = new GPolygon();
         body.addVertex(0, -25);
         body.addVertex(25, 25);
         body.addVertex(-25, 25);
-        body.setColor(Color.red);
+        body.setFillColor(Color.red);
         body.setFilled(true);
         
         this.bodyCompound.add(body,x,y);

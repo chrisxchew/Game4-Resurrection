@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import structures.Rock;
 import acm.graphics.*;
+import enemy.EnemyRect;
 public class Tile {
     int screenWidth;
     int screenHeight;
@@ -44,6 +45,10 @@ public class Tile {
             if (r.nextInt(100) < 20) {
                 Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
                 enemies.add(e);
+            }
+            if (r.nextInt(100) < 20) {
+                EnemyRect e2 = new EnemyRect(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
+                enemies.add(e2);
             }
         }
         generateStrutures();
