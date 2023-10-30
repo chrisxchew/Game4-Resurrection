@@ -30,9 +30,14 @@ public class Player {
         GOval oval = new GOval(50, 50);
         oval.setFillColor(Color.black);
         oval.setFilled(true);
-        Item item = new Sword();
-        this.currentlyEquippedItem = item;
-        this.inventory.getInventory().add(item);
+        for(int i =0; i < 20; i ++) {
+            Item item = new Sword();
+            this.inventory.getInventory().add(item);
+            this.currentlyEquippedItem = item;
+        }
+
+
+
         playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         
@@ -54,13 +59,13 @@ public class Player {
     }
     public boolean collidingWithEnemy(Enemy e) {
         if (
-            e.getBody().getY() > this.y &&
-            e.getBody().getY() < this.y + 50
+            e.getY() > this.y &&
+            e.getY() < this.y + 50
         ) {
-            if ((e.getBody().getX() > this.x + 50 &&
-                    e.getBody().getX() < this.x + 100) ||
-                (e.getBody().getX() > this.x - 50 &&
-                    e.getBody().getX() < this.x)) {
+            if ((e.getX() > this.x + 50 &&
+                    e.getX() < this.x + 100) ||
+                (e.getX() > this.x - 50 &&
+                    e.getX() < this.x)) {
                 return true;
             }
         }

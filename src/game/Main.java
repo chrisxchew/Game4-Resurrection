@@ -74,7 +74,6 @@ public class Main extends GraphicsProgram implements ActionListener{
         if(key_manager.contains("e")) {
         	this.game.getPlayer().getInventory().updateGraphicalInterface();
         	calculateDisplayingInventory();
-        	System.out.println(this.game.getPlayer().getInventory().getInventory());
         }else {
         	canChangeInventoryDisplayed = true;
         }

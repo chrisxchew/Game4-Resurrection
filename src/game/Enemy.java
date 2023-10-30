@@ -10,7 +10,7 @@ import javax.swing.Timer;
 import acm.graphics.*;
 
 public class Enemy implements ActionListener{
-    private GPolygon body;
+	private GCompound bodyCompound;
     private double x;
     private double y;
     private int health = 5;
@@ -18,31 +18,39 @@ public class Enemy implements ActionListener{
     double velocityMultiplier = -2;
     private boolean unloaded = false;
     public Enemy(int x, int y) {
+    	bodyCompound = new GCompound();
     	this.x = x;
     	this.y = y;
-        body = new GPolygon(x, y);
+
+        addObjectsToCompound(x,y);
+    	this.timer = new Timer(10, this);
+    }
+
+	private void addObjectsToCompound(int x, int y) {
+    	GPolygon body;
+        body = new GPolygon();
         body.addVertex(0, -25);
         body.addVertex(25, 25);
         body.addVertex(-25, 25);
         body.setColor(Color.red);
         body.setFilled(true);
         
-    	this.timer = new Timer(10, this);
+        this.bodyCompound.add(body,x,y);
     }
     public GObject getBody() {
-        return body;
+        return bodyCompound;
     }
-    public void setBody(GPolygon body) {
-        this.body = body;
+    public void setBody(GCompound body) {
+        this.bodyCompound = body;
     }
     public void moveX(double val) {
         this.x += val;
-        body.move(val, 0);
+        bodyCompound.move(val, 0);
     }
 
     public void moveY(double val) {
         this.y += val;
-        body.move(0, val);
+        bodyCompound.move(0, val);
     }
     public void knockback(double mulitplier) {
     	
@@ -64,7 +72,7 @@ public class Enemy implements ActionListener{
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
     	if(!this.unloaded) {
     		if(this.health <= 0) {
-    			this.body.setColor(Color.black);
+    			this.bodyCompound.getElement(0).setColor(Color.black);
     		}else {
         		if((this.x - targetx) != 0 ) {
     		        moveX(((this.x - targetx)/(Math.abs(this.x - targetx))) * velocityMultiplier);
@@ -87,5 +95,17 @@ public class Enemy implements ActionListener{
 	}
 	public void setHealth(int health) {
 		this.health = health;
+	}
+    public double getX() {
+		return x;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public double getY() {
+		return y;
+	}
+	public void setY(double y) {
+		this.y = y;
 	}
 }
