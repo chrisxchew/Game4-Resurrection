@@ -6,24 +6,34 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import acm.graphics.GImage;
+import game.Player;
 
 public class SwordSlash implements ActionListener{
 	private double x;
 	private double y;
 	private GImage image;
 	private Timer timer;
+	private Player Owner;
 	int counter = 1;
-	public SwordSlash(double x,double y) {
+	public SwordSlash(double x,double y, Player Owner) {
+		this.Owner = Owner;
 		this.setX(x);
 		this.setY(y);
 		this.timer = new Timer(10, this);
-		this.image = new GImage("src/images/slash/slash1.png",x,y);
+		this.image = new GImage("media/Items/Weapons/SwordSlash/slash1.png",x,y);
 		this.image.rotate(45);
 		this.timer.start();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.image.setImage("src/images/slash/slash" + counter + ".png");
+		if(this.Owner.isFacingRight()) {
+			this.image.setLocation(x+100,y);
+			this.image.setImage("media/Items/Weapons/SwordSlash/slash"+ counter + "Right.png");
+		}else {
+
+			this.image.setImage("media/Items/Weapons/SwordSlash/slash"+ counter + ".png");
+		}
+		
 		counter++;
 		if(counter == 8) {
 			this.timer.stop();

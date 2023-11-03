@@ -72,9 +72,15 @@ public class Player {
         }
         return false;
     }
-    public void attackPressed(Game game) {
+    public boolean isFacingRight() {
+		return facingRight;
+	}
+	public void setFacingRight(boolean facingRight) {
+		this.facingRight = facingRight;
+	}
+	public void attackPressed(Game game) {
     	if(this.getCurrentlyEquippedItem() instanceof Melee) {
-    		SwordSlash slash = new SwordSlash(-100,0);
+    		SwordSlash slash = new SwordSlash(-100,0, this);
     		this.playerGCompound.add(slash.getImage());
     		
     		for(Enemy e : game.getCurrentTile().getEnemies()) {
@@ -98,19 +104,18 @@ public class Player {
     //moves player G Compound to player x and player y
     public void moveX(int val) {
     	if(val > 0) {
-
-    		if(facingRight == true) {
+    		if(facingRight == false) {
     			this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
     			this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
-    		this.facingRight = false;
+    		this.facingRight = true;
     	}
     	if(val < 0) {
-    		if(facingRight == false) {
+    		if(facingRight == true) {
     			this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
     			this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
-    		this.facingRight = true;
+    		this.facingRight = false;
 
 
     	}
