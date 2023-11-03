@@ -20,7 +20,7 @@ public class SwordSlash implements ActionListener{
 		this.setX(x);
 		this.setY(y);
 		this.timer = new Timer(10, this);
-		this.image = new GImage("media/Items/Weapons/SwordSlash/slash1.png",x,y);
+		this.image = new GImage("",x,y);
 		this.image.rotate(45);
 		this.timer.start();
 	}
