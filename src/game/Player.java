@@ -73,10 +73,14 @@ public class Player {
     }
     public void attackPressed(Game game) {
     	if(this.getCurrentlyEquippedItem() instanceof Sword) {
+    		SwordSlash slash = new SwordSlash(-100,0);
+    		this.playerGCompound.add(slash.getImage());
+    		
     		for(Enemy e : game.getCurrentTile().getEnemies()) {
     			if(collidingWithEnemy(e)) {
      				e.knockback(-7);
      				e.setHealth(e.getHealth()-1);
+     				
     			}
     		}
     		

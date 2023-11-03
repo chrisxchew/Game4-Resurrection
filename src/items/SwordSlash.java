@@ -18,6 +18,7 @@ public class SwordSlash implements ActionListener{
 		this.setY(y);
 		this.timer = new Timer(10, this);
 		this.image = new GImage("src/images/slash/slash1.png",x,y);
+		this.image.rotate(45);
 		this.timer.start();
 	}
 	@Override
@@ -25,7 +26,8 @@ public class SwordSlash implements ActionListener{
 		this.image.setImage("src/images/slash/slash" + counter + ".png");
 		counter++;
 		if(counter == 8) {
-			counter = 1;
+			this.timer.stop();
+			this.image.setVisible(false);
 		}
 	}
 	public GImage getImage() {
