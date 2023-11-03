@@ -31,7 +31,7 @@ public class Player {
         oval.setFillColor(Color.black);
         oval.setFilled(true);
         for(int i =0; i < 20; i ++) {
-            Item item = new Sword();
+            Item item = new Sword1();
             this.inventory.getInventory().add(item);
             this.currentlyEquippedItem = item;
         }
@@ -73,7 +73,7 @@ public class Player {
         return false;
     }
     public void attackPressed(Game game) {
-    	if(this.getCurrentlyEquippedItem() instanceof Sword) {
+    	if(this.getCurrentlyEquippedItem() instanceof Melee) {
     		SwordSlash slash = new SwordSlash(-100,0);
     		this.playerGCompound.add(slash.getImage());
     		
@@ -85,7 +85,7 @@ public class Player {
     			}
     		}
     		
-    		((Sword) this.getCurrentlyEquippedItem()).attackEvent(null);
+    		((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
     	}
     }
     
@@ -98,17 +98,20 @@ public class Player {
     //moves player G Compound to player x and player y
     public void moveX(int val) {
     	if(val > 0) {
+
+    		if(facingRight == true) {
+    			this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+    			this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
+    		}
+    		this.facingRight = false;
+    	}
+    	if(val < 0) {
     		if(facingRight == false) {
-        		//this.currentlyEquippedItem.getItemBody().rotate(90);
+    			this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+    			this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
     		this.facingRight = true;
 
-    	}
-    	if(val < 0) {
-    		if(facingRight == true) {
-        		//this.currentlyEquippedItem.getItemBody().rotate(90);
-    		}
-    		this.facingRight = false;
 
     	}
         this.x += val;
