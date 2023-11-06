@@ -6,7 +6,6 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
-import items.*;
 
 public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer(1, this);;

@@ -1,9 +1,6 @@
 package structures;
 
-import java.awt.Color;
-
 import acm.graphics.GImage;
-import acm.graphics.GOval;
 import game.Structure;
 
 public class grassyBiomeRegularTree extends Structure{
