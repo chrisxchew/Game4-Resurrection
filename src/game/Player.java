@@ -59,7 +59,7 @@ public class Player {
     }
     public boolean collidingWithEnemy(Enemy e) {
         if (
-            e.getY() > this.y-25 
+            e.getY() > this.y-75 
             && e.getY() < this.y + 75
         ) {
             if ((e.getX() > this.x + 50 
