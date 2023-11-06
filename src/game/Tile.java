@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import structures.Rock;
 import structures.grassyBiomeRegularTree;
+import structures.tree1;
 import acm.graphics.*;
 import enemy.EnemyRect;
 public class Tile {
@@ -68,6 +69,16 @@ public class Tile {
             if (rnd.nextInt(100) == 5) {
             	if(biome.getTemp() > 21) {
                     grassyBiomeRegularTree tree = new grassyBiomeRegularTree(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(tree);
+                    for (GObject obj: tree.getObjects()) {
+                        objects.add(obj);
+                    }
+            	}
+
+            }
+            if (rnd.nextInt(100) == 5) {
+            	if(biome.getTemp() == 50) {
+            		tree1 tree = new tree1(rnd.nextInt(1000), rnd.nextInt(500));
                     structures.add(tree);
                     for (GObject obj: tree.getObjects()) {
                         objects.add(obj);
