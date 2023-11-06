@@ -85,7 +85,7 @@ public class Player {
     		
     		for(Enemy e : game.getCurrentTile().getEnemies()) {
     			if(collidingWithEnemy(e)) {
-     				e.knockback(-7);
+     				e.knockback(-5);
      				e.setHealth(e.getHealth()-1);
      				
     			}
