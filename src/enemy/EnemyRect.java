@@ -2,7 +2,6 @@ package enemy;
 
 import java.awt.Color;
 
-import acm.graphics.GPolygon;
 import acm.graphics.GRect;
 import game.Enemy;
 
