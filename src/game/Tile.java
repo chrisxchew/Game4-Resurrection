@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.Rock;
+import structures.grassyBiomeRegularTree;
+import structures.tree1;
 import acm.graphics.*;
+import enemy.EnemyRect;
 public class Tile {
     int screenWidth;
     int screenHeight;
@@ -41,9 +44,13 @@ public class Tile {
             }
         }
         for (int i = 0; i < 10; i++) {
-            if (r.nextInt(100) < 20) {
+            if (r.nextInt(500) < 20) {
                 Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
                 enemies.add(e);
+            }
+            if (r.nextInt(500) < 20) {
+                EnemyRect e2 = new EnemyRect(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
+                enemies.add(e2);
             }
         }
         generateStrutures();
@@ -52,12 +59,32 @@ public class Tile {
     public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
-            if (rnd.nextInt(50) == 5) {
+            if (rnd.nextInt(100) == 5) {
                 Rock rock = new Rock(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(rock);
                 for (GObject obj: rock.getObjects()) {
                     objects.add(obj);
                 }
+            }
+            if (rnd.nextInt(100) == 5) {
+            	if(biome.getTemp() > 21) {
+                    grassyBiomeRegularTree tree = new grassyBiomeRegularTree(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(tree);
+                    for (GObject obj: tree.getObjects()) {
+                        objects.add(obj);
+                    }
+            	}
+
+            }
+            if (rnd.nextInt(100) == 5) {
+            	if(biome.getTemp() == 50) {
+            		tree1 tree = new tree1(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(tree);
+                    for (GObject obj: tree.getObjects()) {
+                        objects.add(obj);
+                    }
+            	}
+
             }
         }
     }

@@ -21,6 +21,8 @@ public class Player {
     private Item currentlyEquippedItem;
     private Inventory inventory;
     private boolean facingRight = false;
+    GRect collisionRect;
+    GRect collisionRect2;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
@@ -28,12 +30,23 @@ public class Player {
         GOval oval = new GOval(50, 50);
         oval.setFillColor(Color.black);
         oval.setFilled(true);
-        Item item = new Sword();
-        this.currentlyEquippedItem = item;
+        for(int i =0; i < 20; i ++) {
+            Item item = new Sword1();
+            this.inventory.getInventory().add(item);
+            this.currentlyEquippedItem = item;
+        }
+
+
+
         playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         
 
+        collisionRect = new GRect(50,50);
+        collisionRect2 = new GRect(50,50);
+        collisionRect.move(50, 0);
+        collisionRect2.move(-50, 0);
+        
         playerGCompound.setLocation(spawnx, spawny);
         this.x = spawnx;
         this.y = spawny;
@@ -44,10 +57,41 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
     }
-    
-    public void attackPressed() {
-    	if(this.getCurrentlyEquippedItem() instanceof Sword) {
-    		((Sword) this.getCurrentlyEquippedItem()).attackEvent();
+    public boolean collidingWithEnemy(Enemy e) {
+        if (
+            e.getY() > this.y-75 
+            && e.getY() < this.y + 75
+        ) {
+            if ((e.getX() > this.x + 50 
+            		&&
+                    e.getX() < this.x + 100) ||
+                (e.getX() > this.x - 50 &&
+                    e.getX() < this.x)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean isFacingRight() {
+		return facingRight;
+	}
+	public void setFacingRight(boolean facingRight) {
+		this.facingRight = facingRight;
+	}
+	public void attackPressed(Game game) {
+    	if(this.getCurrentlyEquippedItem() instanceof Melee) {
+    		SwordSlash slash = new SwordSlash(-100,0, this);
+    		this.playerGCompound.add(slash.getImage());
+    		
+    		for(Enemy e : game.getCurrentTile().getEnemies()) {
+    			if(collidingWithEnemy(e)) {
+     				e.knockback(-5);
+     				e.setHealth(e.getHealth()-1);
+     				
+    			}
+    		}
+    		
+    		((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
     	}
     }
     
@@ -61,22 +105,24 @@ public class Player {
     public void moveX(int val) {
     	if(val > 0) {
     		if(facingRight == false) {
-        		//this.getPlayerGCompound().rotate(180);
+    			this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+    			this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
     		this.facingRight = true;
-
     	}
     	if(val < 0) {
     		if(facingRight == true) {
-        		//this.getPlayerGCompound().rotate(180);
+    			this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+    			this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
     		this.facingRight = false;
+
 
     	}
         this.x += val;
         playerGCompound.move(val, 0);
     }
-
+    
     public void moveY(int val) {
         this.y += val;
         playerGCompound.move(0, val);
