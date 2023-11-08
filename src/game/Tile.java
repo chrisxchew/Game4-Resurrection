@@ -6,6 +6,7 @@ import java.util.Random;
 import structures.Rock;
 import structures.grassyBiomeRegularTree;
 import structures.tree1;
+import structures.Castle;
 import acm.graphics.*;
 import enemy.EnemyRect;
 public class Tile {
@@ -74,7 +75,13 @@ public class Tile {
                         objects.add(obj);
                     }
             	}
-
+            }
+            if (rnd.nextInt(100) == 5) {
+                Castle castle = new Castle(200, 60);
+                structures.add(castle);
+                for (GObject obj: castle.getObjects()) {
+                    objects.add(obj);
+                }
             }
             if (rnd.nextInt(100) == 5) {
             	if(biome.getTemp() == 50) {
