@@ -29,6 +29,7 @@ public class Main extends GraphicsProgram implements ActionListener{
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
+        add(game.getPlayer().getHealthPoints().getHealthPointsIcons());
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
             game.getPlayer().getTile().get(1)));
         add(tileLabel);

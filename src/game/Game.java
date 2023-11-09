@@ -4,7 +4,7 @@ public class Game {
     private Player player;
     private int screenWidth;
     private int screenHeight;
-    private Dictionary < List < Integer > , Tile > tiles = new Hashtable < > ();
+    private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
     public Game(int screenWidth, int screenHeight) {
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
         this.screenWidth = screenWidth;
@@ -59,10 +59,10 @@ public class Game {
             System.out.println("moveTiles function usage: (0,1), (1,0)");
         }
     }
-    public Dictionary < List < Integer > , Tile > getTiles() {
+    public Map < List < Integer > , Tile > getTiles() {
         return tiles;
     }
-    public void setTiles(Dictionary < List < Integer > , Tile > tiles) {
+    public void setTiles(Map < List < Integer > , Tile > tiles) {
         this.tiles = tiles;
     }
 }

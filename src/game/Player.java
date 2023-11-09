@@ -6,7 +6,7 @@ import java.util.List;
 
 import acm.graphics.*;
 import items.*;
-import userinterface.Inventory;
+import userinterface.*;
 
 public class Player {
 
@@ -21,6 +21,7 @@ public class Player {
     private Item currentlyEquippedItem;
     private Inventory inventory;
     private boolean facingRight = false;
+    private HealthPoints healthPoints;
     GRect collisionRect;
     GRect collisionRect2;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
@@ -35,7 +36,7 @@ public class Player {
             this.inventory.getInventory().add(item);
             this.currentlyEquippedItem = item;
         }
-
+        this.healthPoints = new HealthPoints();
 
 
         playerGCompound.add(oval);
@@ -213,5 +214,9 @@ public class Player {
 	public void setCurrentlyEquippedItem(Item currentlyEquippedItem) {
 		this.currentlyEquippedItem = currentlyEquippedItem;
 	}
+
+    public HealthPoints getHealthPoints() {
+        return healthPoints;
+    }
 
 }
