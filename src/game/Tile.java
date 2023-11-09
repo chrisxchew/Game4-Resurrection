@@ -16,6 +16,7 @@ public class Tile {
     private ArrayList < GObject > objects = new ArrayList < GObject > ();
     private ArrayList < Structure > structures = new ArrayList < Structure > ();
     private ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
+    
     public ArrayList < GObject > getObjects() {
         return objects;
     }
