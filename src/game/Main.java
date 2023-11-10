@@ -92,7 +92,7 @@ public class Main extends GraphicsProgram implements ActionListener{
     		remove(this.game.getPlayer().getInventory().getGraphicalInterface());
     		inventoryDisplayed = false;
     		canChangeInventoryDisplayed = false;
-                        this.game.getPlayer().setMovementEnabled(true);
+            this.game.getPlayer().setMovementEnabled(true);
     	}else if(canChangeInventoryDisplayed){
             add(this.game.getPlayer().getInventory().getGraphicalInterface());
             inventoryDisplayed = true;
