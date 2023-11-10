@@ -43,9 +43,10 @@ public class Main extends GraphicsProgram implements ActionListener{
         
         runTimer.start();
     }
-    
+    int ticknumber = 0;
     @Override
     public void actionPerformed(ActionEvent e) {
+            ticknumber++;
         	if (checkTileCrossing()) {
                 removeAll();
                 drawTiles();
@@ -65,20 +66,31 @@ public class Main extends GraphicsProgram implements ActionListener{
             if(this.floatingItem != null) {
             	this.floatingItem.getItemBody().setLocation(mouseX, mouseY);
             }
+            if(ticknumber % 10 == 0){
+            this.game.getPlayer().tickAnimation();
+            }
+            if(this.game.getPlayer().getAttackCooldown() > 0){
+                this.game.getPlayer().setAttackCooldown(this.game.getPlayer().getAttackCooldown()-1);
+            }
+
         
     }
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
             game.getPlayer().moveY(-5);
+            this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("s")) {
             game.getPlayer().moveY(5);
+            this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("a")) {
             game.getPlayer().moveX(-5);
+            this.game.getPlayer().setMovingX(true);
         }
         if (key_manager.contains("d")) {
             game.getPlayer().moveX(5);
+            this.game.getPlayer().setMovingX(true);
         }
         if(key_manager.contains("e")) {
         	this.game.getPlayer().getInventory().updateGraphicalInterface();
@@ -213,15 +225,19 @@ public class Main extends GraphicsProgram implements ActionListener{
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_W) {
             key_manager.remove("w");
+            this.game.getPlayer().setMovingY(false);
         }
         if (keyCode == KeyEvent.VK_S) {
             key_manager.remove("s");
+            this.game.getPlayer().setMovingY(false);
         }
         if (keyCode == KeyEvent.VK_A) {
             key_manager.remove("a");
+            this.game.getPlayer().setMovingX(false);
         }
         if (keyCode == KeyEvent.VK_D) {
             key_manager.remove("d");
+            this.game.getPlayer().setMovingX(false);
         }
         if (keyCode == KeyEvent.VK_E) {
             key_manager.remove("e");

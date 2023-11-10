@@ -24,6 +24,12 @@ public class Player {
     private HealthPoints healthPoints;
     private boolean movementEnabled = true;
     private boolean facingDown = true;
+    private boolean movingX = false;
+    private boolean movingY = false;
+    //0 is up, 1 is down, 2 is left, 3 is right
+    int facing = 0;
+
+
     GRect collisionRect;
     GRect collisionRect2;
     private GImage playerBody;
@@ -89,21 +95,31 @@ public class Player {
 	public void setFacingRight(boolean facingRight) {
 		this.facingRight = facingRight;
 	}
+    private int attackCooldown = 0;
+    public void setAttackCooldown(int attackCooldown) {
+        this.attackCooldown = attackCooldown;
+    }
+    public int getAttackCooldown() {
+        return attackCooldown;
+    }
 	public void attackPressed(Game game) {
-    	if(this.getCurrentlyEquippedItem() instanceof Melee) {
-    		SwordSlash slash = new SwordSlash(-100,0, this);
-    		this.playerGCompound.add(slash.getImage());
-    		
-    		for(Enemy e : game.getCurrentTile().getEnemies()) {
-    			if(collidingWithEnemy(e)) {
-     				e.knockback(-5);
-     				e.setHealth(e.getHealth()-1);
-     				
-    			}
-    		}
-    		
-    		((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
-    	}
+        if(attackCooldown == 0){
+            if(this.getCurrentlyEquippedItem() instanceof Melee) {
+                SwordSlash slash = new SwordSlash(-100,0, this);
+                this.playerGCompound.add(slash.getImage());
+                attackCooldown = 25;
+                for(Enemy e : game.getCurrentTile().getEnemies()) {
+                    if(collidingWithEnemy(e)) {
+                        e.knockback(-5);
+                        e.setHealth(e.getHealth()-1);
+                        
+                    }
+                }
+                
+                ((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
+            }
+        }
+
     }
     
     public GPoint getPlayerCenter() {
@@ -111,30 +127,33 @@ public class Player {
     	output.setLocation(this.x+(playerWidth/2), this.y+(playerHeight/2));
     	return output;
     }
-    
+    public void changeFacingRightAnimation(boolean isFacingRight){
+        if(isFacingRight == true) {
+                    this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+                    this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
+                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40,-15);
+
+                    facing = 3;
+                    this.playerGCompound.add(playerBody);
+                }
+        if(isFacingRight == false) {
+                    this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+                    this.getCurrentlyEquippedItem().getItemBody().setLocation(-40,-15);
+                    this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
+
+                    facing = 2;
+                    this.playerGCompound.add(playerBody);
+                }
+    }
     //moves player G Compound to player x and player y
     public void moveX(int val) {
         if(movementEnabled){
             if(val > 0) {
-                if(facingRight == false) {
-                    this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
-                    this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
-                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40,-15);
-                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceRight.png");
-                    this.playerBody.scale(5);
-                    this.playerGCompound.add(playerBody);
-                }
+                changeFacingRightAnimation(facingRight);
                 this.facingRight = true;
             }
             if(val < 0) {
-                if(facingRight == true) {
-                    this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
-                    this.getCurrentlyEquippedItem().getItemBody().setLocation(-40,-15);
-                    this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
-                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceLeft.png");
-                    this.playerBody.scale(5);
-                    this.playerGCompound.add(playerBody);
-                }
+                changeFacingRightAnimation(facingRight);
                 this.facingRight = false;
 
 
@@ -148,19 +167,29 @@ public class Player {
         if(movementEnabled){
             if(val > 0) {
                 if(facingDown == false) {
-                    this.playerGCompound.remove(playerBody);
-                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceFront.png");
-                    this.playerBody.scale(5);
-                    this.playerGCompound.add(playerBody);
+                    if(!movingX){
+                        this.playerGCompound.remove(playerBody);
+                        this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceFront.png");
+                        facing = 1;
+                        this.playerGCompound.add(playerBody);
+                    }else{
+                        changeFacingRightAnimation(facingRight);
+                    }
+
                 }
                 this.facingDown = true;
             }
-            if(val < 0) {
+            else if(val < 0) {
                 if(facingDown == true) {
-                    this.playerGCompound.remove(playerBody);
-                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceBack.png");
-                    this.playerBody.scale(5);
-                    this.playerGCompound.add(playerBody);
+                    if(!movingX){
+                        this.playerGCompound.remove(playerBody);
+                        this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceBack.png");
+                        facing = 0;
+                        this.playerGCompound.add(playerBody);
+                    }else{
+                        changeFacingRightAnimation(facingRight);
+                    }
+
                 }
                 this.facingDown = false;
 
@@ -171,7 +200,60 @@ public class Player {
         }
 
     }
-    
+    int i = 0;
+    public void tickAnimation(){
+        i++;
+        if(facing == 0){
+            if(!movingY){
+                this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceBack.png");
+            }else{
+                if(i%3 == 0){
+                    this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceBack.png");
+                }else if(i%3 == 1){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceBack_Walk1.png");
+                }else if(i%3==2){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceBack_Walk2.png");
+                }
+            }
+
+        }else if(facing == 1){
+            if(!movingY){
+                this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceFront.png");
+            }else{
+                if(i%3 == 0){
+                    this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceFront.png");
+                }else if(i%3 == 1){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceFront_Walk1.png");
+                }else if(i%3==2){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceFront_Walk2.png");
+                }
+            }
+        }else if(facing == 2){
+            if(!movingX){
+                this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceLeft.png");
+            }else{
+                if(i%3 == 0){
+                    this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceLeft.png");
+                }else if(i%3 == 1){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceLeft_Walk1.png");
+                }else if(i%3==2){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceLeft_Walk2.png");
+                }
+            }
+        }else if(facing == 3){
+            if(!movingX){
+                this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceRight.png");
+            }else{
+                if(i%3 == 0){
+                    this.playerBody.setImage("media/Characters/Blurby/Blurby_FaceRight.png");
+                }else if(i%3 == 1){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceRight_Walk1.png");
+                }else if(i%3==2){
+                    this.playerBody.setImage("media/Characters/Blurby/Animation/Walk/Blurby_FaceRight_Walk2.png");
+                }
+            }
+        }
+    }
     public double getHealth() {
         return health;
     }
@@ -267,5 +349,10 @@ public class Player {
     public HealthPoints getHealthPoints() {
         return healthPoints;
     }
-
+    public void setMovingX(boolean movingX) {
+        this.movingX = movingX;
+    }
+    public void setMovingY(boolean movingY) {
+        this.movingY = movingY;
+    }
 }
