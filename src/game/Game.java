@@ -4,7 +4,7 @@ public class Game {
     private Player player;
     private int screenWidth;
     private int screenHeight;
-    private Dictionary < List < Integer > , Tile > tiles = new Hashtable < > ();
+    private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
     public Game(int screenWidth, int screenHeight) {
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
         this.screenWidth = screenWidth;
@@ -13,8 +13,7 @@ public class Game {
             0,
             0
         });
-        tiles.put(id, new Tile(screenWidth, screenHeight, id, null));
-        System.out.println(tiles);
+        tiles.put(id, new Tile(screenWidth, screenHeight, id, null, this));
     }
     public Player getPlayer() {
         return player;
@@ -46,7 +45,7 @@ public class Game {
         this.player.setTile(key);
         if (tiles.get(player.getTile()) == null) {
             tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile(),
-                getNeighbors(player.getTile())));
+                getNeighbors(player.getTile()), this));
         }
         if (x == 1) {
             this.player.setX(1);
@@ -60,10 +59,10 @@ public class Game {
             System.out.println("moveTiles function usage: (0,1), (1,0)");
         }
     }
-    public Dictionary < List < Integer > , Tile > getTiles() {
+    public Map < List < Integer > , Tile > getTiles() {
         return tiles;
     }
-    public void setTiles(Dictionary < List < Integer > , Tile > tiles) {
+    public void setTiles(Map < List < Integer > , Tile > tiles) {
         this.tiles = tiles;
     }
 }

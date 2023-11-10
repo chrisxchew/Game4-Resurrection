@@ -1,9 +1,14 @@
 package game;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
+
+import javax.swing.Timer;
+
 import acm.graphics.*;
 import acm.program.*;
-public class Main extends GraphicsProgram {
+
+public class Main extends GraphicsProgram implements ActionListener{
+	Timer runTimer = new Timer( 1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
     private boolean inventoryDisplayed = false;
@@ -24,46 +29,51 @@ public class Main extends GraphicsProgram {
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
+        add(game.getPlayer().getHealthPoints().getHealthPointsIcons());
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
             game.getPlayer().getTile().get(1)));
         add(tileLabel);
         for (Enemy e: game.getCurrentTile().getEnemies()) {
             add(e.getBody());
         }
-
-        while (true) {
-            if (checkTileCrossing()) {
+        
+        runTimer.start();
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        	if (checkTileCrossing()) {
                 removeAll();
                 drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
-                for (Enemy e: game.getCurrentTile().getEnemies()) {
-                    add(e.getBody());
+                for (Enemy enemy: game.getCurrentTile().getEnemies()) {
+                    add(enemy.getBody());
                 }
             }
-            for (Enemy e: game.getCurrentTile().getEnemies()) {
-                e.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
+            for (Enemy enemy: game.getCurrentTile().getEnemies()) {
+            	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
                     .getY(), game.getCurrentTile().getEnemies());
             }
             handleKeyStrokes();
             tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
-            pause(1);
-        }
+        
     }
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-1);
+            game.getPlayer().moveY(-5);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(1);
+            game.getPlayer().moveY(5);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-1);
+            game.getPlayer().moveX(-5);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(1);
+            game.getPlayer().moveX(5);
         }
         if(key_manager.contains("e")) {
+        	this.game.getPlayer().getInventory().updateGraphicalInterface();
         	calculateDisplayingInventory();
         }else {
         	canChangeInventoryDisplayed = true;
@@ -116,7 +126,8 @@ public class Main extends GraphicsProgram {
     }
     @Override
     public void mousePressed(MouseEvent e) {
-    	this.game.getPlayer().attackPressed();
+    	this.game.getPlayer().attackPressed(this.game);
+    	
     }
     @Override
     public void keyPressed(KeyEvent e) {
