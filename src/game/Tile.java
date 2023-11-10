@@ -24,9 +24,11 @@ public class Tile {
     public void setObjects(ArrayList < GObject > objects) {
         this.objects = objects;
     }
-    public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors) {
+    private Game game;
+    public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors, Game game) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        this.game = game;
         Random r = new Random();
         biome = rollBiomes(knownNeighbors);
         for (int i = 0; i < screenWidth / 10; i++) {
@@ -47,11 +49,11 @@ public class Tile {
         }
         for (int i = 0; i < 10; i++) {
             if (r.nextInt(500) < 20) {
-                Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
+                Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50, this.game);
                 enemies.add(e);
             }
             if (r.nextInt(500) < 20) {
-                EnemyRect e2 = new EnemyRect(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50);
+                EnemyRect e2 = new EnemyRect(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50, this.game);
                 enemies.add(e2);
             }
         }

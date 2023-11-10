@@ -14,15 +14,17 @@ public class Enemy implements ActionListener{
 	protected GCompound bodyCompound;
     private double x;
     private double y;
+	protected boolean isDead;
     private int health = 5;
+	protected Game game;
     Timer timer;
     double velocityMultiplier = -2;
     protected boolean unloaded = false;
-    public Enemy(int x, int y) {
+    public Enemy(int x, int y, Game game) {
     	bodyCompound = new GCompound();
     	this.x = x;
     	this.y = y;
-
+		this.game = game;
         addObjectsToCompound(x,y);
     	this.timer = new Timer(10, this);
     }
@@ -76,13 +78,28 @@ public class Enemy implements ActionListener{
 			if(this.bodyCompound.getElement(i) instanceof GPolygon){
 				((GPolygon) this.bodyCompound.getElement(i)).setFillColor(Color.black);	
 			}
-			this.unloaded=true;
 		}
     }
     
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
     	if(!this.unloaded) {
-    		if(this.health <= 0) {
+			if(this.isDead){
+				if(Math.abs(this.x - targetx) < 100 && Math.abs(this.y - targety) < 100){
+					if((this.x - targetx) != 0 ) {
+						moveX(((this.x - targetx)/(Math.abs(this.x - targetx))) * -1);
+					}
+					if((this.y - targety) != 0) {
+						moveY(((this.y - targety)/(Math.abs(this.y - targety))) * -1);
+					}
+				}
+				if(checkCollision(targetx, targety)){
+					this.game.getPlayer().getInventory().addAll(drops);
+					System.out.println(this.game.getPlayer().getInventory().getInventory());
+					this.bodyCompound.removeAll();
+					this.unloaded = true;
+				}
+			}
+    		else if(this.health <= 0) {
     			deathEvent();
 
     		}else {
@@ -96,6 +113,14 @@ public class Enemy implements ActionListener{
 
     	}
     }
+	
+	public boolean checkCollision(double targetx, double targety){
+		//if 25 pixels away from target, return true else return false
+		if(Math.abs(this.x - targetx) < 25 && Math.abs(this.y - targety) < 25){
+			return true;
+		}return false;
+	}
+
 	public boolean isUnloaded() {
 		return unloaded;
 	}

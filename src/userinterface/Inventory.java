@@ -48,8 +48,8 @@ public class Inventory {
 				if(inventory.size()-1 >= (i*10) + j) {
 					if(inventory.get((i*10) + j) != null){
 						GCompound itemtoAdd = (GCompound) (((Item) (inventory.get((i*10) + j))).getItemBody()).clone();
-						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-25-(i*inventoryInterfaceBoxSize));
-						itemtoAdd.scale(0.4);
+						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-20-(i*inventoryInterfaceBoxSize));
+						itemtoAdd.scale(0.3);
 						
 						Interface.add(itemtoAdd);
 					}
@@ -68,5 +68,12 @@ public class Inventory {
 	public GCompound getGraphicalInterface() {
 		return this.Interface;
 	}
-	
+	public void add(Item item) {
+		this.inventory.add(item);
+		this.updateGraphicalInterface();
+	}
+	public void addAll(ArrayList<Item> items) {
+		this.inventory.addAll(items);
+		this.updateGraphicalInterface();
+	}
 }

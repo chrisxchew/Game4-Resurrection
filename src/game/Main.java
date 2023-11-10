@@ -8,7 +8,7 @@ import acm.graphics.*;
 import acm.program.*;
 
 public class Main extends GraphicsProgram implements ActionListener{
-	Timer runTimer = new Timer(1, this);
+	Timer runTimer = new Timer( 1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
     private boolean inventoryDisplayed = false;

@@ -8,6 +8,7 @@ import game.Item;
 
 public class Sword extends Item implements Melee{
 	public Sword() {
+
 		GImage image = new GImage("src/images/swordLeft.png");
 		image.setLocation(image.getLocation().getX()-60,image.getLocation().getY()-30);
 

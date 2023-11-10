@@ -31,7 +31,12 @@ public class Player {
         GOval oval = new GOval(50, 50);
         oval.setFillColor(Color.black);
         oval.setFilled(true);
-        for(int i =0; i < 20; i ++) {
+        for(int i =0; i <10 ; i ++) {
+            Item item = new Cherries();
+            this.inventory.getInventory().add(item);
+            this.currentlyEquippedItem = item;
+        }
+        for(int i =0; i < 10; i ++) {
             Item item = new Sword1();
             this.inventory.getInventory().add(item);
             this.currentlyEquippedItem = item;

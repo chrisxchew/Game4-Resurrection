@@ -13,7 +13,7 @@ public class Game {
             0,
             0
         });
-        tiles.put(id, new Tile(screenWidth, screenHeight, id, null));
+        tiles.put(id, new Tile(screenWidth, screenHeight, id, null, this));
     }
     public Player getPlayer() {
         return player;
@@ -45,7 +45,7 @@ public class Game {
         this.player.setTile(key);
         if (tiles.get(player.getTile()) == null) {
             tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile(),
-                getNeighbors(player.getTile())));
+                getNeighbors(player.getTile()), this));
         }
         if (x == 1) {
             this.player.setX(1);
