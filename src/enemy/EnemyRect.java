@@ -18,7 +18,7 @@ public class EnemyRect extends Enemy{
 		GRect body = new GRect(50,50);
 		body.setFillColor(Color.BLUE);
 		body.setFilled(true);
-		this.bodyCompound.add(body,x,y);
+		this.bodyCompound.add(body,x-25,y-25);
 	}
 	
 	@Override
