@@ -26,6 +26,7 @@ public class Player {
     private boolean facingDown = true;
     private boolean movingX = false;
     private boolean movingY = false;
+    private int selectedHotbarSlot = 0;
     //0 is up, 1 is down, 2 is left, 3 is right
     int facing = 0;
 
@@ -42,17 +43,16 @@ public class Player {
         for(int i =0; i <10 ; i ++) {
             Item item = new Cherries();
             this.inventory.add(item);
-            this.currentlyEquippedItem = item;
         }
         for(int i =0; i < 10; i ++) {
             Item item = new Sword1();
             this.inventory.add(item);
-            this.currentlyEquippedItem = item;
+
         }
         this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
 
-
+        this.currentlyEquippedItem = inventory.getInventory().get(0);
         playerGCompound.add(playerBody);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
@@ -129,21 +129,27 @@ public class Player {
     }
     public void changeFacingRightAnimation(boolean isFacingRight){
         if(isFacingRight == true) {
+                if(this.getCurrentlyEquippedItem() instanceof Melee){
                     this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
                     this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
                     this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40,-15);
+
+                }
 
                     facing = 3;
                     this.playerGCompound.add(playerBody);
                 }
         if(isFacingRight == false) {
+                if(this.getCurrentlyEquippedItem() instanceof Melee){
                     this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
                     this.getCurrentlyEquippedItem().getItemBody().setLocation(-40,-15);
                     this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
 
-                    facing = 2;
-                    this.playerGCompound.add(playerBody);
+
                 }
+                                    facing = 2;
+                    this.playerGCompound.add(playerBody);
+            }
     }
     //moves player G Compound to player x and player y
     public void moveX(int val) {
@@ -263,7 +269,19 @@ public class Player {
     }
     
     
-    
+    public int getSelectedHotbarSlot(){
+        return selectedHotbarSlot;
+    }
+    public void setSelectedHotbarSlot(int selectedHotbarSlot){
+        this.selectedHotbarSlot = selectedHotbarSlot;
+        playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+        if(currentlyEquippedItem instanceof Melee){
+            playerGCompound.remove(this.currentlyEquippedItem.getItemBodyRight());
+        }
+        this.currentlyEquippedItem = this.inventory.getInventory().get(selectedHotbarSlot);
+        playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+
+    }
     //Deals damage to the player, 
     //deducting amount "damage" from the players health
     public void dealDamage(double damage) {

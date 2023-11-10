@@ -33,15 +33,19 @@ public class Main extends GraphicsProgram implements ActionListener{
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-        add(game.getPlayer().getHealthPoints().getHealthPointsIcons());
+
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
             game.getPlayer().getTile().get(1)));
         add(tileLabel);
         for (Enemy e: game.getCurrentTile().getEnemies()) {
             add(e.getBody());
         }
-        
+        drawUI();
         runTimer.start();
+    }
+    public void drawUI(){
+        add(game.getHotbar().getInterface());
+        add(game.getPlayer().getHealthPoints().getHealthPointsIcons());
     }
     int ticknumber = 0;
     @Override
@@ -52,6 +56,7 @@ public class Main extends GraphicsProgram implements ActionListener{
                 drawTiles();
                 add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
+                drawUI();
                 for (Enemy enemy: game.getCurrentTile().getEnemies()) {
                     add(enemy.getBody());
                 }
@@ -102,10 +107,14 @@ public class Main extends GraphicsProgram implements ActionListener{
     public void calculateDisplayingInventory() {
     	if(inventoryDisplayed && canChangeInventoryDisplayed) {
     		remove(this.game.getPlayer().getInventory().getGraphicalInterface());
+            this.game.getHotbar().updateHotbar();
+            add(this.game.getHotbar().getInterface());
     		inventoryDisplayed = false;
     		canChangeInventoryDisplayed = false;
             this.game.getPlayer().setMovementEnabled(true);
     	}else if(canChangeInventoryDisplayed){
+            remove(this.game.getHotbar().getInterface());
+            this.game.getHotbar().updateHotbar();
             add(this.game.getPlayer().getInventory().getGraphicalInterface());
             inventoryDisplayed = true;
             canChangeInventoryDisplayed = false;
@@ -159,6 +168,7 @@ public class Main extends GraphicsProgram implements ActionListener{
                 i.updateGraphicalInterface();
                 remove(floatingItem.getItemBody());
                 this.floatingItem = null;
+                this.game.getHotbar().updateHotbar();
             }else
             if(floatingItem != null && this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) != null){
                 //swap the two items
@@ -169,6 +179,7 @@ public class Main extends GraphicsProgram implements ActionListener{
                 add(floatingItem.getItemBody());
                 this.game.getPlayer().getInventory().remove(temp);
                 this.game.getPlayer().getInventory().updateGraphicalInterface();
+                this.game.getHotbar().updateHotbar();
                 
             }else{
                 this.floatingItem = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
@@ -176,6 +187,8 @@ public class Main extends GraphicsProgram implements ActionListener{
                 i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), null);
                 i.updateGraphicalInterface();
                 add(this.floatingItem.getItemBody());
+                this.game.getHotbar().updateHotbar();
+                
                 }
 
             }
@@ -219,6 +232,16 @@ public class Main extends GraphicsProgram implements ActionListener{
             if (!key_manager.contains("e")) {
                 key_manager.add("e");
             }
+        }
+        //if key is between 0-9 change selected hot bar slot in player
+        //1 is 0 and 0 is 10
+        if(keyCode >= 48 && keyCode <= 57){
+            if(keyCode == 48){
+                keyCode = 58;
+            }
+                this.game.getPlayer().setSelectedHotbarSlot(keyCode-49);
+                game.getHotbar().updateHotbar();
+
         }
     }
     public void keyReleased(KeyEvent e) {

@@ -14,6 +14,7 @@ public class Inventory {
 	private GCompound Interface = new GCompound();
 	private int inventorySize;
 	private int screenHeight;
+	
 	public Inventory(int inventorySize, int screenHeight) {
 		this.screenHeight = screenHeight;
 		this.inventorySize = inventorySize;
@@ -61,6 +62,9 @@ public class Inventory {
 				Interface.add(box);
 			}
 		}
+	}
+	public int getScreenHeight() {
+		return screenHeight;
 	}
 	public ArrayList<Item> getInventory() {
 		return inventory;

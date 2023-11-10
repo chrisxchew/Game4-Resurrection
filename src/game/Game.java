@@ -1,11 +1,14 @@
 package game;
 import java.util.*;
+import userinterface.*;
 public class Game {
     private Player player;
     private int screenWidth;
     private int screenHeight;
     private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
+    private Hotbar hotbar;
     public Game(int screenWidth, int screenHeight) {
+
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -14,6 +17,10 @@ public class Game {
             0
         });
         tiles.put(id, new Tile(screenWidth, screenHeight, id, null, this));
+        hotbar = new Hotbar(player.getInventory(),player);
+    }
+    public Hotbar getHotbar() {
+        return hotbar;
     }
     public Player getPlayer() {
         return player;
