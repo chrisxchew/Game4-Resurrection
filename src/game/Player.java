@@ -23,15 +23,16 @@ public class Player {
     private boolean facingRight = false;
     private HealthPoints healthPoints;
     private boolean movementEnabled = true;
+    private boolean facingDown = true;
     GRect collisionRect;
     GRect collisionRect2;
+    private GImage playerBody;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
         //remove after testing
-        GOval oval = new GOval(50, 50);
-        oval.setFillColor(Color.black);
-        oval.setFilled(true);
+        playerBody = new GImage("media/Characters/Blurby/Blurby_FaceFront.png");
+        playerBody.scale(5);
         for(int i =0; i <10 ; i ++) {
             Item item = new Cherries();
             this.inventory.add(item);
@@ -46,10 +47,10 @@ public class Player {
         this.healthPoints = new HealthPoints();
 
 
-        playerGCompound.add(oval);
+        playerGCompound.add(playerBody);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
-        this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
+        this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500,-15);
         
 
         collisionRect = new GRect(50,50);
@@ -118,15 +119,21 @@ public class Player {
                 if(facingRight == false) {
                     this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
                     this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
-                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
+                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40,-15);
+                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceRight.png");
+                    this.playerBody.scale(5);
+                    this.playerGCompound.add(playerBody);
                 }
                 this.facingRight = true;
             }
             if(val < 0) {
                 if(facingRight == true) {
                     this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
-                    this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
+                    this.getCurrentlyEquippedItem().getItemBody().setLocation(-40,-15);
                     this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
+                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceLeft.png");
+                    this.playerBody.scale(5);
+                    this.playerGCompound.add(playerBody);
                 }
                 this.facingRight = false;
 
@@ -139,6 +146,26 @@ public class Player {
     
     public void moveY(int val) {
         if(movementEnabled){
+            if(val > 0) {
+                if(facingDown == false) {
+                    this.playerGCompound.remove(playerBody);
+                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceFront.png");
+                    this.playerBody.scale(5);
+                    this.playerGCompound.add(playerBody);
+                }
+                this.facingDown = true;
+            }
+            if(val < 0) {
+                if(facingDown == true) {
+                    this.playerGCompound.remove(playerBody);
+                    this.playerBody = new GImage("media/Characters/Blurby/Blurby_FaceBack.png");
+                    this.playerBody.scale(5);
+                    this.playerGCompound.add(playerBody);
+                }
+                this.facingDown = false;
+
+
+            }
             this.y += val;
             playerGCompound.move(0, val);
         }

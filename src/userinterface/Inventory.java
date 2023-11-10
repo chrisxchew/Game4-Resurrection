@@ -107,4 +107,7 @@ public class Inventory {
 	public void setSpecificItem(int index, Item item) {
 		this.inventory.set(index, item);
 	}
+	public GCompound getInterface(){
+		return this.Interface;
+	}
 }
