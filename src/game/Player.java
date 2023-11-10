@@ -46,6 +46,8 @@ public class Player {
 
         playerGCompound.add(oval);
         playerGCompound.add(currentlyEquippedItem.getItemBody());
+        this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
+        this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
         
 
         collisionRect = new GRect(50,50);
@@ -113,12 +115,14 @@ public class Player {
     		if(facingRight == false) {
     			this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
     			this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
+                this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
     		}
     		this.facingRight = true;
     	}
     	if(val < 0) {
     		if(facingRight == true) {
     			this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+                this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
     			this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
     		}
     		this.facingRight = false;

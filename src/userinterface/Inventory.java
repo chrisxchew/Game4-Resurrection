@@ -72,8 +72,24 @@ public class Inventory {
 		this.inventory.add(item);
 		this.updateGraphicalInterface();
 	}
+	public void remove(Item item) {
+		this.inventory.remove(item);
+		this.updateGraphicalInterface();
+	}
 	public void addAll(ArrayList<Item> items) {
 		this.inventory.addAll(items);
 		this.updateGraphicalInterface();
+	}
+	public int getInventorySize() {
+		return inventorySize;
+	}
+	public Item getClickedItem(int x, int y) {
+		int xIndex = x/inventoryInterfaceBoxSize;
+		int yIndex = (screenHeight-y)/inventoryInterfaceBoxSize;
+		try {
+			return this.inventory.get((yIndex*10) + xIndex);
+		}catch(Exception e) {
+			return null;
+		}
 	}
 }
