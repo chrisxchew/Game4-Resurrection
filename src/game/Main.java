@@ -11,8 +11,11 @@ public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer( 1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
+    double mouseX=0;
+    double mouseY=0;
     private boolean inventoryDisplayed = false;
     private boolean canChangeInventoryDisplayed = true;
+    private Item floatingItem;
     Window window = new Window(windowWidth, windowHeight);
     Game game = new Game(windowWidth, windowHeight);
     private ArrayList < String > key_manager = new ArrayList < String > ();
@@ -57,6 +60,10 @@ public class Main extends GraphicsProgram implements ActionListener{
             }
             handleKeyStrokes();
             tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
+
+            if(this.floatingItem != null) {
+            	this.floatingItem.getItemBody().setLocation(mouseX, mouseY);
+            }
         
     }
     public void handleKeyStrokes() {
@@ -101,24 +108,28 @@ public class Main extends GraphicsProgram implements ActionListener{
             game.moveTiles(1, 0);
             tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
                 .getPlayer().getTile().get(1)));
+            this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getX() < 0) {
             game.moveTiles(-1, 0);
             tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
                 .getPlayer().getTile().get(1)));
+            this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() < 0) {
             game.moveTiles(0, 1);
             tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
                 .getPlayer().getTile().get(1)));
+            this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
             game.moveTiles(0, -1);
             tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
                 .getPlayer().getTile().get(1)));
+            this.inventoryDisplayed = false;
             return true;
         } else {
             return false;
@@ -126,8 +137,39 @@ public class Main extends GraphicsProgram implements ActionListener{
     }
     @Override
     public void mousePressed(MouseEvent e) {
-    	this.game.getPlayer().attackPressed(this.game);
+        if(inventoryDisplayed && e.getX() < 250 && e.getY() > 500-(25*this.game.getPlayer().getInventory().getInventorySize()/10)){
+            if(floatingItem != null &&this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) == null){
+                this.game.getPlayer().getInventory().add(floatingItem);
+                remove(floatingItem.getItemBody());
+                this.floatingItem = null;
+            }else
+            if(floatingItem != null && this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) != null){
+                //swap the two items
+                Item temp = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
+                this.game.getPlayer().getInventory().getInventory().set(this.game.getPlayer().getInventory().getInventory().indexOf(temp), this.floatingItem);
+                remove(floatingItem.getItemBody());
+                this.floatingItem = temp;
+                add(floatingItem.getItemBody());
+                this.game.getPlayer().getInventory().remove(temp);
+                this.game.getPlayer().getInventory().updateGraphicalInterface();
+                
+            }else{
+            this.floatingItem = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
+            this.game.getPlayer().getInventory().remove(this.floatingItem);
+            add(this.floatingItem.getItemBody());
+            }
+            
+
+        }else{  
+    	    this.game.getPlayer().attackPressed(this.game);
+        }
+
     	
+    }
+    @Override
+    public void	mouseMoved(MouseEvent e){
+        	this.mouseX = e.getX();
+        	this.mouseY = e.getY();
     }
     @Override
     public void keyPressed(KeyEvent e) {
