@@ -9,7 +9,7 @@ import acm.graphics.GRect;
 import game.Item;
 
 public class Inventory {
-	static int inventoryInterfaceBoxSize = 25;
+	static int inventoryInterfaceBoxSize = 50;
 	private ArrayList<Item> inventory;
 	private GCompound Interface = new GCompound();
 	private int inventorySize;
@@ -18,6 +18,9 @@ public class Inventory {
 		this.screenHeight = screenHeight;
 		this.inventorySize = inventorySize;
 		this.inventory = new ArrayList<Item>();
+		for(int i = 0; i < inventorySize; i++) {
+			inventory.add(null);
+		}
 		for(int i = 0; i < inventorySize/10; i++) {
 			for(int j = 0; j < 10; j++) {
 				Color c = new Color(0, 0, 0, 75);
@@ -41,15 +44,15 @@ public class Inventory {
 		for(int i = 0; i < inventorySize/10; i++) {
 			for(int j = 0; j < 10; j++) {
 				Color c = new Color(0, 0, 0, 75);
-				GRect box = new GRect(j*inventoryInterfaceBoxSize, screenHeight-25-(i*inventoryInterfaceBoxSize), inventoryInterfaceBoxSize, inventoryInterfaceBoxSize);
+				GRect box = new GRect(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize), inventoryInterfaceBoxSize, inventoryInterfaceBoxSize);
 				box.setColor(c);
 				box.setFillColor(c);
 				box.setFilled(true);
 				if(inventory.size()-1 >= (i*10) + j) {
 					if(inventory.get((i*10) + j) != null){
 						GCompound itemtoAdd = (GCompound) (((Item) (inventory.get((i*10) + j))).getItemBody()).clone();
-						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-20-(i*inventoryInterfaceBoxSize));
-						itemtoAdd.scale(0.3);
+						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize));
+						itemtoAdd.scale(0.7);
 						
 						Interface.add(itemtoAdd);
 					}
@@ -69,7 +72,13 @@ public class Inventory {
 		return this.Interface;
 	}
 	public void add(Item item) {
-		this.inventory.add(item);
+		//find first non null item and set it to input item
+		for(int i = 0; i < this.inventory.size(); i++) {
+			if(this.inventory.get(i) == null) {
+				this.inventory.set(i, item);
+				break;
+			}
+		}
 		this.updateGraphicalInterface();
 	}
 	public void remove(Item item) {
@@ -77,7 +86,9 @@ public class Inventory {
 		this.updateGraphicalInterface();
 	}
 	public void addAll(ArrayList<Item> items) {
-		this.inventory.addAll(items);
+		for(Item item: items) {
+			this.add(item);
+		}
 		this.updateGraphicalInterface();
 	}
 	public int getInventorySize() {
@@ -86,10 +97,14 @@ public class Inventory {
 	public Item getClickedItem(int x, int y) {
 		int xIndex = x/inventoryInterfaceBoxSize;
 		int yIndex = (screenHeight-y)/inventoryInterfaceBoxSize;
-		try {
-			return this.inventory.get((yIndex*10) + xIndex);
-		}catch(Exception e) {
-			return null;
-		}
+		return this.inventory.get((yIndex*10) + xIndex);
+	}
+	public int getClickedIndex(int x,int y){
+		int xIndex = x/inventoryInterfaceBoxSize;
+		int yIndex = (screenHeight-y)/inventoryInterfaceBoxSize;
+		return (yIndex*10) + xIndex;
+	}
+	public void setSpecificItem(int index, Item item) {
+		this.inventory.set(index, item);
 	}
 }

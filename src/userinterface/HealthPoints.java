@@ -8,7 +8,7 @@ public class HealthPoints {
         for(int i = 0; i < 5; i++){
             GImage healthPoint = new GImage("media/UI/heart.png");
             healthPoint.setSize(healthPoint.getWidth()*2, healthPoint.getHeight()*2);
-            healthPoint.setLocation(healthPoint.getWidth()*i+275, 500-healthPoint.getHeight());
+            healthPoint.setLocation(1000-healthPoint.getWidth()*(i+1), 500-healthPoint.getHeight());
             healthPointsIcons.add(healthPoint);
         }
     }
