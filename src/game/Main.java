@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
+import userinterface.Inventory;
 
 public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer( 1, this);
@@ -91,10 +92,12 @@ public class Main extends GraphicsProgram implements ActionListener{
     		remove(this.game.getPlayer().getInventory().getGraphicalInterface());
     		inventoryDisplayed = false;
     		canChangeInventoryDisplayed = false;
+            this.game.getPlayer().setMovementEnabled(true);
     	}else if(canChangeInventoryDisplayed){
             add(this.game.getPlayer().getInventory().getGraphicalInterface());
             inventoryDisplayed = true;
             canChangeInventoryDisplayed = false;
+            this.game.getPlayer().setMovementEnabled(false);
     	}
     }
     public void drawTiles() {
@@ -137,9 +140,11 @@ public class Main extends GraphicsProgram implements ActionListener{
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        if(inventoryDisplayed && e.getX() < 250 && e.getY() > 500-(25*this.game.getPlayer().getInventory().getInventorySize()/10)){
+        Inventory i = this.game.getPlayer().getInventory();
+        if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*this.game.getPlayer().getInventory().getInventorySize()/10)){
             if(floatingItem != null &&this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) == null){
-                this.game.getPlayer().getInventory().add(floatingItem);
+                i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), floatingItem);
+                i.updateGraphicalInterface();
                 remove(floatingItem.getItemBody());
                 this.floatingItem = null;
             }else
@@ -154,9 +159,13 @@ public class Main extends GraphicsProgram implements ActionListener{
                 this.game.getPlayer().getInventory().updateGraphicalInterface();
                 
             }else{
-            this.floatingItem = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
-            this.game.getPlayer().getInventory().remove(this.floatingItem);
-            add(this.floatingItem.getItemBody());
+                this.floatingItem = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
+                if(floatingItem != null){
+                i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), null);
+                i.updateGraphicalInterface();
+                add(this.floatingItem.getItemBody());
+                }
+
             }
             
 

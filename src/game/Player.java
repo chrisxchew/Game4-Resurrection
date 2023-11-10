@@ -22,6 +22,7 @@ public class Player {
     private Inventory inventory;
     private boolean facingRight = false;
     private HealthPoints healthPoints;
+    private boolean movementEnabled = true;
     GRect collisionRect;
     GRect collisionRect2;
     public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
@@ -33,14 +34,15 @@ public class Player {
         oval.setFilled(true);
         for(int i =0; i <10 ; i ++) {
             Item item = new Cherries();
-            this.inventory.getInventory().add(item);
+            this.inventory.add(item);
             this.currentlyEquippedItem = item;
         }
         for(int i =0; i < 10; i ++) {
             Item item = new Sword1();
-            this.inventory.getInventory().add(item);
+            this.inventory.add(item);
             this.currentlyEquippedItem = item;
         }
+        this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
 
 
@@ -111,31 +113,36 @@ public class Player {
     
     //moves player G Compound to player x and player y
     public void moveX(int val) {
-    	if(val > 0) {
-    		if(facingRight == false) {
-    			this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
-    			this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
-                this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
-    		}
-    		this.facingRight = true;
-    	}
-    	if(val < 0) {
-    		if(facingRight == true) {
-    			this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
-                this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
-    			this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
-    		}
-    		this.facingRight = false;
+        if(movementEnabled){
+            if(val > 0) {
+                if(facingRight == false) {
+                    this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+                    this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
+                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(30,-15);
+                }
+                this.facingRight = true;
+            }
+            if(val < 0) {
+                if(facingRight == true) {
+                    this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+                    this.getCurrentlyEquippedItem().getItemBody().setLocation(-50,-15);
+                    this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
+                }
+                this.facingRight = false;
 
 
-    	}
-        this.x += val;
-        playerGCompound.move(val, 0);
+            }
+            this.x += val;
+            playerGCompound.move(val, 0);
+        }
     }
     
     public void moveY(int val) {
-        this.y += val;
-        playerGCompound.move(0, val);
+        if(movementEnabled){
+            this.y += val;
+            playerGCompound.move(0, val);
+        }
+
     }
     
     public double getHealth() {
@@ -211,6 +218,12 @@ public class Player {
 	public void setPlayerWidth(int playerWidth) {
 		this.playerWidth = playerWidth;
 	}
+    public boolean isMovementEnabled() {
+        return movementEnabled;
+    }
+    public void setMovementEnabled(boolean movementEnabled) {
+        this.movementEnabled = movementEnabled;
+    }
 
 	public Inventory getInventory() {
 		return inventory;
