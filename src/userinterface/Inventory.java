@@ -49,6 +49,11 @@ public class Inventory {
 				box.setColor(c);
 				box.setFillColor(c);
 				box.setFilled(true);
+				//make the first 10 boxes a darker shade of grey
+				if(i == 0) {
+					box.setColor(new Color(0, 0, 0, 150));
+					box.setFillColor(new Color(0, 0, 0, 150));
+				}
 				if(inventory.size()-1 >= (i*10) + j) {
 					if(inventory.get((i*10) + j) != null){
 						GCompound itemtoAdd = (GCompound) (((Item) (inventory.get((i*10) + j))).getItemBody()).clone();

@@ -38,7 +38,9 @@ public class Enemy implements ActionListener{
         body.setFillColor(Color.red);
         body.setFilled(true);
         
-        this.bodyCompound.add(body,x,y);
+		GImage bodyImage = new GImage("media/Characters/DoritoSV/DoritoSV_FaceFront.png");
+		bodyImage.scale(4);
+        this.bodyCompound.add(bodyImage,x,y);
     }
     public GObject getBody() {
         return bodyCompound;

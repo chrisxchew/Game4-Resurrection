@@ -127,6 +127,9 @@ public class Player {
     	output.setLocation(this.x+(playerWidth/2), this.y+(playerHeight/2));
     	return output;
     }
+    public void updateMeeleItem(boolean isFacingRight){
+
+    }
     public void changeFacingRightAnimation(boolean isFacingRight){
         if(isFacingRight == true) {
                 if(this.getCurrentlyEquippedItem() instanceof Melee){
@@ -147,7 +150,7 @@ public class Player {
 
 
                 }
-                                    facing = 2;
+                    facing = 2;
                     this.playerGCompound.add(playerBody);
             }
     }
@@ -161,8 +164,6 @@ public class Player {
             if(val < 0) {
                 changeFacingRightAnimation(facingRight);
                 this.facingRight = false;
-
-
             }
             this.x += val;
             playerGCompound.move(val, 0);

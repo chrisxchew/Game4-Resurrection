@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import acm.graphics.GObject;
 
-public class Structure {
+public abstract class Structure {
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
 	private int x;
 	private int y;

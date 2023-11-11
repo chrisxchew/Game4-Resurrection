@@ -241,7 +241,7 @@ public class Main extends GraphicsProgram implements ActionListener{
             }
                 this.game.getPlayer().setSelectedHotbarSlot(keyCode-49);
                 game.getHotbar().updateHotbar();
-
+                game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
     }
     public void keyReleased(KeyEvent e) {
