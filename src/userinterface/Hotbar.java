@@ -44,10 +44,12 @@ public class Hotbar {
 
 
         for(int i = 0; i < 10; i++){
-            GObject j = (GObject) inventory.getInventory().get(i).getItemBody().clone();    
-            j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
-            j.scale(0.7);
-            Interface.add(j);
+                if(inventory.getInventory().get(i) != null){
+                GObject j = (GObject) inventory.getInventory().get(i).getItemBody().clone();    
+                j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
+                j.scale(0.7);
+                Interface.add(j);
+            }
         }
     }
     public GCompound getInterface(){

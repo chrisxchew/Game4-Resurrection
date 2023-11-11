@@ -11,7 +11,6 @@ public class Sword extends Item implements Melee{
 
 		GImage image = new GImage("src/images/swordLeft.png");
 		image.setLocation(image.getLocation().getX()-60,image.getLocation().getY()-30);
-
 		image.setSize(75,75);
 		this.getItemBody().add(image);
 	}
