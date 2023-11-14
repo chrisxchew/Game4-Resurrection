@@ -6,9 +6,9 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
+import userinterface.Hotbar;
 import userinterface.Inventory;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer( 1, this);
@@ -35,15 +35,17 @@ public class Main extends GraphicsProgram implements ActionListener{
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-
         tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
             game.getPlayer().getTile().get(1)));
         add(tileLabel);
+        addEnemySprites();
+        drawUI();
+        runTimer.start();
+    }
+    public void addEnemySprites(){
         for (Enemy e: game.getCurrentTile().getEnemies()) {
             add(e.getBody());
         }
-        drawUI();
-        runTimer.start();
     }
     public void drawUI(){
         add(game.getHotbar().getInterface());
@@ -161,46 +163,45 @@ public class Main extends GraphicsProgram implements ActionListener{
             return false;
         }
     }
-    @Override
-    public void mousePressed(MouseEvent e) {
+    public void checkInventoryInteraction(MouseEvent e){
         Inventory i = this.game.getPlayer().getInventory();
-        if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*this.game.getPlayer().getInventory().getInventorySize()/10)){
-            if(floatingItem != null &&this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) == null){
+        Hotbar h = this.game.getHotbar();
+        if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*i.getInventorySize()/10)){
+            if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) == null){
                 i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), floatingItem);
                 i.updateGraphicalInterface();
                 remove(floatingItem.getItemBody());
                 this.floatingItem = null;
                 this.game.getHotbar().updateHotbar();
             }else
-            if(floatingItem != null && this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY()) != null){
+            if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
                 //swap the two items
-                Item temp = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
-                this.game.getPlayer().getInventory().getInventory().set(this.game.getPlayer().getInventory().getInventory().indexOf(temp), this.floatingItem);
+                Item temp = i.getClickedItem(e.getX(), e.getY());
+                i.getInventory().set(i.getInventory().indexOf(temp), this.floatingItem);
                 remove(floatingItem.getItemBody());
                 this.floatingItem = temp;
                 add(floatingItem.getItemBody());
-                this.game.getPlayer().getInventory().remove(temp);
-                this.game.getPlayer().getInventory().updateGraphicalInterface();
-                this.game.getHotbar().updateHotbar();
+                i.remove(temp);
+                i.updateGraphicalInterface();
+                h.updateHotbar();
                 
             }else{
-                this.floatingItem = this.game.getPlayer().getInventory().getClickedItem(e.getX(), e.getY());
+                this.floatingItem = i.getClickedItem(e.getX(), e.getY());
                 if(floatingItem != null){
                 i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), null);
                 i.updateGraphicalInterface();
                 add(this.floatingItem.getItemBody());
-                this.game.getHotbar().updateHotbar();
+                h.updateHotbar();
                 
                 }
 
             }
-            
-
-        }else{  
-    	    this.game.getPlayer().attackPressed(this.game);
         }
-
-    	
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        checkInventoryInteraction(e);
+    	this.game.getPlayer().attackPressed(this.game);
     }
     @Override
     public void	mouseMoved(MouseEvent e){
