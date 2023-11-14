@@ -94,7 +94,7 @@ public class Tile {
                 addObjects(objects, castle.getObjects());
             }
             if (percentChance(1)) {
-                iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500);
+                iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(hill);
                 addObjects(objects, hill.getObjects());
             }
