@@ -1,9 +1,7 @@
 package enemy;
 
-import java.awt.Color;
 
 import acm.graphics.GImage;
-import acm.graphics.GRect;
 import game.*;
 import items.Cherries;
 public class EnemyRect extends Enemy{
