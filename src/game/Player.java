@@ -48,6 +48,8 @@ public class Player {
             this.inventory.add(item);
 
         }
+        FireStaff staff = new FireStaff();
+        this.inventory.add(staff);
         this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
 
