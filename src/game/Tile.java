@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import structures.Rock;
+import structures.boulder_1;
 import structures.grassyBiomeRegularTree;
 import structures.tree1;
 import structures.Castle;
@@ -64,7 +64,7 @@ public class Tile {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
             if (rnd.nextInt(100) == 5) {
-                Rock rock = new Rock(rnd.nextInt(1000), rnd.nextInt(500));
+                boulder_1 rock = new boulder_1(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(rock);
                 for (GObject obj: rock.getObjects()) {
                     objects.add(obj);

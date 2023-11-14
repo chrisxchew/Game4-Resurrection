@@ -275,12 +275,18 @@ public class Player {
     }
     public void setSelectedHotbarSlot(int selectedHotbarSlot){
         this.selectedHotbarSlot = selectedHotbarSlot;
-        playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+        if(this.currentlyEquippedItem != null){
+            playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+        }
+
         if(currentlyEquippedItem instanceof Melee){
             playerGCompound.remove(this.currentlyEquippedItem.getItemBodyRight());
         }
         this.currentlyEquippedItem = this.inventory.getInventory().get(selectedHotbarSlot);
-        playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+        if(this.currentlyEquippedItem != null){
+            playerGCompound.add(this.currentlyEquippedItem.getItemBody());
+        }
+
 
     }
     //Deals damage to the player, 
