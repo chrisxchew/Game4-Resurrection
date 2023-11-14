@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import acm.graphics.*;
 import game.Enemy;
+import game.Game;
 import game.Item;
 
 public class FireStaff extends Item implements Ranged{
@@ -19,7 +20,10 @@ public class FireStaff extends Item implements Ranged{
 	}
 
 	@Override
-	public void attackEvent(ArrayList<Enemy> enemies) {
-		
+	public void attackEvent(ArrayList<Enemy> enemies, boolean isRight, double x, double y, Game game) {
+		Fireball fireball = new Fireball(x, y, isRight);
+		game.getProjectiles().add(fireball);
+		game.getGraphicsProgram().add(fireball.getImage());
 	}
 }
+	

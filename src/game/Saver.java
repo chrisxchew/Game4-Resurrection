@@ -31,8 +31,6 @@ public class Saver {
     }
 
     public Game Load(String saveFile) {
-        Game output = new Game(windowWidth, windowHeight);
-        output.setTiles(null);
         return null;
 
     }

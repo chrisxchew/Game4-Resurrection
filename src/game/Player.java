@@ -118,6 +118,15 @@ public class Player {
 
                 ((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
             }
+            if(this.getCurrentlyEquippedItem() instanceof Ranged){
+                ((Ranged) this.getCurrentlyEquippedItem()).attackEvent(
+                        game.getCurrentTile().getEnemies(), 
+                        isFacingRight(), 
+                        this.getPlayerCenter().getX(), 
+                        this.getPlayerCenter().getY(), 
+                        game
+                    );
+            }
         }
 
     }
@@ -132,7 +141,7 @@ public class Player {
     }
     public void changeFacingRightAnimation(boolean isFacingRight) {
         if (isFacingRight == true) {
-            if (this.getCurrentlyEquippedItem() instanceof Melee) {
+            if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
                 this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
                 this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
                 this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40, -15);
@@ -143,7 +152,7 @@ public class Player {
             this.playerGCompound.add(playerBody);
         }
         if (isFacingRight == false) {
-            if (this.getCurrentlyEquippedItem() instanceof Melee) {
+            if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
                 this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
                 this.getCurrentlyEquippedItem().getItemBody().setLocation(-40, -15);
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());

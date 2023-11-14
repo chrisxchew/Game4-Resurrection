@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
+import items.Projectile;
 import userinterface.Hotbar;
 import userinterface.Inventory;
 import java.awt.event.MouseWheelEvent;
@@ -20,7 +21,7 @@ public class Main extends GraphicsProgram implements ActionListener{
     private boolean canChangeInventoryDisplayed = true;
     private Item floatingItem;
     Window window = new Window(windowWidth, windowHeight);
-    Game game = new Game(windowWidth, windowHeight);
+    Game game = new Game(windowWidth, windowHeight, this);
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
@@ -81,7 +82,10 @@ public class Main extends GraphicsProgram implements ActionListener{
             if(this.game.getPlayer().getAttackCooldown() > 0){
                 this.game.getPlayer().setAttackCooldown(this.game.getPlayer().getAttackCooldown()-1);
             }
-
+            for(Projectile p : this.game.getProjectiles()){
+                p.animate();
+                p.tick();
+            }
         
     }
     public void handleKeyStrokes() {

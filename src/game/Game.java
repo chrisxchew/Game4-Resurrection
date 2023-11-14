@@ -1,14 +1,19 @@
 package game;
 import java.util.*;
+
+import items.Projectile;
 import userinterface.*;
+import acm.program.GraphicsProgram;
 public class Game {
     private Player player;
     private int screenWidth;
     private int screenHeight;
     private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
     private Hotbar hotbar;
-    public Game(int screenWidth, int screenHeight) {
-
+    private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    private GraphicsProgram graphicsProgram;
+    public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram) {
+        this.graphicsProgram = graphicsProgram;
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -18,6 +23,12 @@ public class Game {
         });
         tiles.put(id, new Tile(screenWidth, screenHeight, id, null, this));
         hotbar = new Hotbar(player.getInventory(),player);
+    }
+    public GraphicsProgram getGraphicsProgram() {
+        return graphicsProgram;
+    }  
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
     }
     public Hotbar getHotbar() {
         return hotbar;
