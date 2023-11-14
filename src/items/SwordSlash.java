@@ -30,7 +30,6 @@ public class SwordSlash implements ActionListener{
 			this.image.setLocation(x+100,y);
 			this.image.setImage("media/Items/Weapons/SwordSlash/slash"+ counter + "Right.png");
 		}else {
-
 			this.image.setImage("media/Items/Weapons/SwordSlash/slash"+ counter + ".png");
 		}
 		

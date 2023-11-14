@@ -60,39 +60,43 @@ public class Tile {
         generateStrutures();
         this.key = key;
     }
+    public boolean percentChance(int percent) {
+        Random r = new Random();
+        if (r.nextInt(100) < percent) {
+            return true;
+        }
+        return false;
+    }
+    public void addObjects(ArrayList<GObject> objects, ArrayList<GObject> objectsToAdd){
+        for(GObject obj: objectsToAdd){
+            objects.add(obj);
+        }
+    }
     public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
-            if (rnd.nextInt(100) == 5) {
+            if (percentChance(1)) {
                 boulder_1 rock = new boulder_1(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(rock);
-                for (GObject obj: rock.getObjects()) {
-                    objects.add(obj);
-                }
+                addObjects(objects, rock.getObjects());
             }
-            if (rnd.nextInt(100) == 5) {
+            if (percentChance(1)) {
             	if(biome.getTemp() > 21) {
                     grassyBiomeRegularTree tree = new grassyBiomeRegularTree(rnd.nextInt(1000), rnd.nextInt(500));
                     structures.add(tree);
-                    for (GObject obj: tree.getObjects()) {
-                        objects.add(obj);
-                    }
+                    addObjects(objects, tree.getObjects());
             	}
             }
-            if (rnd.nextInt(100) == 5) {
+            if (percentChance(1)) {
                 Castle castle = new Castle(200, 60);
                 structures.add(castle);
-                for (GObject obj: castle.getObjects()) {
-                    objects.add(obj);
-                }
+                addObjects(objects, castle.getObjects());
             }
-            if (rnd.nextInt(100) == 5) {
+            if (percentChance(1)) {
             	if(biome.getTemp() == 50) {
             		tree1 tree = new tree1(rnd.nextInt(1000), rnd.nextInt(500));
                     structures.add(tree);
-                    for (GObject obj: tree.getObjects()) {
-                        objects.add(obj);
-                    }
+                    addObjects(objects, tree.getObjects());
             	}
 
             }

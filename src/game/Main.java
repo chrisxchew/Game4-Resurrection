@@ -7,6 +7,8 @@ import javax.swing.Timer;
 import acm.graphics.*;
 import acm.program.*;
 import userinterface.Inventory;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer( 1, this);
@@ -243,6 +245,17 @@ public class Main extends GraphicsProgram implements ActionListener{
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+    if (e.isControlDown()) {
+        if (e.getWheelRotation() < 0) {
+            System.out.println("mouse wheel Up");
+        } else {
+            System.out.println("mouse wheel Down");
+        }
+    }
     }
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
