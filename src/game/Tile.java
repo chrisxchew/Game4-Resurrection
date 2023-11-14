@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import structures.boulder_1;
 import structures.grassyBiomeRegularTree;
+import structures.iceBiomeHill;
 import structures.tree1;
 import structures.Castle;
 import acm.graphics.*;
@@ -91,6 +92,11 @@ public class Tile {
                 Castle castle = new Castle(200, 60);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
+            }
+            if (percentChance(1)) {
+                iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500);
+                structures.add(hill);
+                addObjects(objects, hill.getObjects());
             }
             if (percentChance(1)) {
             	if(biome.getTemp() == 50) {
