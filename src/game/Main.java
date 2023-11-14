@@ -84,19 +84,19 @@ public class Main extends GraphicsProgram implements ActionListener{
     }
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-5);
+            game.getPlayer().moveY(-game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(5);
+            game.getPlayer().moveY(game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-5);
+            game.getPlayer().moveX(-game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingX(true);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(5);
+            game.getPlayer().moveX(game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingX(true);
         }
         if(key_manager.contains("e")) {

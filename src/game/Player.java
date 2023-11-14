@@ -71,6 +71,7 @@ public class Player {
         this.tile.set(1, 0);
         playerWidth = 50;
         playerHeight = 50;
+        speed = 5;
     }
     public boolean collidingWithEnemy(Enemy e) {
         if (
@@ -152,7 +153,7 @@ public class Player {
         }
     }
     //moves player G Compound to player x and player y
-    public void moveX(int val) {
+    public void moveX(double val) {
         if (movementEnabled) {
             if (val > 0) {
                 changeFacingRightAnimation(facingRight);
@@ -167,7 +168,7 @@ public class Player {
         }
     }
 
-    public void moveY(int val) {
+    public void moveY(double val) {
         if (movementEnabled) {
             if (val > 0) {
                 if (facingDown == false) {
