@@ -21,6 +21,7 @@ public class EnemyRect extends Enemy{
 	
 	@Override
 	protected void deathEvent() {
+		isDead = true;
 		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
 				this.bodyCompound.getElement(i).setVisible(false);	
 				this.isDead = true;

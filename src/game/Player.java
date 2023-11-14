@@ -136,9 +136,6 @@ public class Player {
         output.setLocation(this.x + (playerWidth / 2), this.y + (playerHeight / 2));
         return output;
     }
-    public void updateMeeleItem(boolean isFacingRight) {
-
-    }
     public void changeFacingRightAnimation(boolean isFacingRight) {
         if (isFacingRight == true) {
             if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
@@ -164,6 +161,10 @@ public class Player {
         }
     }
     //moves player G Compound to player x and player y
+    public void removeItemInHand(){
+                this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
+                this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBody());
+    }
     public void moveX(double val) {
         if (movementEnabled) {
             if (val > 0) {

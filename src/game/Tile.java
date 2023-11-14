@@ -93,10 +93,13 @@ public class Tile {
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
             }
-            if (percentChance(1)) {
-                iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500));
-                structures.add(hill);
-                addObjects(objects, hill.getObjects());
+            if (percentChance(2)) {
+                if(biome.getTemp() < 21){
+                    iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(hill);
+                    addObjects(objects, hill.getObjects());
+                }
+
             }
             if (percentChance(1)) {
             	if(biome.getTemp() == 50) {

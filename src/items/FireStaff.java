@@ -21,9 +21,10 @@ public class FireStaff extends Item implements Ranged{
 
 	@Override
 	public void attackEvent(ArrayList<Enemy> enemies, boolean isRight, double x, double y, Game game) {
-		Fireball fireball = new Fireball(x, y, isRight);
+		Fireball fireball = new Fireball(x, y, isRight, enemies);
 		game.getProjectiles().add(fireball);
 		game.getGraphicsProgram().add(fireball.getImage());
 	}
+	
 }
 	

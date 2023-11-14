@@ -245,23 +245,15 @@ public class Main extends GraphicsProgram implements ActionListener{
         if(keyCode >= 48 && keyCode <= 57){
             if(keyCode == 48){
                 keyCode = 58;
-            }
+            }   
+                this.game.getPlayer().removeItemInHand();
                 this.game.getPlayer().setSelectedHotbarSlot(keyCode-49);
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
     }
 
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e) {
-    if (e.isControlDown()) {
-        if (e.getWheelRotation() < 0) {
-            System.out.println("mouse wheel Up");
-        } else {
-            System.out.println("mouse wheel Down");
-        }
-    }
-    }
+
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_W) {

@@ -14,7 +14,7 @@ public class Enemy implements ActionListener{
 	protected GCompound bodyCompound;
     private double x;
     private double y;
-	protected boolean isDead;
+	protected boolean isDead = false;
     private int health = 5;
 	protected Game game;
     Timer timer;
@@ -76,10 +76,16 @@ public class Enemy implements ActionListener{
     }
     
     protected void deathEvent() {
+		this.isDead = true;
 		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
-			if(this.bodyCompound.getElement(i) instanceof GPolygon){
-				((GPolygon) this.bodyCompound.getElement(i)).setFillColor(Color.black);	
-			}
+				this.bodyCompound.getElement(i).setVisible(false);	
+				this.isDead = true;
+				for(Item drop : drops){
+					drop.getItemBody().setLocation(this.bodyCompound.getElement(i).getX(), this.bodyCompound.getElement(i).getY());
+					this.bodyCompound.add(drop.getItemBody());
+				}
+				this.bodyCompound.removeAll();
+
 		}
     }
     
@@ -146,5 +152,8 @@ public class Enemy implements ActionListener{
 	}
 	public void setY(double y) {
 		this.y = y;
+	}
+	public boolean isDead(){
+		return isDead;
 	}
 }
