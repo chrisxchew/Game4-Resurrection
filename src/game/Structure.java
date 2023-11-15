@@ -3,9 +3,11 @@ package game;
 import java.util.ArrayList;
 
 import acm.graphics.GObject;
+import acm.graphics.GLine;
 
 public abstract class Structure {
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
+	private ArrayList<GLine> colliders = new ArrayList<GLine>();
 	private int x;
 	private int y;
 	public Structure(int x, int y) {
@@ -26,6 +28,9 @@ public abstract class Structure {
 	}
 	public ArrayList<GObject> getObjects() {
 		return objects;
+	}
+	public ArrayList<GLine> getColliders(){
+		return colliders;
 	}
 	
 	
