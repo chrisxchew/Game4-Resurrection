@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.boulder_1;
+import structures.cactus_1;
 import structures.grassyBiomeRegularTree;
 import structures.iceBiomeHill;
 import structures.tree1;
@@ -86,6 +87,13 @@ public class Tile {
                     grassyBiomeRegularTree tree = new grassyBiomeRegularTree(rnd.nextInt(1000), rnd.nextInt(500));
                     structures.add(tree);
                     addObjects(objects, tree.getObjects());
+            	}
+            }
+            if (percentChance(1)) {
+            	if(biome.getTemp() > 99) {
+                    cactus_1 cactus = new cactus_1(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(cactus);
+                    addObjects(objects, cactus.getObjects());
             	}
             }
             if (percentChance(1)) {

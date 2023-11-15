@@ -8,6 +8,7 @@ public abstract class Structure {
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
 	private int x;
 	private int y;
+	
 	public Structure(int x, int y) {
 		this.x = x;
 		this.y = y;
