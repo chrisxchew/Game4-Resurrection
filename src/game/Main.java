@@ -27,17 +27,12 @@ public class Main extends GraphicsProgram implements ActionListener{
         requestFocus();
     }
     //Hi...
-    //for testing
-    GLabel tileLabel;
     @Override
     public void run() {
         addKeyListeners();
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
-            game.getPlayer().getTile().get(1)));
-        add(tileLabel);
         addEnemySprites();
         drawUI();
         runTimer.start();
@@ -58,7 +53,6 @@ public class Main extends GraphicsProgram implements ActionListener{
         	if (checkTileCrossing()) {
                 removeAll();
                 drawTiles();
-                add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
                 drawUI();
                 for (Enemy enemy: game.getCurrentTile().getEnemies()) {
@@ -70,7 +64,6 @@ public class Main extends GraphicsProgram implements ActionListener{
                     .getY(), game.getCurrentTile().getEnemies());
             }
             handleKeyStrokes();
-            tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
 
             if(this.floatingItem != null) {
             	this.floatingItem.getItemBody().setLocation(mouseX, mouseY);
@@ -137,29 +130,21 @@ public class Main extends GraphicsProgram implements ActionListener{
         //remove tile label lines for production
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getX() < 0) {
             game.moveTiles(-1, 0);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() < 0) {
             game.moveTiles(0, 1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
             game.moveTiles(0, -1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         } else {
