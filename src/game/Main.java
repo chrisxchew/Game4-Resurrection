@@ -9,7 +9,6 @@ import acm.program.*;
 import items.Projectile;
 import userinterface.Hotbar;
 import userinterface.Inventory;
-import java.awt.event.MouseWheelEvent;
 
 public class Main extends GraphicsProgram implements ActionListener{
 	Timer runTimer = new Timer( 1, this);
@@ -167,7 +166,7 @@ public class Main extends GraphicsProgram implements ActionListener{
             return false;
         }
     }
-    public void checkInventoryInteraction(MouseEvent e){
+    public boolean checkInventoryInteraction(MouseEvent e){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
         if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*i.getInventorySize()/10)){
@@ -200,12 +199,15 @@ public class Main extends GraphicsProgram implements ActionListener{
                 }
 
             }
+            return true;
         }
+        return false;
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        checkInventoryInteraction(e);
-    	this.game.getPlayer().attackPressed(this.game);
+        if(!checkInventoryInteraction(e)){
+            this.game.getPlayer().attackPressed(this.game);
+        }
     }
     @Override
     public void	mouseMoved(MouseEvent e){
