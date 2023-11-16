@@ -121,9 +121,7 @@ public class Player {
                 attackCooldown = ATTACKCOOLDOWN;
                 for (Enemy e: game.getCurrentTile().getEnemies()) {
                     if (collidingWithEnemy(e)) {
-
-
-                        e.knockback(5);
+                        e.knockback(((Melee) this.getCurrentlyEquippedItem()).getKnockback() * -1);
                         e.setHealth(e.getHealth() - 1);
 
                     }

@@ -20,4 +20,8 @@ public class Sword extends Item implements Melee{
 		
 	}
 
+	@Override
+	public int getKnockback() {
+		return 5;
+	}
 }
