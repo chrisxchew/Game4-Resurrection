@@ -19,4 +19,5 @@ public class Sword extends Item implements Melee{
 	public void attackEvent(ArrayList<Enemy> enemies) {
 		
 	}
+
 }
