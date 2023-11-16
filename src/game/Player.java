@@ -48,8 +48,14 @@ public class Player {
             this.inventory.add(item);
 
         }
+        for (int i = 0; i < 10; i++) {
+            Item arrow = new Arrow();
+            this.inventory.add(arrow);
+
+        }
         FireStaff staff = new FireStaff();
         this.inventory.add(staff);
+        this.inventory.add(new Bow());
         this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
 
