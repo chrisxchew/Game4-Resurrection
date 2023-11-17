@@ -12,12 +12,20 @@ public class Castle extends Structure {
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
 		this.getObjects().add(castle);
+		
+		//Top castle collider
 		GLine topCastle = new GLine(340, 103, 660, 103);
 		this.getColliders().add(topCastle);
+		
+		//Bottom castle collider
 		GLine botCastle = new GLine(340, 384, 660, 384);
 		this.getColliders().add(botCastle);
+		
+		//Right side castle collider
 		GLine rSideCastle = new GLine(716, 160, 716, 330);
 		this.getColliders().add(rSideCastle);
+		
+		//Top left tower colliders
 		GLine lTopCastle = new GLine(305, 71, 340, 103);
 		this.getColliders().add(lTopCastle);
 		GLine l2TopCastle = new GLine(305, 71, 285, 71);
@@ -28,6 +36,8 @@ public class Castle extends Structure {
 		this.getColliders().add(l4TopCastle);
 		GLine l5TopCastle = new GLine(255, 128, 285, 160);
 		this.getColliders().add(l5TopCastle);
+		
+		//Top right tower colliders
 		GLine rTopCastle = new GLine(660, 103, 695, 71);
 		this.getColliders().add(rTopCastle);
 		GLine r2TopCastle = new GLine(695, 71, 713, 71);
@@ -38,6 +48,8 @@ public class Castle extends Structure {
 		this.getColliders().add(r4TopCastle);
 		GLine r5TopCastle = new GLine(745, 129, 716, 160);
 		this.getColliders().add(r5TopCastle);
+		
+		//Bottom left tower colliders
 		GLine lBotCastle = new GLine(310, 415, 340, 384);
 		this.getColliders().add(lBotCastle);
 		GLine l2BotCastle = new GLine(280, 415, 310, 415);
@@ -48,6 +60,8 @@ public class Castle extends Structure {
 		this.getColliders().add(l4BotCastle);
 		GLine l5BotCastle = new GLine(252, 360, 290, 320);
 		this.getColliders().add(l5BotCastle);
+		
+		//Bottom right tower colliders
 		GLine rBotCastle = new GLine(660, 384, 695, 415);
 		this.getColliders().add(rBotCastle);
 		GLine r2BotCastle = new GLine(695, 415, 716, 415);
