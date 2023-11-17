@@ -238,6 +238,16 @@ public class Main extends GraphicsProgram implements ActionListener{
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
+        //p
+        if(keyCode == KeyEvent.VK_P){
+            Saver saver = new Saver();
+            saver.save(this.game, "save1");
+        }
+        if(keyCode == KeyEvent.VK_L){
+            Saver saver = new Saver();
+            Game newGame = saver.load("save1", this);
+            System.out.println(newGame.getPlayer().getInventory().getInventory());
+        }
     }
 
 

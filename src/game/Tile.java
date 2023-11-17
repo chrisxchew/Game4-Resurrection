@@ -19,7 +19,7 @@ public class Tile {
     private ArrayList < GObject > objects = new ArrayList < GObject > ();
     private ArrayList < Structure > structures = new ArrayList < Structure > ();
     private ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
-    
+    private ArrayList < GLine > colliders = new ArrayList < GLine > ();
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -128,6 +128,9 @@ public class Tile {
     public String toString() {
         return (String.valueOf("[" + key.get(0)) + " , " + String.valueOf(key.get(1) + "]"));
     }
+    public ArrayList < GLine > getColliders() {
+        return colliders;
+    }
     public Biome getBiome() {
         return biome;
     }
@@ -136,6 +139,9 @@ public class Tile {
     }
     public ArrayList < Enemy > getEnemies() {
         return enemies;
+    }
+    public ArrayList < Structure > getStructures() {
+        return structures;
     }
     private Biome rollBiomes(ArrayList < Tile > knownNeighbors) {
         Biome biome = new Biome();

@@ -397,4 +397,7 @@ public class Player {
     public void setMovingY(boolean movingY) {
         this.movingY = movingY;
     }
+    public void setInventory(Inventory i2) {
+        this.inventory = i2;
+    }
 }
