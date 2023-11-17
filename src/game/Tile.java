@@ -27,6 +27,10 @@ public class Tile {
         this.objects = objects;
     }
     private Game game;
+    public Tile(List <Integer> key, Game game) {
+        this.game = game;
+        this.key = key;
+    }
     public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors, Game game) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -142,6 +146,18 @@ public class Tile {
     }
     public ArrayList < Structure > getStructures() {
         return structures;
+    }
+    public void setStructures(ArrayList < Structure > structures) {
+        this.structures = structures;
+    }
+    public void setEnemies(ArrayList < Enemy > enemies) {
+        this.enemies = enemies;
+    }
+    public void setColliders(ArrayList < GLine > colliders) {
+        this.colliders = colliders;
+    }
+    public ArrayList<Tile> setNeighbors(ArrayList<Tile> neighbors){
+        return neighbors;
     }
     private Biome rollBiomes(ArrayList < Tile > knownNeighbors) {
         Biome biome = new Biome();

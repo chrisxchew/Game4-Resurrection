@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import acm.graphics.GLine;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
@@ -59,10 +60,13 @@ public class Saver {
         
         for(List < Integer > key : game.getTiles().keySet()) {
         	Tile currentTile = game.getTiles().get(key);
-            File currentFile = makeFile("Tile"+key.get(0)+key.get(1), PATHNAME, saveName);
+            File currentFile = makeFile("Tile"+key.get(0)+"_"+key.get(1)+"_"+game.getTiles().get(key).getBiome().getClass().getName(), PATHNAME, saveName);
             String ground = "Ground{\n";
             for(GObject rect : currentTile.getObjects()) {
-            	ground += "Rect[" + rect.getX() + "," + rect.getY() + "," + rect.getColor().getRed() + "," + rect.getColor().getGreen() + "," + rect.getColor().getBlue() + "]\n";
+                if(rect instanceof GRect){
+                    ground += "Rect[" + rect.getX() + "," + rect.getY() + "," + rect.getColor().getRed() + "," + rect.getColor().getGreen() + "," + rect.getColor().getBlue() + "]\n";
+                }
+            	
             }
             ground += "}";
             String enemies = "Enemies{\n";
@@ -126,35 +130,30 @@ public class Saver {
                 game.getPlayer().setInventory(i);
             }
             if(file.getName().contains("Tile")){
-                //load tile
+                Tile tile = loadTile(file, game);
+                game.getTiles().put(tile.getKey(), tile);
             }
         }
+        recalculateNeighbors(game);
         return game;
+    }
+    
+    public void recalculateNeighbors(Game game) {
+    	for(List < Integer > key : game.getTiles().keySet()) {
+    		Tile tile = game.getTiles().get(key);
+    		tile.setNeighbors(game.getNeighbors(tile.getKey()));
+    	}
     }
 
     public Inventory loadInventory(File inventoryFile, int screenHeight){
-        /*
-         * Inventory{
-         * Item.class
-         * Item.class
-         * Item.class
-         * }
-         */
-
-         /*
-          * for each String class name in inventory file
-          */
-        //count \n -1
         String fileText = "";
         try{
-            Scanner scanner = new Scanner(inventoryFile);
-            while(scanner.hasNextLine()){
-                fileText += scanner.nextLine() + "\n";
-            }
-            scanner.close();
+            fileText = readFile(inventoryFile);
         }catch(IOException e){
-            System.out.println("Error loading inventory: " + e.getMessage());
+            System.out.println("Error reading file: " + e.getMessage());
+            return null;
         }
+
         int inventorySize = fileText.split("\n").length - 1;
         Inventory inventory = new Inventory(inventorySize, screenHeight);
         for(String className : fileText.split("\n")){
@@ -170,12 +169,6 @@ public class Saver {
                     Class<?> itemClass = Class.forName(className);
                     Item item = (Item) itemClass.getDeclaredConstructor().newInstance();
                     inventory.add(item);
-                }catch(ClassNotFoundException e) {
-                    System.out.println("Class not found: " + e.getMessage());
-                }catch(InstantiationException e) {
-                    System.out.println("Error instantiating class: " + e.getMessage());
-                }catch(IllegalAccessException e) {
-                    System.out.println("Illegal access: " + e.getMessage());
                 }catch(Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }
@@ -186,20 +179,115 @@ public class Saver {
     }
 
     public Tile loadTile(File tileFile, Game game){
-        //whats the tile constructor?
+        String fileText = "";
+        try{
+            fileText = readFile(tileFile);
+        }catch(IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
+            return null;
+        }
         ArrayList < Integer > tileKey = new ArrayList < Integer > ();
-        tileKey.add(Integer.parseInt(tileFile.getName().split("Tile")[1].split(".txt")[0].split("")[0]));
-        Tile tile = new Tile(1000, 500, tileKey, null,game);
-        ArrayList<GRect> rects = new ArrayList<GRect>();
-        for(String rectInfo : tileFile.toString().split("\n")){
-            if(rectInfo.equals("Ground{")){
-                Color color = new Color(Integer.parseInt(rectInfo.split(",")[2]), Integer.parseInt(rectInfo.split(",")[3]), Integer.parseInt(rectInfo.split(",")[4]));
-                GRect rect = new GRect(Double.parseDouble(rectInfo.split(",")[0]), Double.parseDouble(rectInfo.split(",")[1]), 10, 10);
-                rect.setFilled(false);
-                rect.setColor(color);
-                rects.add(rect);
+        tileKey.add(Integer.parseInt(tileFile.getName().split("Tile")[1].split("_")[0]));
+        tileKey.add(Integer.parseInt(tileFile.getName().split("Tile")[1].split("_")[1]));
+
+        Tile tile = new Tile( tileKey,game);
+        String biomeClassName = tileFile.getName().split("Tile")[1].split("_")[2];
+        try {
+            Class<?> biomeClass = Class.forName(biomeClassName);
+            Biome biome = (Biome) biomeClass.getDeclaredConstructor().newInstance();
+            tile.setBiome(biome);
+        }catch(Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        ArrayList<GObject> rects = new ArrayList<GObject>();
+        ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+        ArrayList<Structure> structures = new ArrayList<Structure>();
+        ArrayList<GLine> colliders = new ArrayList<GLine>();
+
+        //split the file text by the Groud{}, Enemies{}, Structures{}, Colliders{}
+        String ground = fileText.split("Ground\\{")[1].split("\\}")[0];
+        String[] groundRects = ground.split("Rect\\[");
+        for(String rect : groundRects){
+            if(rect.equals("")){
+                continue;
+            }
+            String[] rectInfo = rect.split("\\]")[0].split(",");
+            //if every element in rect info is a space, newline, or empty, continue
+            boolean allEmpty = true;
+            for(String s : rectInfo){
+                if(!s.equals("") && !s.equals(" ") && !s.equals("\n")){
+                    allEmpty = false;
+                }
+            }
+            if(allEmpty){
+                continue;
+            }
+            GRect rectToAdd = new GRect(Double.parseDouble(rectInfo[0]), Double.parseDouble(rectInfo[1]), 10, 10);
+            rectToAdd.setColor(new Color(Integer.parseInt(rectInfo[2]), Integer.parseInt(rectInfo[3]), Integer.parseInt(rectInfo[4])));
+            Color color = new Color(Integer.parseInt(rectInfo[2]), Integer.parseInt(rectInfo[3]), Integer.parseInt(rectInfo[4]));
+            rectToAdd.setFillColor(color);
+            rectToAdd.setFilled(true);
+            rects.add(rectToAdd);
+        }
+
+
+        String enemiesString = fileText.split("Enemies\\{")[1].split("\\}")[0];
+        String[] enemiesStrings = enemiesString.split("\n");
+        for(String enemyRaw : enemiesStrings){
+            String className = enemyRaw.split("\\[")[0];
+            if(!className.trim().equals("")){
+
+            
+                try {
+                    Class<?> [] paramTypes = new Class[] {int.class, int.class, Game.class};
+                    Object[] params = new Object[] {
+                        (int) Double.parseDouble(enemyRaw.split("\\[")[1].split(",")[0]), 
+                        (int) Double.parseDouble(enemyRaw.split("\\[")[1].split(",")[1].split("\\]")[0]),   
+                        game};
+                    Class<?> enemyClass = Class.forName(className);
+                    Enemy enemy = (Enemy) enemyClass.getDeclaredConstructor(paramTypes).newInstance(params);
+                    enemies.add(enemy);
+                }catch(Exception e) {
+                    System.out.println("Error: " + e.getMessage() + " : " + e.getStackTrace() + " : "  +"class name: " + className);
+                }
             }
         }
+
+        String structuresString = fileText.split("Structures\\{")[1].split("\\}")[0];
+        String[] structuresStrings = structuresString.split("\n");
+        for(String structureRaw : structuresStrings){
+            String className = structureRaw.split("\\[")[0];
+            if(!className.trim().equals("")){
+                try {
+                    Class<?> structureClass = Class.forName(className);
+                    //param types are int, int
+
+                    Object[] params = new Object[] {Integer.parseInt(structureRaw.split("\\[")[1].split(",")[0]), Integer.parseInt(structureRaw.split("\\[")[1].split(",")[1].split("\\]")[0])};
+                    Class<?>[] paramTypes = new Class[] {int.class, int.class};
+                    Structure structure = (Structure) structureClass.getDeclaredConstructor(paramTypes).newInstance(params);
+                    structures.add(structure);
+                }catch(Exception e) {
+                    System.out.println("Error: " + e.getMessage() + " : " + e.getStackTrace() + " : "  +"class name: " + className);
+                }
+            }
+        }
+
+        String collidersString = fileText.split("Colliders\\{")[1].split("\\}")[0];
+        String[] collidersStrings = collidersString.split("\n");
+        for(String colliderRaw : collidersStrings){
+            String[] colliderInfo = colliderRaw.split("\\[")[1].split("\\]")[0].split(",");
+            GLine collider = new GLine(Double.parseDouble(colliderInfo[0]), Double.parseDouble(colliderInfo[1]), Double.parseDouble(colliderInfo[0]) + Double.parseDouble(colliderInfo[2]), Double.parseDouble(colliderInfo[1]) + Double.parseDouble(colliderInfo[3]));
+            colliders.add(collider);
+        }
+
+        tile.setColliders(colliders);
+        tile.setStructures(structures);
+        tile.setObjects(rects);
+        for(Structure struct : structures){
+            tile.addObjects(tile.getObjects(), struct.getObjects());
+        }
+
+        tile.setEnemies(enemies);
         return tile;
     }
 
@@ -224,10 +312,18 @@ public class Saver {
         writer.write(text);
         writer.close();
     }
-
+    public String readFile(File file) throws IOException {
+        String fileText = "";
+        Scanner scanner = new Scanner(file);
+        while(scanner.hasNextLine()) {
+            fileText += scanner.nextLine() + "\n";
+        }
+        scanner.close();
+        return fileText;
+    }
     public Game Load(String saveFile) {
         return null;
-
+        
     }
 
 }

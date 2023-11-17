@@ -20,7 +20,11 @@ public class Main extends GraphicsProgram implements ActionListener{
     private boolean canChangeInventoryDisplayed = true;
     private Item floatingItem;
     Window window = new Window(windowWidth, windowHeight);
+    Saver saver = new Saver();
+    
+    //loads game from save if uncommented
     Game game = new Game(windowWidth, windowHeight, this);
+    //Game game;
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
@@ -29,6 +33,10 @@ public class Main extends GraphicsProgram implements ActionListener{
     //Hi...
     @Override
     public void run() {
+
+        //loads game from save if uncommented
+        //game = saver.load("save1", this);
+
         addKeyListeners();
         addMouseListeners();
         drawTiles();
@@ -238,7 +246,6 @@ public class Main extends GraphicsProgram implements ActionListener{
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
-        //p
         if(keyCode == KeyEvent.VK_P){
             Saver saver = new Saver();
             saver.save(this.game, "save1");
@@ -274,6 +281,7 @@ public class Main extends GraphicsProgram implements ActionListener{
         }
     }
     public static void main(String[] args) {
+        
         new Main().start();
     }
 }

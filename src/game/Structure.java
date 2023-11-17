@@ -15,6 +15,10 @@ public abstract class Structure {
 		this.x = x;
 		this.y = y;
 	}
+	public Structure(){
+		this.x = 0;
+		this.y = 0;
+	}
 	public int getX() {
 		return x;
 	}
