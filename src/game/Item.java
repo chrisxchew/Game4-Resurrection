@@ -2,7 +2,7 @@ package game;
 
 import acm.graphics.*;
 
-public class Item {
+public abstract class Item {
 	private GCompound itemBody;
 	private GCompound itemBodyRight;
 	public double x;
