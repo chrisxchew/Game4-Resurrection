@@ -9,9 +9,8 @@ import acm.program.*;
 import items.Projectile;
 import userinterface.Hotbar;
 import userinterface.Inventory;
-import java.awt.event.MouseWheelEvent;
 
-public class Main extends GraphicsProgram implements ActionListener{
+public class Main extends GraphicsProgram{
 	Timer runTimer = new Timer( 1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
@@ -21,24 +20,27 @@ public class Main extends GraphicsProgram implements ActionListener{
     private boolean canChangeInventoryDisplayed = true;
     private Item floatingItem;
     Window window = new Window(windowWidth, windowHeight);
+    Saver saver = new Saver();
+    
+    //loads game from save if uncommented
     Game game = new Game(windowWidth, windowHeight, this);
+    //Game game;
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
         requestFocus();
     }
     //Hi...
-    //for testing
-    GLabel tileLabel;
     @Override
     public void run() {
+
+        //loads game from save if uncommented
+        //game = saver.load("save1", this);
+
         addKeyListeners();
         addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
-        tileLabel = new GLabel(String.valueOf(game.getPlayer().getTile().get(0)) + ", " + String.valueOf(
-            game.getPlayer().getTile().get(1)));
-        add(tileLabel);
         addEnemySprites();
         drawUI();
         runTimer.start();
@@ -59,7 +61,6 @@ public class Main extends GraphicsProgram implements ActionListener{
         	if (checkTileCrossing()) {
                 removeAll();
                 drawTiles();
-                add(tileLabel);
                 add(game.getPlayer().getPlayerGCompound());
                 drawUI();
                 for (Enemy enemy: game.getCurrentTile().getEnemies()) {
@@ -71,7 +72,6 @@ public class Main extends GraphicsProgram implements ActionListener{
                     .getY(), game.getCurrentTile().getEnemies());
             }
             handleKeyStrokes();
-            tileLabel.setLocation(windowWidth / 2, windowHeight / 2);
 
             if(this.floatingItem != null) {
             	this.floatingItem.getItemBody().setLocation(mouseX, mouseY);
@@ -138,36 +138,28 @@ public class Main extends GraphicsProgram implements ActionListener{
         //remove tile label lines for production
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getX() < 0) {
             game.moveTiles(-1, 0);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() < 0) {
             game.moveTiles(0, 1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         }
         if (game.getPlayer().getY() > windowHeight - game.getPlayer().getPlayerHeight()) {
             game.moveTiles(0, -1);
-            tileLabel.setLabel((game.getPlayer().getTile().get(0)) + ", " + String.valueOf(game
-                .getPlayer().getTile().get(1)));
             this.inventoryDisplayed = false;
             return true;
         } else {
             return false;
         }
     }
-    public void checkInventoryInteraction(MouseEvent e){
+    public boolean checkInventoryInteraction(MouseEvent e){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
         if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*i.getInventorySize()/10)){
@@ -200,12 +192,15 @@ public class Main extends GraphicsProgram implements ActionListener{
                 }
 
             }
+            return true;
         }
+        return false;
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        checkInventoryInteraction(e);
-    	this.game.getPlayer().attackPressed(this.game);
+        if(!checkInventoryInteraction(e)){
+            this.game.getPlayer().attackPressed(this.game);
+        }
     }
     @Override
     public void	mouseMoved(MouseEvent e){
@@ -251,6 +246,15 @@ public class Main extends GraphicsProgram implements ActionListener{
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
+        if(keyCode == KeyEvent.VK_P){
+            Saver saver = new Saver();
+            saver.save(this.game, "save1");
+        }
+        if(keyCode == KeyEvent.VK_L){
+            Saver saver = new Saver();
+            Game newGame = saver.load("save1", this);
+            System.out.println(newGame.getPlayer().getInventory().getInventory());
+        }
     }
 
 
@@ -277,6 +281,7 @@ public class Main extends GraphicsProgram implements ActionListener{
         }
     }
     public static void main(String[] args) {
+        
         new Main().start();
     }
 }

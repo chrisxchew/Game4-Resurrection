@@ -9,7 +9,7 @@ public class iceBiomeHill extends Structure {
 		super(x, y);
 		GImage castle = new GImage("media/terrain/iceBiomeHill.png");
 		castle.setLocation(x,y);
-		castle.setSize(50,50);
+		castle.setSize(150,150);
 		this.getObjects().add(castle);
 	}
 }

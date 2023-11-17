@@ -27,6 +27,7 @@ local.properties
 # Directories #
 /build/
 target/
+saves/
  
 # OS Files #
 .DS_Store

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.boulder_1;
+import structures.cactus_1;
 import structures.grassyBiomeRegularTree;
 import structures.iceBiomeHill;
 import structures.tree1;
@@ -18,7 +19,7 @@ public class Tile {
     private ArrayList < GObject > objects = new ArrayList < GObject > ();
     private ArrayList < Structure > structures = new ArrayList < Structure > ();
     private ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
-    
+    private ArrayList < GLine > colliders = new ArrayList < GLine > ();
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -26,6 +27,10 @@ public class Tile {
         this.objects = objects;
     }
     private Game game;
+    public Tile(List <Integer> key, Game game) {
+        this.game = game;
+        this.key = key;
+    }
     public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors, Game game) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -89,6 +94,13 @@ public class Tile {
             	}
             }
             if (percentChance(1)) {
+            	if(biome.getTemp() > 99) {
+                    cactus_1 cactus = new cactus_1(rnd.nextInt(1000), rnd.nextInt(500));
+                    structures.add(cactus);
+                    addObjects(objects, cactus.getObjects());
+            	}
+            }
+            if (percentChance(1)) {
                 Castle castle = new Castle(200, 60);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
@@ -120,6 +132,9 @@ public class Tile {
     public String toString() {
         return (String.valueOf("[" + key.get(0)) + " , " + String.valueOf(key.get(1) + "]"));
     }
+    public ArrayList < GLine > getColliders() {
+        return colliders;
+    }
     public Biome getBiome() {
         return biome;
     }
@@ -128,6 +143,21 @@ public class Tile {
     }
     public ArrayList < Enemy > getEnemies() {
         return enemies;
+    }
+    public ArrayList < Structure > getStructures() {
+        return structures;
+    }
+    public void setStructures(ArrayList < Structure > structures) {
+        this.structures = structures;
+    }
+    public void setEnemies(ArrayList < Enemy > enemies) {
+        this.enemies = enemies;
+    }
+    public void setColliders(ArrayList < GLine > colliders) {
+        this.colliders = colliders;
+    }
+    public ArrayList<Tile> setNeighbors(ArrayList<Tile> neighbors){
+        return neighbors;
     }
     private Biome rollBiomes(ArrayList < Tile > knownNeighbors) {
         Biome biome = new Biome();

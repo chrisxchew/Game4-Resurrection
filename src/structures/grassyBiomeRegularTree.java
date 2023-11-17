@@ -9,7 +9,7 @@ public class grassyBiomeRegularTree extends Structure{
 		super(x, y);
 		GImage tree = new GImage("media/terrain/grassyBiomeRegularTree.png");
 		tree.setLocation(x,y);
-		tree.setSize(150,150);
+		tree.setSize(300,300);
 		this.getObjects().add(tree);
 	}
 
