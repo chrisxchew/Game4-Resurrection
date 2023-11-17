@@ -10,7 +10,7 @@ import items.Projectile;
 import userinterface.Hotbar;
 import userinterface.Inventory;
 
-public class Main extends GraphicsProgram implements ActionListener{
+public class Main extends GraphicsProgram{
 	Timer runTimer = new Timer( 1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
