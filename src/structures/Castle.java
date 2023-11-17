@@ -38,6 +38,7 @@ public class Castle extends Structure {
 		this.getColliders().add(r4TopCastle);
 		GLine r5TopCastle = new GLine(745, 129, 716, 160);
 		this.getColliders().add(r5TopCastle);
-
+		GLine lBotCastle = new GLine(310, 415, 340, 384);
+		this.getColliders().add(lBotCastle);
 	}
 }
