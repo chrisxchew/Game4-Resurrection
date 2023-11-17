@@ -1,6 +1,7 @@
 package structures;
 
 import acm.graphics.GImage;
+import acm.graphics.GLine;
 import game.Structure;
 
 public class Castle extends Structure {
@@ -11,6 +12,7 @@ public class Castle extends Structure {
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
 		this.getObjects().add(castle);
+		//GLine botCastle = new GLine();
 		//this.getColliders().add()
 	}
 }
