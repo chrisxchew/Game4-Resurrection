@@ -11,5 +11,6 @@ public class Castle extends Structure {
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
 		this.getObjects().add(castle);
+		//this.getColliders().add()
 	}
 }
