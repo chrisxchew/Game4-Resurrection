@@ -87,9 +87,15 @@ public class Player {
     }
     public boolean checkCollisionX(double moveX, ArrayList<GLine> colliders){
         for(GLine col : colliders){
-            for(i = 1; i < moveX; i++){
-                if(col.contains(this.x + i, this.y)){
-                    return false;
+            for(i = 1; i < Math.abs(moveX); i++){
+                if(moveX < 0){
+                    if(col.contains(getPlayerCenter().getX()-i, getPlayerCenter().getY())){
+                        return false;
+                    }
+                }else{
+                    if(col.contains(getPlayerCenter().getX()+i, getPlayerCenter().getY())){
+                        return false;
+                    }
                 }
             }
         }
@@ -97,9 +103,15 @@ public class Player {
     }
     public boolean checkCollisionY(double moveY, ArrayList<GLine> colliders){
     for(GLine col : colliders){
-        for(i = 1; i < moveY; i++){
-            if(col.contains(this.x, this.y+i)){
-                return false;
+        for(i = 1; i < Math.abs(moveY); i++){
+            if(moveY < 0){
+                if(col.contains(getPlayerCenter().getX(), getPlayerCenter().getY()-i)){
+                    return false;
+                }
+            }else{
+                if(col.contains(getPlayerCenter().getX(), getPlayerCenter().getY()+i)){
+                    return false;
+                }
             }
         }
     }
@@ -196,7 +208,7 @@ public class Player {
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBody());
     }
     public void moveX(double val, Game game) {
-    	if(checkCollisionY(val, game.getCurrentTile().getColliders())) {
+    	if(checkCollisionX(val, game.getCurrentTile().getColliders())) {
         if (movementEnabled) {
             if (val > 0) {
                 changeFacingRightAnimation(facingRight);
@@ -213,7 +225,7 @@ public class Player {
     }
 
     public void moveY(double val, Game game) {
-    	if(checkCollisionX(val, game.getCurrentTile().getColliders())) {
+    	if(checkCollisionY(val, game.getCurrentTile().getColliders())) {
         if (movementEnabled) {
             if (val > 0) {
                 if (facingDown == false) {
