@@ -94,7 +94,6 @@ public class Enemy implements ActionListener{
 				}
 				if(checkCollision(targetx, targety)){
 					this.game.getPlayer().getInventory().addAll(drops);
-					System.out.println(this.game.getPlayer().getInventory().getInventory());
 					this.bodyCompound.removeAll();
 					this.unloaded = true;
 				}
