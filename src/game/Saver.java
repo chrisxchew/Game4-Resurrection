@@ -272,17 +272,20 @@ public class Saver {
 
         String collidersString = fileText.split("Colliders\\{")[1].split("\\}")[0];
         String[] collidersStrings = collidersString.split("\n");
-        for(String colliderRaw : collidersStrings){
+        for(String colliderRaw : collidersStrings){      
+            if(colliderRaw.equals("")){
+                continue;
+            }
             String[] colliderInfo = colliderRaw.split("\\[")[1].split("\\]")[0].split(",");
-            GLine collider = new GLine(Double.parseDouble(colliderInfo[0]), Double.parseDouble(colliderInfo[1]), Double.parseDouble(colliderInfo[0]) + Double.parseDouble(colliderInfo[2]), Double.parseDouble(colliderInfo[1]) + Double.parseDouble(colliderInfo[3]));
-            colliders.add(collider);
+            GLine collider = new GLine(Double.parseDouble(colliderInfo[0]), Double.parseDouble(colliderInfo[1]), Double.parseDouble(colliderInfo[2]), Double.parseDouble(colliderInfo[3]));
+            //colliders.add(collider);
         }
 
-        tile.setColliders(colliders);
         tile.setStructures(structures);
         tile.setObjects(rects);
         for(Structure struct : structures){
             tile.addObjects(tile.getObjects(), struct.getObjects());
+            tile.addColliders(tile.getColliders(), struct.getColliders());
         }
 
         tile.setEnemies(enemies);

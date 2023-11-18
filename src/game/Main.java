@@ -23,8 +23,8 @@ public class Main extends GraphicsProgram{
     Saver saver = new Saver();
     
     //loads game from save if uncommented
-    Game game = new Game(windowWidth, windowHeight, this);
-    //Game game;
+    //Game game = new Game(windowWidth, windowHeight, this);
+    Game game;
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
@@ -35,7 +35,7 @@ public class Main extends GraphicsProgram{
     public void run() {
 
         //loads game from save if uncommented
-        //game = saver.load("save1", this);
+        game = saver.load("save1", this);
 
         addKeyListeners();
         addMouseListeners();

@@ -30,14 +30,6 @@ public class Enemy implements ActionListener{
     }
 
 	protected void addObjectsToCompound(int x, int y) {
-    	GPolygon body;
-        body = new GPolygon();
-        body.addVertex(0, -25);
-        body.addVertex(25, 25);
-        body.addVertex(-25, 25);
-        body.setFillColor(Color.red);
-        body.setFilled(true);
-        
 		GImage bodyImage = new GImage("media/Characters/DoritoSV/DoritoSV_FaceFront.png");
 		bodyImage.scale(4);
         this.bodyCompound.add(bodyImage,x,y);
