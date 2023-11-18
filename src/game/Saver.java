@@ -236,8 +236,6 @@ public class Saver {
         for(String enemyRaw : enemiesStrings){
             String className = enemyRaw.split("\\[")[0];
             if(!className.trim().equals("")){
-
-            
                 try {
                     Class<?> [] paramTypes = new Class[] {int.class, int.class, Game.class};
                     Object[] params = new Object[] {

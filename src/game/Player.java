@@ -85,6 +85,26 @@ public class Player {
         playerHeight = 50;
         speed = 5;
     }
+    public boolean checkCollisionX(int moveX, ArrayList<GLine> colliders){
+        for(GLine col : colliders){
+            for(i = 1; i < moveX; i++){
+                if(col.contains(this.x + i, this.y)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean checkCollisionY(int moveY, ArrayList<GLine> colliders){
+    for(GLine col : colliders){
+        for(i = 1; i < moveY; i++){
+            if(col.contains(this.x, this.y+i)){
+                return false;
+            }
+        }
+    }
+    return true;
+    }   
     public boolean collidingWithEnemy(Enemy e) {
         if (
             e.getY() > this.y - playerHeight*2 &&
@@ -220,6 +240,7 @@ public class Player {
                 this.facingDown = false;
 
             }
+
             this.y += val;
             playerGCompound.move(0, val);
         }

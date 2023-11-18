@@ -78,6 +78,9 @@ public class Tile {
             objects.add(obj);
         }
     }
+    public boolean checkCollisionX(GLine line, int moveX, Game game){
+        for()
+    }
     public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
