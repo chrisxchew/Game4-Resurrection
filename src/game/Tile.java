@@ -78,8 +78,15 @@ public class Tile {
             objects.add(obj);
         }
     }
+<<<<<<< HEAD
     public boolean checkCollisionX(GLine line, int moveX, Game game){
         for()
+=======
+    public void addColliders(ArrayList <GLine> colliders, ArrayList <GLine> linesToAdd) {
+    	for(GLine line: linesToAdd) {
+    		colliders.add(line);
+    	}
+>>>>>>> 8450e0ee9bdd1cc71abd355ea56d92910a15fcdd
     }
     public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
@@ -107,6 +114,7 @@ public class Tile {
                 Castle castle = new Castle(200, 60);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
+                addColliders(colliders, castle.getColliders());
             }
             if (percentChance(2)) {
                 if(biome.getTemp() < 21){
