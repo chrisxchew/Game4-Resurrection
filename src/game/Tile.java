@@ -78,6 +78,11 @@ public class Tile {
             objects.add(obj);
         }
     }
+    public void addColliders(ArrayList <GLine> colliders, ArrayList <GLine> linesToAdd) {
+    	for(GLine line: linesToAdd) {
+    		colliders.add(line);
+    	}
+    }
     public void generateStrutures() {
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
@@ -104,6 +109,7 @@ public class Tile {
                 Castle castle = new Castle(200, 60);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
+                addColliders(colliders, castle.getColliders());
             }
             if (percentChance(2)) {
                 if(biome.getTemp() < 21){
