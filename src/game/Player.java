@@ -85,7 +85,7 @@ public class Player {
         playerHeight = 50;
         speed = 5;
     }
-    public boolean checkCollisionX(int moveX, ArrayList<GLine> colliders){
+    public boolean checkCollisionX(double moveX, ArrayList<GLine> colliders){
         for(GLine col : colliders){
             for(i = 1; i < moveX; i++){
                 if(col.contains(this.x + i, this.y)){
@@ -95,7 +95,7 @@ public class Player {
         }
         return true;
     }
-    public boolean checkCollisionY(int moveY, ArrayList<GLine> colliders){
+    public boolean checkCollisionY(double moveY, ArrayList<GLine> colliders){
     for(GLine col : colliders){
         for(i = 1; i < moveY; i++){
             if(col.contains(this.x, this.y+i)){
@@ -195,7 +195,8 @@ public class Player {
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBody());
     }
-    public void moveX(double val) {
+    public void moveX(double val, Game game) {
+    	if(checkCollisionY(val, game.getCurrentTile().getColliders())) {
         if (movementEnabled) {
             if (val > 0) {
                 changeFacingRightAnimation(facingRight);
@@ -208,9 +209,11 @@ public class Player {
             this.x += val;
             playerGCompound.move(val, 0);
         }
+    	}
     }
 
-    public void moveY(double val) {
+    public void moveY(double val, Game game) {
+    	if(checkCollisionX(val, game.getCurrentTile().getColliders())) {
         if (movementEnabled) {
             if (val > 0) {
                 if (facingDown == false) {
@@ -244,7 +247,7 @@ public class Player {
             this.y += val;
             playerGCompound.move(0, val);
         }
-
+    	}
     }
     int i = 0;
     public void tickAnimation() {

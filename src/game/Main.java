@@ -90,19 +90,19 @@ public class Main extends GraphicsProgram{
     }
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-game.getPlayer().getSpeed());
+            game.getPlayer().moveY(-game.getPlayer().getSpeed(), game);
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(game.getPlayer().getSpeed());
+            game.getPlayer().moveY(game.getPlayer().getSpeed(), game);
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-game.getPlayer().getSpeed());
+            game.getPlayer().moveX(-game.getPlayer().getSpeed(), game);
             this.game.getPlayer().setMovingX(true);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(game.getPlayer().getSpeed());
+            game.getPlayer().moveX(game.getPlayer().getSpeed(), game);
             this.game.getPlayer().setMovingX(true);
         }
         if(key_manager.contains("e")) {
