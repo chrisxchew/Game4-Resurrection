@@ -202,7 +202,6 @@ public class Saver {
         ArrayList<GObject> rects = new ArrayList<GObject>();
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         ArrayList<Structure> structures = new ArrayList<Structure>();
-        ArrayList<GLine> colliders = new ArrayList<GLine>();
 
         //split the file text by the Groud{}, Enemies{}, Structures{}, Colliders{}
         String ground = fileText.split("Ground\\{")[1].split("\\}")[0];

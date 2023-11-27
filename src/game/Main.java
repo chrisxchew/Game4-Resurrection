@@ -37,7 +37,7 @@ public class Main extends GraphicsProgram{
     public void run() {
 
         //loads game from save if uncommented
-        
+
         //game = saver.load("save1", this);
 
         addKeyListeners();
