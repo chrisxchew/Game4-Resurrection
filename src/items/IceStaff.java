@@ -10,8 +10,8 @@ import game.Item;
 public class IceStaff extends Item implements Ranged{
 	public IceStaff() {
 
-		GImage image = new GImage("media/Items/Weapons/IceStaff/IceStaff.png");
-		GImage imageReversed = new GImage("media/Items/Weapons/IceStaff/IceStaff_reversed_view.png");
+		GImage image = new GImage("media/Items/Weapons/IceStaff/iceStaff_reversed_view.png");
+		GImage imageReversed = new GImage("media/Items/Weapons/IceStaff/iceStaff.png");
 
 		image.setSize(75,75);	
 		imageReversed.setSize(75,75);

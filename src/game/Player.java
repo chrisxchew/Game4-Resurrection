@@ -58,6 +58,9 @@ public class Player {
 
         }
         FireStaff staff = new FireStaff();
+        IceStaff staff2 = new IceStaff();
+        this.inventory.add(staff2);
+
         this.inventory.add(staff);
         this.inventory.add(new Bow());
         this.inventory.updateGraphicalInterface();
