@@ -95,33 +95,5 @@ public class Game {
     public ArrayList<EnemyProjectile> getEnemyProjectiles() {
         return enemyProjectiles;
     }
-    public void calculateEnemyPlayerCollision(){
-        for(Enemy enemy: this.getCurrentTile().getEnemies()){
-            if(!enemy.isDead() && !enemy.isRanged()){
-                if(enemy.getBody().getBounds().intersects(player.getPlayerGCompound().getBounds())){
-                    player.setHealth(player.getHealth()-1);
-                    player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
-                    //if enemy is above player, subtract 20 from velx
-                    if(enemy.getY() < player.getPlayerCenter().getY()){
-                        player.setVelY(-8);
-                    }
-                    //if enemy is below player, add 20 to velx
-                    else if(enemy.getY() > player.getPlayerCenter().getY()){
-                        player.setVelY(8);
-                    }
-                    //if enemy is to the left of player, subtract 20 from vely
-                    if(enemy.getX() < player.getPlayerCenter().getX()){
-                        player.setVelX(8);
-                    }
-                    //if enemy is to the right of player, add 20 to vely
-                    else if(enemy.getX() > player.getPlayerCenter().getX()){
-                        player.setVelX(-8);
-                    }
 
-                }
-            }
-
-        }
-        
-    }
 }

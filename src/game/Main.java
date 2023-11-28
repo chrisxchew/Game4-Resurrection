@@ -90,6 +90,7 @@ public class Main extends GraphicsProgram{
             for(EnemyProjectile p : this.game.getEnemyProjectiles()){
                 p.tick();
             }
+            this.game.getPlayer().tick();
             this.game.getPlayer().moveX(this.game.getPlayer().getVelX(), game);
             this.game.getPlayer().moveY(this.game.getPlayer().getVelY(), game);
             if(ticknumber%2==0){
@@ -98,21 +99,24 @@ public class Main extends GraphicsProgram{
         
     }
     public void handleKeyStrokes() {
-        if (key_manager.contains("w")) {
-            game.getPlayer().tryMoveY(-game.getPlayer().getSpeed());
-            this.game.getPlayer().setMovingY(true);
-        }
-        if (key_manager.contains("s")) {
-            game.getPlayer().tryMoveY(game.getPlayer().getSpeed());
-            this.game.getPlayer().setMovingY(true);
-        }
-        if (key_manager.contains("a")) {
-            game.getPlayer().tryMoveX(-game.getPlayer().getSpeed());
-            this.game.getPlayer().setMovingX(true);
-        }
-        if (key_manager.contains("d")) {
-            game.getPlayer().tryMoveX(game.getPlayer().getSpeed());
-            this.game.getPlayer().setMovingX(true);
+        if(!inventoryDisplayed){
+            if (key_manager.contains("w")) {
+
+                game.getPlayer().tryMoveY(-game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingY(true);
+            }
+            if (key_manager.contains("s")) {
+                game.getPlayer().tryMoveY(game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingY(true);
+            }
+            if (key_manager.contains("a")) {
+                game.getPlayer().tryMoveX(-game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingX(true);
+            }
+            if (key_manager.contains("d")) {
+                game.getPlayer().tryMoveX(game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingX(true);
+            }
         }
         if(key_manager.contains("e")) {
         	this.game.getPlayer().getInventory().updateGraphicalInterface();

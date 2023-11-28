@@ -34,7 +34,7 @@ public class ArrowProjectile extends Projectile{
                 //if fireball is a certain distance from enemies center
                 if(!e.isDead()){
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
-                        e.setHealth(e.getHealth() - 1);
+                        e.setHealth(e.getHealth() - 7);
 
                         e.knockback(-5);
                         image.setVisible(false);

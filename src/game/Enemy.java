@@ -122,32 +122,23 @@ public abstract class Enemy implements ActionListener {
 	}
     public void calculateEnemyPlayerCollision(Player player){
             if(!isDead() && !isRanged()){
-                if(getBody().getBounds().intersects(player.getPlayerGCompound().getBounds())){
-                    player.setHealth(player.getHealth()-1);
-                    player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
-                    //if enemy is above player, subtract 20 from velx
-                    if(getY() < player.getPlayerCenter().getY()){
-                        player.setVelY(-8);
-                    }
-                    //if enemy is below player, add 20 to velx
-                    else if(getY() > player.getPlayerCenter().getY()){
-                        player.setVelY(8);
-                    }
-                    //if enemy is to the left of player, subtract 20 from vely
-                    if(getX() < player.getPlayerCenter().getX()){
-                        player.setVelX(8);
-                    }
-                    //if enemy is to the right of player, add 20 to vely
-                    else if(getX() > player.getPlayerCenter().getX()){
-                        player.setVelX(-8);
-                    }
-
-                }
+				//if the enemy is a certain distance from the playercenter (25)
+				if(distanceTo(player.getPlayerCenter().getX(), player.getPlayerCenter().getY()) < 65){
+					attackEvent(player);
+				}
             }
 
     
         
     }
+	public void attackEvent(Player player){
+		player.setHealth(player.getHealth()-1);
+		player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
+		player.setInvurnerableCooldown(100);
+		//normalize the knockback vector
+		player.setVelX((int)((player.getPlayerCenter().getX() - this.x) /7));
+		player.setVelY((int)((player.getPlayerCenter().getY() - this.y) / 7));
+	}
 
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
