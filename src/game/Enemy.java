@@ -21,7 +21,7 @@ public abstract class Enemy implements ActionListener {
 	protected boolean isRanged = false;
     protected StatusEffect statusEffect;
     Timer timer;
-    double velocityMultiplier = -2;
+    private double velocityMultiplier = -2;
     protected boolean unloaded = false;
     protected Item drop;
     public Enemy(int x, int y, Game game) {
@@ -204,10 +204,10 @@ public abstract class Enemy implements ActionListener {
     public boolean isDead() {
         return isDead;
     }
-    public void setSpeed(double speed) {
-        this.speed = speed;
+    public void setVelocityMultiplier(double speed) {
+        this.velocityMultiplier = speed;
     }
-    public double getSpeed() {
-        return speed;
+    public double getVelocityMultiplier() {
+        return velocityMultiplier;
     }
 }

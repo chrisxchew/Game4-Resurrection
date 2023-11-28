@@ -1,6 +1,7 @@
 package items;
 
 import game.Enemy;
+import statuseffects.StatusEffectIce;
 
 import java.util.ArrayList;
 public class iceGem extends Projectile{
@@ -38,6 +39,7 @@ public class iceGem extends Projectile{
                         e.knockback(-5);
                         image.setVisible(false);
                         loaded = false;
+                        e.addStatusEffect(new StatusEffectIce(e));
                 }
                 }
                 
