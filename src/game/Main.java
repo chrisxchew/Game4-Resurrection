@@ -6,12 +6,11 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
-import items.Projectile;
-import userinterface.Hotbar;
-import userinterface.Inventory;
+import items.*;
+import userinterface.*;
 
 public class Main extends GraphicsProgram{
-	Timer runTimer = new Timer( 1, this);
+	Timer runTimer = new Timer(1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
     double mouseX=0;
