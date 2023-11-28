@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.Timer;
 
 import acm.graphics.*;
+import statuseffects.StatusEffect;
 
 public abstract class Enemy implements ActionListener {
     protected ArrayList < Item > drops = new ArrayList < Item > ();
@@ -18,6 +19,7 @@ public abstract class Enemy implements ActionListener {
     private int health = 14;
     protected Game game;
 	protected boolean isRanged = false;
+    protected StatusEffect statusEffect;
     Timer timer;
     double velocityMultiplier = -2;
     protected boolean unloaded = false;
@@ -40,9 +42,10 @@ public abstract class Enemy implements ActionListener {
         bodyImage.scale(4);
         this.bodyCompound.add(bodyImage, x, y);
     }
-    public GObject getBody() {
+    public GCompound getBody() {
         return bodyCompound;
     }
+    
     public void setBody(GCompound body) {
         this.bodyCompound = body;
     }
@@ -122,8 +125,7 @@ public abstract class Enemy implements ActionListener {
 	}
     public void calculateEnemyPlayerCollision(Player player){
             if(!isDead() && !isRanged()){
-				//if the enemy is a certain distance from the playercenter (25)
-				if(distanceTo(player.getPlayerCenter().getX(), player.getPlayerCenter().getY()) < 65){
+				if(distanceTo(player.getPlayerCenter().getX(), player.getPlayerCenter().getY()) < 65 && player.getInvurnerableCooldown() <= 0){
 					attackEvent(player);
 				}
             }
@@ -135,14 +137,19 @@ public abstract class Enemy implements ActionListener {
 		player.setHealth(player.getHealth()-1);
 		player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
 		player.setInvurnerableCooldown(100);
-		//normalize the knockback vector
 		player.setVelX((int)((player.getPlayerCenter().getX() - this.x) /7));
 		player.setVelY((int)((player.getPlayerCenter().getY() - this.y) / 7));
 	}
-
+    public void addStatusEffect(StatusEffect effect) {
+        statusEffect = effect;
+    }
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
+            if(statusEffect != null){
+                statusEffect.tick();
+            }
             if (this.isDead) {
+
                 if (checkCollision(targetx, targety)) {
                     for (Item i: drops) {
                         if (i != null) {
