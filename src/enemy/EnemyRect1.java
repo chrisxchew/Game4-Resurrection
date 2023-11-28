@@ -30,20 +30,45 @@ public class EnemyRect1 extends Enemy{
 		this.game.add(p.getCompound());
 		this.game.getEnemyProjectiles().add(p);
 	}
+	int animationStage = 1;
+	boolean finishedAnimation = true;
+	public void animateShooting(int deltaTick){
+		//loop from Blocka_FaceFront_Walk1 to Blocka_FaceFront_Walk3, then go back to Blocka_FaceFront
+		if(deltaTick%5==0){
+			if(!finishedAnimation){
+				if(animationStage == 1){
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk1.png");
+					animationStage = 2;
+					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
+				}else if(animationStage == 2){
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk2.png");
+					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
+					animationStage = 3;
+				}else if(animationStage == 3){
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk3.png");
+					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
+					animationStage = 1;
+					finishedAnimation = true;
+				}
+			}else{
+				((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront.png");
+				((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
+			}
+		}
 
+	}
+//
 	@Override
 	public void attackPlayer(double targetx, double targety, int deltaTick){
-		//System.out.println("distance to player: " + this.distanceTo(targetx, targety));
-		//ranged enemy moves toward the player until it is within 200 pixels of the player, then it stops moving and shoots an projectile at the player
-		if(this.distanceTo(targetx, targety) > 200){
+		if(this.distanceTo(targetx, targety) > 400){
 			this.moveToward(targetx, targety);
 		}else{
 			if(deltaTick%50 == 0){
 				this.shootProjectile(targetx, targety);
-				
-				System.out.println("EnemyRect1 shot projectile");	
-			}
 
+				finishedAnimation = false;
+			}
+				this.animateShooting(deltaTick);
 		}
 	}
 

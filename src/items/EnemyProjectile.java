@@ -10,11 +10,17 @@ public abstract class EnemyProjectile {
     protected Game game;
     protected double speed = 10;
     protected GCompound compound = new GCompound();
+    private boolean unloaded = false;
     public void damagePlayer(double x, double y, Game game){
-        if(game.getPlayer().getPlayerGCompound().getElementAt(x, y) != null) {
-            game.getPlayer().setHealth(game.getPlayer().getHealth() - 1);
-            game.remove(compound);
+        //if distance from the playercenter to the projectile is less than the radius of the player (25)
+        if(!unloaded){
+            if(Math.sqrt(Math.pow(x - game.getPlayer().getPlayerCenter().getX(), 2) + Math.pow(y - game.getPlayer().getPlayerCenter().getY(), 2)) < 25) {
+                game.getPlayer().setHealth(game.getPlayer().getHealth() - 1);
+                game.remove(compound);
+                unloaded = true;
+            }
         }
+
     }
     public void tick() {
         x = this.x + speed * Math.cos(angle);
@@ -23,6 +29,7 @@ public abstract class EnemyProjectile {
         if(x > 1500 || x < 0 || y > 800 || y < 0) {
             game.remove(compound);
         }
+        damagePlayer(x, y, game);
 
     }
 }

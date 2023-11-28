@@ -334,6 +334,7 @@ public class Player {
 
     public void setHealth(int health) {
         this.health = health;
+        this.healthPoints.updateHealthPointsIcons(health);
     }
 
     public int getSelectedHotbarSlot() {

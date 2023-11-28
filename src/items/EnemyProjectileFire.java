@@ -1,6 +1,7 @@
 package items;
 
 import acm.graphics.GCompound;
+import acm.graphics.GImage;
 import acm.graphics.GOval;
 import game.Game;
 
@@ -11,7 +12,8 @@ public class EnemyProjectileFire extends EnemyProjectile{
         this.y = y;
         this.angle = angle;
         this.game = game;
-        this.compound.add(new GOval(10, 10));
+        GImage image = new GImage("media/Items/EnemyProjectile/FireBall.png");
+        this.compound.add(image);
     }
 
     public GCompound getCompound() {
