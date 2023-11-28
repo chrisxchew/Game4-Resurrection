@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import acm.graphics.GLine;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
@@ -275,9 +274,6 @@ public class Saver {
             if(colliderRaw.equals("")){
                 continue;
             }
-            String[] colliderInfo = colliderRaw.split("\\[")[1].split("\\]")[0].split(",");
-            GLine collider = new GLine(Double.parseDouble(colliderInfo[0]), Double.parseDouble(colliderInfo[1]), Double.parseDouble(colliderInfo[2]), Double.parseDouble(colliderInfo[3]));
-            //colliders.add(collider);
         }
 
         tile.setStructures(structures);

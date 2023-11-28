@@ -6,12 +6,11 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import acm.program.*;
-import items.Projectile;
-import userinterface.Hotbar;
-import userinterface.Inventory;
+import items.*;
+import userinterface.*;
 
 public class Main extends GraphicsProgram{
-	Timer runTimer = new Timer( 1, this);
+	Timer runTimer = new Timer(1, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
     double mouseX=0;
@@ -70,7 +69,8 @@ public class Main extends GraphicsProgram{
             }
             for (Enemy enemy: game.getCurrentTile().getEnemies()) {
             	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
-                    .getY(), game.getCurrentTile().getEnemies());
+                    .getY(), game.getCurrentTile().getEnemies(), ticknumber);
+                enemy.calculateEnemyPlayerCollision(game.getPlayer());
             }
             handleKeyStrokes();
 
@@ -87,24 +87,36 @@ public class Main extends GraphicsProgram{
                 p.animate();
                 p.tick();
             }
+            for(EnemyProjectile p : this.game.getEnemyProjectiles()){
+                p.tick();
+            }
+            this.game.getPlayer().tick();
+            this.game.getPlayer().moveX(this.game.getPlayer().getVelX(), game);
+            this.game.getPlayer().moveY(this.game.getPlayer().getVelY(), game);
+            if(ticknumber%2==0){
+                this.game.getPlayer().friction();
+            }
         
     }
     public void handleKeyStrokes() {
-        if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-game.getPlayer().getSpeed(), game);
-            this.game.getPlayer().setMovingY(true);
-        }
-        if (key_manager.contains("s")) {
-            game.getPlayer().moveY(game.getPlayer().getSpeed(), game);
-            this.game.getPlayer().setMovingY(true);
-        }
-        if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-game.getPlayer().getSpeed(), game);
-            this.game.getPlayer().setMovingX(true);
-        }
-        if (key_manager.contains("d")) {
-            game.getPlayer().moveX(game.getPlayer().getSpeed(), game);
-            this.game.getPlayer().setMovingX(true);
+        if(!inventoryDisplayed){
+            if (key_manager.contains("w")) {
+
+                game.getPlayer().tryMoveY(-game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingY(true);
+            }
+            if (key_manager.contains("s")) {
+                game.getPlayer().tryMoveY(game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingY(true);
+            }
+            if (key_manager.contains("a")) {
+                game.getPlayer().tryMoveX(-game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingX(true);
+            }
+            if (key_manager.contains("d")) {
+                game.getPlayer().tryMoveX(game.getPlayer().getSpeed());
+                this.game.getPlayer().setMovingX(true);
+            }
         }
         if(key_manager.contains("e")) {
         	this.game.getPlayer().getInventory().updateGraphicalInterface();

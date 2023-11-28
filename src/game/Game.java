@@ -3,7 +3,9 @@ import java.util.*;
 
 import items.Projectile;
 import userinterface.*;
+import acm.graphics.GObject;
 import acm.program.GraphicsProgram;
+import items.*;
 public class Game {
     private Player player;
     private int screenWidth;
@@ -11,6 +13,7 @@ public class Game {
     private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
     private Hotbar hotbar;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    private ArrayList<EnemyProjectile> enemyProjectiles = new ArrayList<EnemyProjectile>();
     private GraphicsProgram graphicsProgram;
     public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram) {
         this.graphicsProgram = graphicsProgram;
@@ -83,4 +86,14 @@ public class Game {
     public void setTiles(Map < List < Integer > , Tile > tiles) {
         this.tiles = tiles;
     }
+    public void add(GObject obj){
+        this.graphicsProgram.add(obj);
+    }
+    public void remove(GObject obj){
+        this.graphicsProgram.remove(obj);
+    }
+    public ArrayList<EnemyProjectile> getEnemyProjectiles() {
+        return enemyProjectiles;
+    }
+
 }

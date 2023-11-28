@@ -10,7 +10,7 @@ import structures.iceBiomeHill;
 import structures.tree1;
 import structures.Castle;
 import acm.graphics.*;
-import enemy.EnemyRect;
+import enemy.*;
 public class Tile {
     int screenWidth;
     int screenHeight;
@@ -53,18 +53,87 @@ public class Tile {
                 objects.add(rectToAdd);
             }
         }
-        for (int i = 0; i < 10; i++) {
-            if (r.nextInt(500) < 20) {
-                Enemy e = new Enemy(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50, this.game);
-                enemies.add(e);
-            }
-            if (r.nextInt(500) < 20) {
-                EnemyRect e2 = new EnemyRect(r.nextInt(screenWidth - 50) + 50, r.nextInt(screenHeight - 50) + 50, this.game);
-                enemies.add(e2);
-            }
-        }
+        
+        generateEnemies(key);
         generateStrutures();
         this.key = key;
+    }
+    public int getTileDifficulty(List<Integer> key) {
+        //difficulty is the distance from [0,0]
+        return Math.abs(key.get(0)) + Math.abs(key.get(1));
+    }
+    public void generateEnemies(List<Integer> key){
+        Random rand = new Random();
+        //the farther you are from [0,0] the more enemies there are and the harder they are
+        //from 0-10 difficulty the enemies have 1% chance to spawn
+        //from 11-20 difficulty the enemies have 2% chance to spawn
+        //from 21-30 difficulty the enemies have 3% chance to spawn
+        //from 31-40 difficulty the enemies have 4% chance to spawn
+        //from 0-20 mostly lvl 1 enemies spawn and a few lvl 2 enemies spawn
+        //from 21-40 mostly lvl 2 enemies spawn and a few lvl 3 enemies spawn
+        //from 41-60 mostly lvl 3 enemies spawn and a few lvl 4 enemies spawn
+        //from 61-80 only lvl 4 enemies spawn
+        int percent_chance = 0;
+        if(getTileDifficulty(key)%10 > 4){
+            percent_chance = 4;
+        }else{
+            percent_chance = getTileDifficulty(key)%10;
+        }
+        for(int i = 0; i < getTileDifficulty(key)*2;i++){
+            if(percentChance(percent_chance)){
+                if(getTileDifficulty(key) < 20){
+                    int rx = rand.nextInt(800) + 100;
+                    int ry = rand.nextInt(450) + 25;
+                    EnemyTri1 enemy = new EnemyTri1(rx,ry,game);
+                    enemies.add(enemy);
+                }
+                if(getTileDifficulty(key) >= 20 && getTileDifficulty(key) < 40){
+                    //50% chance to spawn a lvl 2 enemy
+                    int rx = rand.nextInt(800) + 100;
+                    int ry = rand.nextInt(450) + 25;
+                    if(percentChance(50)){
+                        EnemyTri2 enemy = new EnemyTri2(rx,ry,game);
+                        enemies.add(enemy);
+                    }else{
+                        EnemyTri1 enemy = new EnemyTri1(rx,ry,game);
+                        enemies.add(enemy);
+                    }
+                }
+                if(getTileDifficulty(key) >= 40 && getTileDifficulty(key) < 60){
+                    //50% chance to spawn a lvl 3 enemy
+                    int rx = rand.nextInt(800) + 100;
+                    int ry = rand.nextInt(450) + 25;
+                    if(percentChance(50)){
+                        EnemyTri3 enemy = new EnemyTri3(rx,ry,game);
+                        enemies.add(enemy);
+                    }else{
+                        EnemyTri2 enemy = new EnemyTri2(rx,ry,game);
+                        enemies.add(enemy);
+                    }
+                }
+                if(getTileDifficulty(key) >= 60 && getTileDifficulty(key) < 80){
+                    //50% chance to spawn a lvl 4 enemy
+                    int rx = rand.nextInt(800) + 100;
+                    int ry = rand.nextInt(450) + 25;
+                    if(percentChance(50)){
+                        EnemyTri4 enemy = new EnemyTri4(rx,ry,game);
+                        enemies.add(enemy);
+                    }else{
+                        EnemyTri3 enemy = new EnemyTri3(rx,ry,game);
+                        enemies.add(enemy);
+                    }
+                }
+                if(getTileDifficulty(key) >= 80){
+                    //50% chance to spawn a lvl 4 enemy
+                    int rx = rand.nextInt(800) + 100;
+                    int ry = rand.nextInt(450) + 25;
+                    EnemyTri4 enemy = new EnemyTri4(rx,ry,game);
+                    enemies.add(enemy);
+                }
+            }
+        }
+
+        
     }
     public boolean percentChance(int percent) {
         Random r = new Random();
