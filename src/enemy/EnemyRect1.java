@@ -25,20 +25,23 @@ public class EnemyRect1 extends Enemy{
 		double dx = targetx - x;
 		double dy = targety - y;
 		double angle = Math.atan2(dy, dx);
-		/* 
-		Projectile p = new Projectile(x, y, angle, this.game);
-		this.game.add(p);
-		*/
+		
+		EnemyProjectileFire p = new EnemyProjectileFire(x, y, angle, this.game);
+		this.game.add(p.getCompound());
+		this.game.getEnemyProjectiles().add(p);
 	}
 
 	@Override
 	public void attackPlayer(double targetx, double targety, int deltaTick){
+		//System.out.println("distance to player: " + this.distanceTo(targetx, targety));
 		//ranged enemy moves toward the player until it is within 200 pixels of the player, then it stops moving and shoots an projectile at the player
 		if(this.distanceTo(targetx, targety) > 200){
 			this.moveToward(targetx, targety);
 		}else{
-			if(deltaTick%100 == 0){
+			if(deltaTick%50 == 0){
 				this.shootProjectile(targetx, targety);
+				
+				System.out.println("EnemyRect1 shot projectile");	
 			}
 
 		}

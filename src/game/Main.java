@@ -87,6 +87,9 @@ public class Main extends GraphicsProgram{
                 p.animate();
                 p.tick();
             }
+            for(EnemyProjectile p : this.game.getEnemyProjectiles()){
+                p.tick();
+            }
             this.game.getPlayer().moveX(this.game.getPlayer().getVelX(), game);
             this.game.getPlayer().moveY(this.game.getPlayer().getVelY(), game);
             if(ticknumber%2==0){

@@ -103,10 +103,10 @@ public abstract class Enemy implements ActionListener {
 
 	public void moveToward(double targetx, double targety) {
 		if ((this.x - targetx) != 0) {
-			moveX(((this.x - targetx) / (Math.abs(this.x - targetx))) * -speed);
+			moveX(((this.x - targetx) / (Math.abs(this.x - targetx))) * velocityMultiplier);
 		}
 		if ((this.y - targety) != 0) {
-			moveY(((this.y - targety) / (Math.abs(this.y - targety))) * -speed);
+			moveY(((this.y - targety) / (Math.abs(this.y - targety))) * velocityMultiplier);
 		}
 	}
 	
@@ -122,7 +122,6 @@ public abstract class Enemy implements ActionListener {
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
             if (this.isDead) {
-				attackPlayer(targetx, targety, deltaTick);
                 if (checkCollision(targetx, targety)) {
                     for (Item i: drops) {
                         if (i != null) {
@@ -137,12 +136,7 @@ public abstract class Enemy implements ActionListener {
                 deathEvent();
 
             } else {
-                if ((this.x - targetx) != 0) {
-                    moveX(((this.x - targetx) / (Math.abs(this.x - targetx))) * velocityMultiplier);
-                }
-                if ((this.y - targety) != 0) {
-                    moveY(((this.y - targety) / (Math.abs(this.y - targety))) * velocityMultiplier);
-                }
+				attackPlayer(targetx, targety, deltaTick);
             }
 
         }
