@@ -8,7 +8,7 @@ public class iceGem extends Projectile{
     public iceGem(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
         super(x, y, isRight , enemies);
 
-        image.scale(5);
+        image.scale(3);
         speed = 10;
     }
     @Override

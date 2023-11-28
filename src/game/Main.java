@@ -25,6 +25,7 @@ public class Main extends GraphicsProgram{
     //loads game from save if uncommented
     Game game = new Game(windowWidth, windowHeight, this);
     //Game game;
+
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
