@@ -2,7 +2,6 @@ package items;
 
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
-import acm.graphics.GOval;
 import game.Game;
 
 public class EnemyProjectileFire extends EnemyProjectile{

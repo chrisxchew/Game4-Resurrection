@@ -8,6 +8,7 @@ public class EnemyRect1 extends Enemy{
 	public EnemyRect1(int x, int y, Game game) {
 		super(x, y, game);
 		this.setHealth(20);
+		this.isRanged = true;
 	}
 	
 	@Override

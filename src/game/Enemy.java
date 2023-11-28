@@ -17,6 +17,7 @@ public abstract class Enemy implements ActionListener {
     private double speed = 1;
     private int health = 14;
     protected Game game;
+	protected boolean isRanged = false;
     Timer timer;
     double velocityMultiplier = -2;
     protected boolean unloaded = false;
@@ -31,7 +32,9 @@ public abstract class Enemy implements ActionListener {
         drop = calculateDrop();
         this.drops.add(drop);
     }
-
+	public boolean isRanged() {
+		return isRanged;
+	}
     protected void addObjectsToCompound(int x, int y) {
         GImage bodyImage = new GImage("media/Characters/DoritoSV/DoritoSV_FaceFront.png");
         bodyImage.scale(4);

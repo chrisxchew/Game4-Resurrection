@@ -97,7 +97,7 @@ public class Game {
     }
     public void calculateEnemyPlayerCollision(){
         for(Enemy enemy: this.getCurrentTile().getEnemies()){
-            if(!enemy.isDead()){
+            if(!enemy.isDead() && !enemy.isRanged()){
                 if(enemy.getBody().getBounds().intersects(player.getPlayerGCompound().getBounds())){
                     player.setHealth(player.getHealth()-1);
                     player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
