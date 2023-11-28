@@ -47,8 +47,8 @@ public class Player {
             Item item = new Cherries();
             this.inventory.add(item);
         }
-        for (int i = 0; i < 10; i++) {
-            Item item = new Sword1();
+        for (int i = 0; i < 1; i++) {
+            Item item = new Sword7();
             this.inventory.add(item);
 
         }
@@ -156,7 +156,8 @@ public class Player {
                 for (Enemy e: game.getCurrentTile().getEnemies()) {
                     if (collidingWithEnemy(e)) {
                         e.knockback(((Melee) this.getCurrentlyEquippedItem()).getKnockback() * -1);
-                        e.setHealth(e.getHealth() - 1);
+                        int SwordDamage = ((Melee) this.getCurrentlyEquippedItem()).getDamage();
+                        e.setHealth(e.getHealth() - SwordDamage);
 
                     }
                 }
