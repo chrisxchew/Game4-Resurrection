@@ -10,9 +10,6 @@ public abstract class Item {
 	public Item() {
 		itemBody = new GCompound();
 		itemBodyRight = new GCompound();
-		//remove in prod
-
-
 	}
 	public GCompound getItemBody() {
 		return itemBody;

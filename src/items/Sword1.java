@@ -9,8 +9,8 @@ import game.Item;
 public class Sword1 extends Item implements Melee{
 	public Sword1() {
 
-		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left.png");
-		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right.png");
+		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left1.png");
+		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right1.png");
 
 		image.setSize(75,75);
 		imageRight.setSize(75,75);
@@ -26,5 +26,9 @@ public class Sword1 extends Item implements Melee{
 	@Override
 	public int getKnockback() {
 		return 5;
+	}
+	@Override
+	public int getDamage() {
+		return 6;
 	}
 }

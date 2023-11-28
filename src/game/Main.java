@@ -25,6 +25,10 @@ public class Main extends GraphicsProgram{
     //loads game from save if uncommented
     Game game = new Game(windowWidth, windowHeight, this);
     //Game game;
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'main' of https://github.com/comp55/final-project-team-4.git
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);

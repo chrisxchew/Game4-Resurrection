@@ -15,7 +15,7 @@ public class Enemy implements ActionListener{
     private double x;
     private double y;
 	protected boolean isDead = false;
-    private int health = 5;
+    private int health = 14;
 	protected Game game;
     Timer timer;
     double velocityMultiplier = -2;

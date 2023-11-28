@@ -22,7 +22,7 @@ public class ArrowProjectile extends Projectile{
         if(isRight){
             image.setImage("media/Projectiles/Arrow.png");
         }else{
-            image.setImage("media/Projectiles/Arrow.png");
+            image.setImage("media/Projectiles/Arrow_Left.png");
         }
 
     }
