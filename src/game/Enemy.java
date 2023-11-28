@@ -120,7 +120,34 @@ public abstract class Enemy implements ActionListener {
 	public void shootProjectile(double targetx, double targety) {
 		throw new UnsupportedOperationException("Unimplemented method, this enemy cannot shoot projectiles");
 	}
+    public void calculateEnemyPlayerCollision(Player player){
+            if(!isDead() && !isRanged()){
+                if(getBody().getBounds().intersects(player.getPlayerGCompound().getBounds())){
+                    player.setHealth(player.getHealth()-1);
+                    player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
+                    //if enemy is above player, subtract 20 from velx
+                    if(getY() < player.getPlayerCenter().getY()){
+                        player.setVelY(-8);
+                    }
+                    //if enemy is below player, add 20 to velx
+                    else if(getY() > player.getPlayerCenter().getY()){
+                        player.setVelY(8);
+                    }
+                    //if enemy is to the left of player, subtract 20 from vely
+                    if(getX() < player.getPlayerCenter().getX()){
+                        player.setVelX(8);
+                    }
+                    //if enemy is to the right of player, add 20 to vely
+                    else if(getX() > player.getPlayerCenter().getX()){
+                        player.setVelX(-8);
+                    }
 
+                }
+            }
+
+    
+        
+    }
 
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
@@ -146,8 +173,7 @@ public abstract class Enemy implements ActionListener {
     }
 
     public boolean checkCollision(double targetx, double targety) {
-        //if 25 pixels away from target, return true else return false
-        if (Math.abs(this.x - targetx) < 25 && Math.abs(this.y - targety) < 25) {
+        if (Math.abs(this.x - targetx) < 25 && Math.abs(this.y - targety) < 20) {
             return true;
         }
         return false;
