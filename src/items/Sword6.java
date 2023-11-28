@@ -29,6 +29,6 @@ public class Sword6 extends Item implements Melee{
 	}
 	@Override
 	public int getDamage() {
-		return 12;
+		return 17;
 	}
 }
