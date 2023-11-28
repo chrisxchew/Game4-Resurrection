@@ -70,7 +70,7 @@ public class Main extends GraphicsProgram{
             game.calculateEnemyPlayerCollision();
             for (Enemy enemy: game.getCurrentTile().getEnemies()) {
             	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
-                    .getY(), game.getCurrentTile().getEnemies());
+                    .getY(), game.getCurrentTile().getEnemies(), ticknumber);
             }
             handleKeyStrokes();
 

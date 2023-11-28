@@ -97,17 +97,32 @@ public abstract class Enemy implements ActionListener {
 
     protected abstract Item calculateDrop();
 
-    public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
+	public double distanceTo(double targetx, double targety) {
+		return Math.sqrt(Math.pow(this.x - targetx, 2) + Math.pow(this.y - targety, 2));
+	}
+
+	public void moveToward(double targetx, double targety) {
+		if ((this.x - targetx) != 0) {
+			moveX(((this.x - targetx) / (Math.abs(this.x - targetx))) * -speed);
+		}
+		if ((this.y - targety) != 0) {
+			moveY(((this.y - targety) / (Math.abs(this.y - targety))) * -speed);
+		}
+	}
+	
+	public void attackPlayer(double targetx, double targety, int deltaTick) {
+		moveToward(targetx, targety);
+	}
+
+	public void shootProjectile(double targetx, double targety) {
+		throw new UnsupportedOperationException("Unimplemented method, this enemy cannot shoot projectiles");
+	}
+
+
+    public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
             if (this.isDead) {
-                if (Math.abs(this.x - targetx) < 100 && Math.abs(this.y - targety) < 100) {
-                    if ((this.x - targetx) != 0) {
-                        moveX(((this.x - targetx) / (Math.abs(this.x - targetx))) * -speed);
-                    }
-                    if ((this.y - targety) != 0) {
-                        moveY(((this.y - targety) / (Math.abs(this.y - targety))) * -speed);
-                    }
-                }
+				attackPlayer(targetx, targety, deltaTick);
                 if (checkCollision(targetx, targety)) {
                     for (Item i: drops) {
                         if (i != null) {
