@@ -3,13 +3,10 @@ package enemy;
 
 import acm.graphics.GImage;
 import game.*;
-import items.Cherries;
+import items.*;
 public class EnemyTri2 extends Enemy{
-	private Item cherry;
 	public EnemyTri2(int x, int y, Game game) {
 		super(x, y, game);
-		cherry = new Cherries();
-		this.drops.add(cherry);
 		this.setHealth(8);
 	}
 	
@@ -20,15 +17,25 @@ public class EnemyTri2 extends Enemy{
 		this.bodyCompound.add(body,x-25,y-25);
 	}
 	
+
+
 	@Override
-	protected void deathEvent() {
-		isDead = true;
-		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
-				this.bodyCompound.getElement(i).setVisible(false);	
-				this.isDead = true;
-				cherry.getItemBody().setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
-				this.bodyCompound.removeAll();
-				this.bodyCompound.add(cherry.getItemBody());
+	protected Item calculateDrop() {
+		//enemy 1 has a 10% chance of dropping a cherry, 5% chance of dropping a level 3 sword, 5% chance of dropping an arrow, 1% chance of dropping a level 4 sword
+		if(percentChance(10)){
+			return new Cherries();
+		}else if(percentChance(5)){
+			return new Sword3();
 		}
-    }
+		else if(percentChance(5)){
+			return new Arrow();
+		}
+		else if(percentChance(1)){
+			return new Sword4();
+		}
+		else{
+			return null;
+		}
+
+	}
 }

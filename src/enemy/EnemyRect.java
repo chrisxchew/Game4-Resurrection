@@ -30,4 +30,10 @@ public class EnemyRect extends Enemy{
 				this.bodyCompound.add(cherry.getItemBody());
 		}
     }
+
+	@Override
+	protected Item calculateDrop() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'calculateDrop'");
+	}
 }

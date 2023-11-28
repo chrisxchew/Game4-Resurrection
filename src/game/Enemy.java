@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 
-public class Enemy implements ActionListener{
+public abstract class Enemy implements ActionListener{
 	protected ArrayList<Item> drops = new ArrayList<Item>();
 	protected GCompound bodyCompound;
     private double x;
@@ -20,6 +20,7 @@ public class Enemy implements ActionListener{
     Timer timer;
     double velocityMultiplier = -2;
     protected boolean unloaded = false;
+	protected Item drop;
     public Enemy(int x, int y, Game game) {
     	bodyCompound = new GCompound();
     	this.x = x;
@@ -27,6 +28,8 @@ public class Enemy implements ActionListener{
 		this.game = game;
         addObjectsToCompound(x,y);
     	this.timer = new Timer(10, this);
+		drop = calculateDrop();
+		this.drops.add(drop);
     }
 
 	protected void addObjectsToCompound(int x, int y) {
@@ -66,21 +69,32 @@ public class Enemy implements ActionListener{
     		velocityMultiplier = -2;
     	}
     }
+	protected boolean percentChance(int percent) {
+		int chance = (int)(Math.random()*100);
+		if(chance < percent) {
+			return true;
+		}
+		return false;
+	}
     
-    protected void deathEvent() {
-		this.isDead = true;
+	protected void deathEvent() {
+		isDead = true;
 		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
 				this.bodyCompound.getElement(i).setVisible(false);	
 				this.isDead = true;
-				for(Item drop : drops){
-					drop.getItemBody().setLocation(this.bodyCompound.getElement(i).getX(), this.bodyCompound.getElement(i).getY());
-					this.bodyCompound.add(drop.getItemBody());
+				if(drop != null){
+				drop.getItemBody().setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
+								this.bodyCompound.removeAll();
+				this.bodyCompound.add(drop.getItemBody());
+				}else{
+					this.bodyCompound.removeAll();
+					this.unloaded = true;
 				}
-				this.bodyCompound.removeAll();
+
 
 		}
     }
-    
+    protected abstract Item calculateDrop();
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies) {
     	if(!this.unloaded) {
 			if(this.isDead){
@@ -93,7 +107,12 @@ public class Enemy implements ActionListener{
 					}
 				}
 				if(checkCollision(targetx, targety)){
-					this.game.getPlayer().getInventory().addAll(drops);
+					for(Item i : drops){
+						if(i != null){
+							game.getPlayer().getInventory().add(i);
+						}
+					}
+					this.game.getPlayer().getInventory().updateGraphicalInterface();
 					this.bodyCompound.removeAll();
 					this.unloaded = true;
 				}

@@ -68,6 +68,7 @@ public class Main extends GraphicsProgram{
                     add(enemy.getBody());
                 }
             }
+            game.calculateEnemyPlayerCollision();
             for (Enemy enemy: game.getCurrentTile().getEnemies()) {
             	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
                     .getY(), game.getCurrentTile().getEnemies());
@@ -87,23 +88,28 @@ public class Main extends GraphicsProgram{
                 p.animate();
                 p.tick();
             }
+            this.game.getPlayer().moveX(this.game.getPlayer().getVelX(), game);
+            this.game.getPlayer().moveY(this.game.getPlayer().getVelY(), game);
+            if(ticknumber%2==0){
+                this.game.getPlayer().friction();
+            }
         
     }
     public void handleKeyStrokes() {
         if (key_manager.contains("w")) {
-            game.getPlayer().moveY(-game.getPlayer().getSpeed(), game);
+            game.getPlayer().tryMoveY(-game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("s")) {
-            game.getPlayer().moveY(game.getPlayer().getSpeed(), game);
+            game.getPlayer().tryMoveY(game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingY(true);
         }
         if (key_manager.contains("a")) {
-            game.getPlayer().moveX(-game.getPlayer().getSpeed(), game);
+            game.getPlayer().tryMoveX(-game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingX(true);
         }
         if (key_manager.contains("d")) {
-            game.getPlayer().moveX(game.getPlayer().getSpeed(), game);
+            game.getPlayer().tryMoveX(game.getPlayer().getSpeed());
             this.game.getPlayer().setMovingX(true);
         }
         if(key_manager.contains("e")) {
