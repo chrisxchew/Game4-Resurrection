@@ -73,5 +73,8 @@ public class Castle extends Structure {
 		GLine r5BotCastle = new GLine(716, 330, 746, 360);
 		this.getColliders().add(r5BotCastle);
 
+		//Entrance to castle
+		GLine door = new GLine(285, 160, 290, 320);
+		this.setDoor(door);
 	}
 }
