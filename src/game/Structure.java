@@ -8,6 +8,7 @@ import acm.graphics.GLine;
 public abstract class Structure {
 	private ArrayList<GObject> objects = new ArrayList<GObject>();
 	private ArrayList<GLine> colliders = new ArrayList<GLine>();
+	private GLine door = null;
 	private int x;
 	private int y;
 	
@@ -37,7 +38,10 @@ public abstract class Structure {
 	public ArrayList<GLine> getColliders(){
 		return colliders;
 	}
-	
-	
-	
+	public GLine getDoor() {
+		return door;
+	}
+	public void setDoor(GLine d) {
+		door = d;
+	}
 }

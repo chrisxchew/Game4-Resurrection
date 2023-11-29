@@ -9,8 +9,8 @@ import userinterface.*;
 
 public class Player {
 
-    private double health;
-    private double speed;
+    private int health;
+    private int speed;
     private GCompound playerGCompound;
     private int x;
     private int y;
@@ -26,10 +26,11 @@ public class Player {
     private boolean movingX = false;
     private boolean movingY = false;
     private int selectedHotbarSlot = 0;
-
+    private int velX = 0;
+    private int velY = 0;
     static private String PLAYERIMGPATH = "media/Characters/Blurby/";
     static private int ATTACKCOOLDOWN = 25;
-
+    private int invurnerableCooldown = 0;
 
     //0 is up, 1 is down, 2 is left, 3 is right
     int facing = 0;
@@ -48,7 +49,7 @@ public class Player {
             this.inventory.add(item);
         }
         for (int i = 0; i < 1; i++) {
-            Item item = new Sword7();
+            Item item = new Sword1();
             this.inventory.add(item);
 
         }
@@ -68,6 +69,7 @@ public class Player {
 
         this.currentlyEquippedItem = inventory.getInventory().get(0);
         playerGCompound.add(playerBody);
+        
         playerGCompound.add(currentlyEquippedItem.getItemBody());
         this.getCurrentlyEquippedItem().getItemBody().setLocation(-50, -15);
         this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500, -15);
@@ -87,6 +89,7 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
         speed = 5;
+        health = 20;
     }
     public boolean checkCollisionX(double moveX, ArrayList<GLine> colliders){
         for(GLine col : colliders){
@@ -103,6 +106,17 @@ public class Player {
             }
         }
         return true;
+    }
+    public void tick(){
+        if(invurnerableCooldown > 0){
+            invurnerableCooldown--;
+            if(invurnerableCooldown %2==0){
+            this.playerBody.setVisible(!this.playerBody.isVisible());
+            }
+        }
+        if(invurnerableCooldown == 0){
+            this.playerBody.setVisible(true);
+        }
     }
     public boolean checkCollisionY(double moveY, ArrayList<GLine> colliders){
     for(GLine col : colliders){
@@ -121,14 +135,14 @@ public class Player {
     return true;
     }   
     public boolean collidingWithEnemy(Enemy e) {
-        if (
-            e.getY() > this.y - playerHeight*2 &&
-            e.getY() < this.y + playerHeight
-        ) {
-            if ((e.getX() > this.x + playerWidth &&
-                    e.getX() < this.x + playerWidth*2) ||
-                (e.getX() > this.x - playerWidth &&
-                    e.getX() < this.x)) {
+        //if enemy is in the same direction as the player is facing and if the enemy is within 100 pixels of the player then return true
+
+        if(facingRight){
+            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
+                return true;
+            }
+        }else{
+            if(e.getX() < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
                 return true;
             }
         }
@@ -213,7 +227,7 @@ public class Player {
     }
     public void moveX(double val, Game game) {
     	if(checkCollisionX(val, game.getCurrentTile().getColliders())) {
-        if (movementEnabled) {
+
             if (val > 0) {
                 changeFacingRightAnimation(facingRight);
                 this.facingRight = true;
@@ -224,13 +238,13 @@ public class Player {
             }
             this.x += val;
             playerGCompound.move(val, 0);
-        }
+        
     	}
     }
 
     public void moveY(double val, Game game) {
     	if(checkCollisionY(val, game.getCurrentTile().getColliders())) {
-        if (movementEnabled) {
+
             if (val > 0) {
                 if (facingDown == false) {
                     if (!movingX) {
@@ -262,8 +276,21 @@ public class Player {
 
             this.y += val;
             playerGCompound.move(0, val);
-        }
+        
     	}
+    }
+    public void friction(){
+        //reduce velocityx and velocityy by 1
+        if(velX > 0){
+            velX--;
+        }else if(velX < 0){
+            velX++;
+        }
+        if(velY > 0){
+            velY--;
+        }else if(velY < 0){
+            velY++;
+        }
     }
     int i = 0;
     public void tickAnimation() {
@@ -319,12 +346,13 @@ public class Player {
             }
         }
     }
-    public double getHealth() {
+    public int getHealth() {
         return health;
     }
 
-    public void setHealth(double health) {
+    public void setHealth(int health) {
         this.health = health;
+        this.healthPoints.updateHealthPointsIcons(health);
     }
 
     public int getSelectedHotbarSlot() {
@@ -345,17 +373,32 @@ public class Player {
         }
 
     }
+
+    public void tryMoveX(int val){
+        if(velX > val){
+            velX--;
+        }if(velX < val){
+            velX++;
+        }
+    }
+    public void tryMoveY(int val){
+        if(velY > val){
+            velY--;
+        }if(velY < val){
+            velY++;
+        }
+    }
     //Deals damage to the player, 
     //deducting amount "damage" from the players health
-    public void dealDamage(double damage) {
+    public void dealDamage(int damage) {
         this.health = this.health - damage;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 
@@ -439,4 +482,26 @@ public class Player {
     public void setInventory(Inventory i2) {
         this.inventory = i2;
     }
+    public void setVelX(int velX) {
+        this.velX = velX;
+    }
+    public void setVelY(int velY) {
+        this.velY = velY;
+    }
+    public int getVelX() {
+        return velX;
+    }
+    public int getVelY() {
+        return velY;
+    }
+    public int getInvurnerableCooldown() {
+        return invurnerableCooldown;
+    }
+    public void setInvurnerableCooldown(int invurnerableCooldown) {
+        this.invurnerableCooldown = invurnerableCooldown;
+    }
+    public GObject getPlayerBody() {
+        return playerBody;
+    }
+
 }
