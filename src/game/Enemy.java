@@ -24,10 +24,11 @@ public abstract class Enemy implements ActionListener {
     private double velocityMultiplier = -2;
     protected boolean unloaded = false;
     protected Item drop;
-    boolean damageImageOn = false;
+    boolean damageImageOn = true;
     int damageImageTimer = 0;
     public Enemy(int x, int y, Game game) {
         bodyCompound = new GCompound();
+        
         this.x = x;
         this.y = y;
         this.game = game;

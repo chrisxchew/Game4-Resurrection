@@ -15,28 +15,50 @@ public class Main extends GraphicsProgram{
     static int windowWidth = 1000;
     double mouseX=0;
     double mouseY=0;
+    boolean mainMenuOn = true;
     private boolean inventoryDisplayed = false;
     private boolean canChangeInventoryDisplayed = true;
     private Item floatingItem;
+    private MainMenu mainMenu = new MainMenu(this);
     Window window = new Window(windowWidth, windowHeight);
     Saver saver = new Saver();
     
     //loads game from save if uncommented
-    Game game = new Game(windowWidth, windowHeight, this);
-    //Game game;
+    
+    Game game;
 
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
         requestFocus();
     }
+    public void loadMainMenu(){
+        for (GObject object: mainMenu.getObjects()) {
+            add(object);
+        }
+        addMouseListeners();
+    }
     //Hi...
     @Override
     public void run() {
-
-        //loads game from save if uncommented
-        //game = saver.load("save1", this);
-
+        loadMainMenu();
+    }
+    public void startGame(){
+        game = new Game(windowWidth, windowHeight, this);
+        mainMenuOn = false;
+        removeAll();
+        addKeyListeners();
+        addMouseListeners();
+        drawTiles();
+        add(game.getPlayer().getPlayerGCompound());
+        addEnemySprites();
+        drawUI();
+        runTimer.start();
+    }
+    public void loadGame(String saveName){
+        game = saver.load(saveName, this);
+        mainMenuOn = false;
+        removeAll();
         addKeyListeners();
         addMouseListeners();
         drawTiles();
@@ -244,42 +266,51 @@ public class Main extends GraphicsProgram{
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        if(!checkInventoryInteraction(e)){
-            this.game.getPlayer().attackPressed(this.game);
+        if(mainMenuOn && e.getButton() == 1){
+            mainMenu.keyPressed(e);
+        }else{
+            if(!checkInventoryInteraction(e)){
+                this.game.getPlayer().attackPressed(this.game);
+            }
         }
     }
     @Override
     public void	mouseMoved(MouseEvent e){
         	this.mouseX = e.getX();
         	this.mouseY = e.getY();
+
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_W) {
-            if (!key_manager.contains("w")) {
-                key_manager.add("w");
+        //key is left click
+
+            int keyCode = e.getKeyCode();
+            if (keyCode == KeyEvent.VK_W) {
+                if (!key_manager.contains("w")) {
+                    key_manager.add("w");
+                }
             }
-        }
-        if (keyCode == KeyEvent.VK_S) {
-            if (!key_manager.contains("s")) {
-                key_manager.add("s");
+            if (keyCode == KeyEvent.VK_S) {
+                if (!key_manager.contains("s")) {
+                    key_manager.add("s");
+                }
             }
-        }
-        if (keyCode == KeyEvent.VK_A) {
-            if (!key_manager.contains("a")) {
-                key_manager.add("a");
+            if (keyCode == KeyEvent.VK_A) {
+                if (!key_manager.contains("a")) {
+                    key_manager.add("a");
+                }
             }
-        }
-        if (keyCode == KeyEvent.VK_D) {
-            if (!key_manager.contains("d")) {
-                key_manager.add("d");
+            if (keyCode == KeyEvent.VK_D) {
+                if (!key_manager.contains("d")) {
+                    key_manager.add("d");
+                }
             }
-        }
-        if (keyCode == KeyEvent.VK_E) {
-            if (!key_manager.contains("e")) {
-                key_manager.add("e");
+            if (keyCode == KeyEvent.VK_E) {
+                if (!key_manager.contains("e")) {
+                    key_manager.add("e");
             }
+            
+        
         }
         //if key is between 0-9 change selected hot bar slot in player
         //1 is 0 and 0 is 10
@@ -301,6 +332,7 @@ public class Main extends GraphicsProgram{
             Game newGame = saver.load("save1", this);
             System.out.println(newGame.getPlayer().getInventory().getInventory());
         }
+        
     }
 
 
