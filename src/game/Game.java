@@ -2,6 +2,7 @@ package game;
 import java.util.*;
 
 import items.Projectile;
+import structures.Castle;
 import userinterface.*;
 import acm.graphics.GObject;
 import acm.program.GraphicsProgram;
@@ -10,14 +11,16 @@ public class Game {
     private Player player;
     private int screenWidth;
     private int screenHeight;
+    private boolean inCastle = false;
     private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
     private Hotbar hotbar;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     private ArrayList<EnemyProjectile> enemyProjectiles = new ArrayList<EnemyProjectile>();
     private GraphicsProgram graphicsProgram;
+    private Castle castle = null;
     public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram) {
         this.graphicsProgram = graphicsProgram;
-        player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight);
+        player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight, this);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         List < Integer > id = Arrays.asList(new Integer[] {
@@ -26,6 +29,12 @@ public class Game {
         });
         tiles.put(id, new Tile(screenWidth, screenHeight, id, null, this));
         hotbar = new Hotbar(player.getInventory(),player);
+        player.setTile(id);
+        for(Structure structure:this.getCurrentTile().getStructures()){
+            if(structure instanceof Castle){
+                castle = (Castle) structure;
+            }
+        }
     }
     public GraphicsProgram getGraphicsProgram() {
         return graphicsProgram;
@@ -43,8 +52,14 @@ public class Game {
         this.player = player;
     }
     public Tile getCurrentTile() {
-        return tiles.get(player.getTile());
+        if(isInCastle()){
+            return castle.getCastleTile();
+        }else{
+            return tiles.get(player.getTile());
+        }
+
     }
+    
     public ArrayList < Tile > getNeighbors(List < Integer > tile) {
         ArrayList < Tile > output = new ArrayList < Tile > ();
         int index0 = tile.get(0);
@@ -59,11 +74,27 @@ public class Game {
             new ArrayList < Integer > (Arrays.asList(index0, index1 - 1))));
         return output;
     }
+    public void enterCastle(Castle castle){
+        inCastle = true;
+        this.castle = castle;
+        this.player.setX(50);
+        this.player.setY(200);
+    }
+    public void exitCastle(){
+        inCastle = false;
+        this.player.setX(10);
+        this.player.setY(275);
+    }
+    public Castle getCastle(){
+        return castle;
+    }
+
     public void moveTiles(int x, int y) {
         List < Integer > key = new ArrayList < Integer > ();
         key.add(this.player.getTile().get(0) + x);
         key.add(this.player.getTile().get(1) + y);
         this.player.setTile(key);
+
         if (tiles.get(player.getTile()) == null) {
             tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile(),
                 getNeighbors(player.getTile()), this));
@@ -78,6 +109,11 @@ public class Game {
             this.player.setY(screenHeight - player.getPlayerHeight() - 1);
         } else {
             System.out.println("moveTiles function usage: (0,1), (1,0)");
+        }
+                for(Structure structure:tiles.get(key).getStructures()){
+            if(structure instanceof Castle){
+                castle = (Castle) structure;
+            }
         }
     }
     public Map < List < Integer > , Tile > getTiles() {
@@ -94,6 +130,9 @@ public class Game {
     }
     public ArrayList<EnemyProjectile> getEnemyProjectiles() {
         return enemyProjectiles;
+    }
+    public boolean isInCastle() {
+        return inCastle;
     }
 
 }

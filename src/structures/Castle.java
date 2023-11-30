@@ -3,11 +3,23 @@ package structures;
 import acm.graphics.GImage;
 import acm.graphics.GLine;
 import game.Structure;
+import game.Tile;
 
 public class Castle extends Structure {
-
-	public Castle(int x, int y) {
+	private Tile parentTile;
+	private CastleTile castleTile;
+	private boolean bossCastle = false;
+	public Castle(int x, int y, Tile parentTile) {
 		super(x, y);
+		this.parentTile = parentTile;
+		this.castleTile = new CastleTile(this);
+		//has tile difficulty (capped at 15%) to be boss tile
+		if((double)parentTile.getTileDifficulty(parentTile.getKey())> 15){
+			bossCastle = true;
+		}else if(Math.random() < (double)parentTile.getTileDifficulty(parentTile.getKey())){
+			bossCastle = true;
+		}
+		this.castleTile.setParentCastle(this);
 		GImage castle = new GImage("media/Buildings/Castle2.0-1.png.png");
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
@@ -72,9 +84,18 @@ public class Castle extends Structure {
 		this.getColliders().add(r4BotCastle);
 		GLine r5BotCastle = new GLine(716, 330, 746, 360);
 		this.getColliders().add(r5BotCastle);
-//Alrighty then
+		//Alrighty then
 		//Entrance to castle
 		GLine door = new GLine(285, 160, 290, 320);
 		this.setDoor(door);
+	}
+	public CastleTile getCastleTile() {
+		return castleTile;
+	}
+	public boolean isBossCastle() {
+		return bossCastle;
+	}
+	public Tile getParentTile() {
+		return parentTile;
 	}
 }
