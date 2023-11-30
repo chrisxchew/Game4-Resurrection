@@ -75,7 +75,7 @@ public class EnemyRect2 extends Enemy{
 
 	@Override
 	protected Item calculateDrop() {
-		if(percentChance(5)){
+		if(percentChance(15)){
 			return new Bow();
 		}
 		if(percentChance(15)){

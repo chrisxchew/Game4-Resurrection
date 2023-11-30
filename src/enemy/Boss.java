@@ -114,7 +114,10 @@ public class Boss extends Enemy {
             shieldCooldown = 500;
             shieldHealth = 3;
             flashing = false;
+            if(bodyCompound.getElementCount() > 0){
             this.bodyCompound.getElement(0).setVisible(true);
+            }
+
         }
     }
     public void flash(int cooldown) {
@@ -185,7 +188,7 @@ public class Boss extends Enemy {
                     this.summonEnemy();
                 }
             }
-            if (deltaTick % 300 == 0) {
+            if (deltaTick % 10 == 0) {
                 int chance = (int)(Math.random() * 100);
                 if (chance == 10) {
                     int y = (int)(Math.random() * 500);
