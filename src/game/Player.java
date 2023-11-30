@@ -83,7 +83,7 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
         speed = 5;
-        health = 20;
+        health = 1;
     }
     public boolean checkCollisionDoor(double moveX, GLine door){
             for(i = 1; i < Math.abs(moveX); i++){
@@ -112,9 +112,6 @@ public class Player {
             colliders2.add(new GLine(0, 500, 1000, 500));
             colliders2.add(new GLine(0, 0, 0, 500));
             colliders2.add(new GLine(1000, 0, 1000, 500));
-
-            
-            
         }
         for(GLine col : colliders2){
             for(i = 1; i < Math.abs(moveX)+5; i++){
@@ -148,8 +145,6 @@ public class Player {
             colliders2.add(col);
         }
         if(game.isInCastle()){
-            //add lines for the top bottom left and right of screen
-            //screen is 1000x500
             colliders2.add(new GLine(0, 0, 1000, 0));
             colliders2.add(new GLine(0, 500, 1000, 500));
             colliders2.add(new GLine(0, 0, 0, 500));

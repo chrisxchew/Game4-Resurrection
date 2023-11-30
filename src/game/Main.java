@@ -11,6 +11,7 @@ import items.*;
 import userinterface.*;
 
 public class Main extends GraphicsProgram{
+    String save = "";
 	Timer runTimer = new Timer(15, this);
     static int windowHeight = 500;
     static int windowWidth = 1000;
@@ -22,6 +23,7 @@ public class Main extends GraphicsProgram{
     private boolean canChangeInventoryDisplayed = true;
     private Item floatingItem;
     private MainMenu mainMenu = new MainMenu(this);
+    private boolean isGameOver = false;
     Window window = new Window(windowWidth, windowHeight);
     Saver saver = new Saver();
     Game game;
@@ -49,9 +51,21 @@ public class Main extends GraphicsProgram{
         addMouseListeners();
         loadMainMenu();
     }
+    GameOver gameOver = new GameOver(this);
     public void gameOver(){
-        //TODO
-        System.exit(0);
+
+        isGameOver = true;
+        removeAll();
+        for(GObject object: gameOver.getObjects()){
+            System.out.println(object);
+            add(object);
+        }
+        runTimer.stop();
+        System.out.println("Deleting world files");
+        Saver saver = new Saver();
+        if(saver.checkIfSaveExists(save)){
+            saver.removeAllInSaveDirectory(save);
+        }
     }
     public void startGame(){
         removeMainMenu();
@@ -69,6 +83,7 @@ public class Main extends GraphicsProgram{
         mainMenuOn = false;
         removeMainMenu();
         game = saver.load(saveName, this);
+        save = saveName;
         removeAll();
         addKeyListeners();
         drawTiles();
@@ -281,14 +296,14 @@ public class Main extends GraphicsProgram{
                 game.getPlayer().getInventory().getTrashcan().sendForward();
                 return true;
             }else{
-                this.floatingItem = i.getClickedItem(e.getX(), e.getY());
-                if(floatingItem != null){
-                i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), null);
-                i.updateGraphicalInterface();
-                add(this.floatingItem.getItemBody());
-                h.updateHotbar();
-                game.getPlayer().getInventory().getTrashcan().sendForward();
-                return true;
+                    this.floatingItem = i.getClickedItem(e.getX(), e.getY());
+                    if(floatingItem != null){
+                    i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), null);
+                    i.updateGraphicalInterface();
+                    add(this.floatingItem.getItemBody());
+                    h.updateHotbar();
+                    game.getPlayer().getInventory().getTrashcan().sendForward();
+                    return true;
                 }
 
             }
@@ -301,6 +316,9 @@ public class Main extends GraphicsProgram{
     }
     @Override
     public void mousePressed(MouseEvent e) {
+        if(isGameOver){
+            gameOver.keyPressed(e);
+        }
         if(mainMenuOn && e.getButton() == 1){
             mainMenu.keyPressed(e);
         }
@@ -330,6 +348,7 @@ public class Main extends GraphicsProgram{
     boolean isPaused = false;
     public void saveGame(String saveName){
         saver.save(this.game, saveName);
+        this.save = saveName;
     }
     @Override
     public void keyPressed(KeyEvent e) {
