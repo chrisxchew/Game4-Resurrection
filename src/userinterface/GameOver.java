@@ -2,7 +2,6 @@ package userinterface;
 
 import acm.graphics.GImage;
 import acm.graphics.GRect;
-import game.Saver;
 import acm.graphics.GObject;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
