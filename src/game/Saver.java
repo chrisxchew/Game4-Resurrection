@@ -51,12 +51,24 @@ public class Saver {
      * }
      * 
      */
+    public void removeAllInSaveDirectory(String saveName){
+        //if files exist:
+
+        if(!new File(PATHNAME + "/" + saveName).exists()){
+            return;
+        }
+        File file = new File(PATHNAME + "/" + saveName);
+        for(File f : file.listFiles()){
+            f.delete();
+        }
+        file.delete();
+    }
     public void save(Game game, String saveName){
-        saveInventory(saveName ,game);
+        removeAllInSaveDirectory(saveName);
         if(!new File(PATHNAME + "/" + saveName).exists()) {
         	makeSaveFolder(saveName);
         }
-        
+        saveInventory(saveName ,game);
         for(List < Integer > key : game.getTiles().keySet()) {
         	Tile currentTile = game.getTiles().get(key);
             File currentFile = makeFile("Tile"+key.get(0)+"_"+key.get(1)+"_"+game.getTiles().get(key).getBiome().getClass().getName(), PATHNAME, saveName);
@@ -321,5 +333,8 @@ public class Saver {
         return null;
         
     }
-
+    public boolean checkIfSaveExists(String saveName){
+        return new File(PATHNAME + "/" + saveName).exists();
+    }
+   
 }

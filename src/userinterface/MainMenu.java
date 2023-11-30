@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 import acm.graphics.*;
 import game.Main;
+import game.Saver;
 
 public class MainMenu implements ActionListener{
     private ArrayList<GObject> objects = new ArrayList<GObject>();
@@ -60,20 +61,27 @@ public class MainMenu implements ActionListener{
 
     public void keyPressed(MouseEvent e) {
         //buttosn are 225 width
-
+        Saver saver = new Saver();
         if(loadScreen){
             if(main.getElementAt(e.getX(), e.getY()) == saveButton1){
-                main.loadGame("save1");
-                timer.stop();
-                return;
+                if(saver.checkIfSaveExists("save1")){
+                    main.loadGame("save1");
+                    timer.stop();
+                    return;
+                }
+
             }else if(main.getElementAt(e.getX(), e.getY()) == saveButton2){
-                main.loadGame("save2");
-                timer.stop();
-                return;
+                if(saver.checkIfSaveExists("save2")){
+                    main.loadGame("save2");
+                    timer.stop();
+                    return;
+                }
             }else if(main.getElementAt(e.getX(), e.getY()) == saveButton3){
-                main.loadGame("save3");
-                timer.stop();
-                return;
+                if(saver.checkIfSaveExists("save3")){
+                    main.loadGame("save3");
+                    timer.stop();
+                    return;
+                }
             }else if(main.getElementAt(e.getX(), e.getY()) == backButton){
                 remakeMainMenu();
                 return;

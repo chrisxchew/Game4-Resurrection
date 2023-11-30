@@ -42,7 +42,7 @@ public class PauseMenu {
     public void keyPressed(MouseEvent e){
         if(saveScreen){
             if(main.getElementAt(e.getX(), e.getY()) == saveButton1){
-                //main.saveGame(1);
+                main.saveGame("save1");
                 saveScreen = false;
                 main.removePauseMenuObjects(this);
                 objects.remove(saveButton1);
@@ -55,7 +55,7 @@ public class PauseMenu {
                 return;
             }
             if(main.getElementAt(e.getX(), e.getY()) == saveButton2){
-                //main.saveGame(2);
+                main.saveGame("save2");
                 saveScreen = false;
                 main.removePauseMenuObjects(this);
                 objects.remove(saveButton1);
@@ -68,7 +68,7 @@ public class PauseMenu {
                 return;
             }
             if(main.getElementAt(e.getX(), e.getY()) == saveButton3){
-                //main.saveGame(3);
+                main.saveGame("save3");
                 saveScreen = false;
                 main.removePauseMenuObjects(this);
                 objects.remove(saveButton1);

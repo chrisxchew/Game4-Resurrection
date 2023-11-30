@@ -296,7 +296,9 @@ public class Main extends GraphicsProgram{
         }
     }
     boolean isPaused = false;
-
+    public void saveGame(String saveName){
+        saver.save(this.game, saveName);
+    }
     @Override
     public void keyPressed(KeyEvent e) {
         //key is left click
