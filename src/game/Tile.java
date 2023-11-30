@@ -32,7 +32,7 @@ public class Tile {
         this.key = key;
     }
     public Tile(Castle castle){}
-    public Tile(){System.out.println("empty constructor");}
+    public Tile(){}
     public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors, Game game) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -40,9 +40,9 @@ public class Tile {
         this.key = key;
         Random r = new Random();
         biome = rollBiomes(knownNeighbors);
-        for (int i = 0; i < screenWidth / 10; i++) {
-            for (int k = 0; k < screenHeight / 10; k++) {
-                GRect rectToAdd = new GRect(10, 10);
+        for (int i = 0; i < screenWidth / 100; i++) {
+            for (int k = 0; k < screenHeight / 100; k++) {
+                GRect rectToAdd = new GRect(100, 100);
                 int rr = r.nextInt(biome.getColorRanges()[1] - biome.getColorRanges()[0]) + biome
                     .getColorRanges()[0];
                 int rg = r.nextInt(biome.getColorRanges()[3] - biome.getColorRanges()[2]) + biome
@@ -52,7 +52,7 @@ public class Tile {
                 rectToAdd.setFilled(true);
                 rectToAdd.setColor(new Color(rr, rg, rb));
                 rectToAdd.setFillColor(new Color(rr, rg, rb));
-                rectToAdd.setLocation(i * 10, k * 10);
+                rectToAdd.setLocation(i * 100, k * 100);
                 objects.add(rectToAdd);
             }
         }
@@ -161,6 +161,15 @@ public class Tile {
     }
     public void generateStrutures() {
         boolean castleExists = false;
+        for(int i = 0; i < 10; i++){
+            if (percentChance(1) && !castleExists && key.get(0) != 0 && key.get(1) != 0) {
+                Castle castle = new Castle(200, 60, this);
+                structures.add(castle);
+                addObjects(objects, castle.getObjects());
+                addColliders(colliders, castle.getColliders());
+                castleExists = true;
+            }
+        }
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
             if (percentChance(1)) {
@@ -183,13 +192,7 @@ public class Tile {
             	}
             }
             
-            if (percentChance(1) && !castleExists) {
-                Castle castle = new Castle(200, 60, this);
-                structures.add(castle);
-                addObjects(objects, castle.getObjects());
-                addColliders(colliders, castle.getColliders());
-                castleExists = true;
-            }
+
             if (percentChance(2)) {
                 if(biome.getTemp() < 21){
                     iceBiomeHill hill = new iceBiomeHill(rnd.nextInt(1000), rnd.nextInt(500));

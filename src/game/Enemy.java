@@ -24,8 +24,11 @@ public abstract class Enemy implements ActionListener {
     private double velocityMultiplier = -2;
     protected boolean unloaded = false;
     protected Item drop;
+    boolean damageImageOn = true;
+    int damageImageTimer = 0;
     public Enemy(int x, int y, Game game) {
         bodyCompound = new GCompound();
+        
         this.x = x;
         this.y = y;
         this.game = game;
@@ -85,6 +88,11 @@ public abstract class Enemy implements ActionListener {
 
     protected void deathEvent() {
         isDead = true;
+        if(damageImage!=null){
+            bodyCompound.remove(damageImage);
+            damageImageOn = false;
+        }
+
         for (int i = 0; i < bodyCompound.getElementCount(); i++) {
             this.bodyCompound.getElement(i).setVisible(false);
             this.isDead = true;
@@ -145,6 +153,13 @@ public abstract class Enemy implements ActionListener {
     }
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
+            if (damageImageOn) {
+                damageImageTimer--;
+                if (damageImageTimer <= 0) {
+                    bodyCompound.remove(damageImage);
+                    damageImageOn = false;
+                }
+            }
             if(statusEffect != null){
                 statusEffect.tick();
             }
@@ -157,6 +172,7 @@ public abstract class Enemy implements ActionListener {
                         }
                     }
                     this.game.getPlayer().getInventory().updateGraphicalInterface();
+                    this.game.getHotbar().updateHotbar();
                     this.bodyCompound.removeAll();
                     this.unloaded = true;
                 }
@@ -186,8 +202,25 @@ public abstract class Enemy implements ActionListener {
     public int getHealth() {
         return health;
     }
+    GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
     public void setHealth(int health) {
         this.health = health;
+
+        damageImage.setSize(50,50);
+        if(!isDead && !isUnloaded()){
+            if(this.bodyCompound.getElement(0) != null){
+                damageImage.setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
+            }   
+        }
+     
+        if (damageImageOn && !isDead) {
+            this.bodyCompound.remove(damageImage);
+        }else if(!isDead){
+            this.bodyCompound.add(damageImage);
+        }
+        damageImageTimer = 50;
+
+        damageImageOn = true;
     }
     public double getX() {
         return x;

@@ -26,6 +26,8 @@ public class Bow extends Item implements Ranged{
 		for(Item i : inventory.getInventory()){
 			if(i instanceof Arrow){
 				inventory.remove(i);
+				inventory.updateGraphicalInterface();
+				game.getHotbar().updateHotbar();
 				ArrowProjectile arrow = new ArrowProjectile(x, y, isRight, enemies);
 				game.getProjectiles().add(arrow);
 				game.getGraphicsProgram().add(arrow.getImage());

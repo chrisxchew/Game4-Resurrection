@@ -75,14 +75,16 @@ public class EnemyRect1 extends Enemy{
 
 	@Override
 	protected Item calculateDrop() {
-		if(percentChance(15)){
-			return new Cherries();
-		}else if(percentChance(15)){
-			return new Arrow();
-		}
-		else if(percentChance(5)){
+		if(percentChance(5)){
 			return new Bow();
 		}
+		if(percentChance(15)){
+			return new Cherries();
+		}
+		if(percentChance(75)){
+			return new Arrow();
+		}
+
 		else{
 			return null;
 		}

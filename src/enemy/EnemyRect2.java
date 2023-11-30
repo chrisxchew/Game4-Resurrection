@@ -13,7 +13,7 @@ public class EnemyRect2 extends Enemy{
 	
 	@Override
 	protected void addObjectsToCompound(int x, int y) {
-		GImage body = new GImage("media/Characters/Blocka/Blocka2_FaceFront.png");
+		GImage body = new GImage("media/Characters/Blocka/Blocka_FaceFront2.png");
 		body.setSize(50,50);
 		this.bodyCompound.add(body,x-25,y-25);
 	}
@@ -75,14 +75,19 @@ public class EnemyRect2 extends Enemy{
 
 	@Override
 	protected Item calculateDrop() {
-		if(percentChance(7)){
-			return new Cherries();
-		}else if(percentChance(7)){
-			return new Arrow();
-		}
-		else if(percentChance(1)){
+		if(percentChance(5)){
 			return new Bow();
 		}
+		if(percentChance(15)){
+			return new Cherries();
+		}
+		if(percentChance(50)){
+			return new Arrow();
+		}
+		if(percentChance(1)){
+			return new IceStaff();
+		}
+
 		else{
 			return null;
 		}

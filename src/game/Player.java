@@ -29,7 +29,7 @@ public class Player {
     private int velX = 0;
     private int velY = 0;
     static private String PLAYERIMGPATH = "media/Characters/Blurby/";
-    static private int ATTACKCOOLDOWN = 25;
+    static private int ATTACKCOOLDOWN = 10;
     private int invurnerableCooldown = 0;
     private Game game;
     //0 is up, 1 is down, 2 is left, 3 is right
@@ -44,33 +44,20 @@ public class Player {
         this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
-        for (int i = 0; i < 10; i++) {
-            Item item = new Cherries();
-            this.inventory.add(item);
+        Item item = new Sword1();
+        this.inventory.add(item);
+        for (int i = 0; i < 3; i++) {
+            Item item2 = new Cherries();
+            this.inventory.add(item2);
         }
-        for (int i = 0; i < 1; i++) {
-            Item item = new Sword1();
-            this.inventory.add(item);
-
-        }
-        for (int i = 0; i < 10; i++) {
-            Item arrow = new Arrow();
-            this.inventory.add(arrow);
-
-        }
-        FireStaff staff = new FireStaff();
-        IceStaff staff2 = new IceStaff();
-        this.inventory.add(staff2);
-
-        this.inventory.add(staff);
-        this.inventory.add(new Bow());
         this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
+        if(this.inventory.getInventory().get(0) != null){
+            this.currentlyEquippedItem = inventory.getInventory().get(0);
+            playerGCompound.add(playerBody);
+            playerGCompound.add(currentlyEquippedItem.getItemBody());
+        }
 
-        this.currentlyEquippedItem = inventory.getInventory().get(0);
-        playerGCompound.add(playerBody);
-        
-        playerGCompound.add(currentlyEquippedItem.getItemBody());
         this.getCurrentlyEquippedItem().getItemBody().setLocation(-50, -15);
         this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500, -15);
 
@@ -180,11 +167,11 @@ public class Player {
         //if enemy is in the same direction as the player is facing and if the enemy is within 100 pixels of the player then return true
 
         if(facingRight){
-            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
+            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 100 && e.getY() < this.y +50){
                 return true;
             }
         }else{
-            if(e.getX() < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
+            if(e.getX()-50 < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 100 && e.getY() < this.y + 50){
                 return true;
             }
         }
@@ -204,6 +191,21 @@ public class Player {
         return attackCooldown;
     }
     public void attackPressed(Game game) {
+        if(this.currentlyEquippedItem != null){
+            if(this.currentlyEquippedItem instanceof Cherries){
+                if(this.health < 20 ){
+                    if(this.health <= 16){
+                        this.health = this.health + 4;
+                    }else{
+                        this.health = 20;
+                    }
+                    this.healthPoints.updateHealthPointsIcons(this.health);
+                    this.inventory.remove(this.currentlyEquippedItem);
+                    this.inventory.updateGraphicalInterface();
+                    this.game.getHotbar().updateHotbar();
+                }
+            }
+        }
         if (attackCooldown == 0) {
             if (this.getCurrentlyEquippedItem() instanceof Melee) {
                 SwordSlash slash = new SwordSlash(-playerWidth*2, 0, this);
@@ -212,6 +214,7 @@ public class Player {
                 for (Enemy e: game.getCurrentTile().getEnemies()) {
                     if (collidingWithEnemy(e)) {
                         e.knockback(((Melee) this.getCurrentlyEquippedItem()).getKnockback() * -1);
+                        //knockback enemy away from player
                         int SwordDamage = ((Melee) this.getCurrentlyEquippedItem()).getDamage();
                         e.setHealth(e.getHealth() - SwordDamage);
 

@@ -22,10 +22,10 @@ public class EnemyTri3 extends Enemy{
 	protected Item calculateDrop() {
 		if(percentChance(10)){
 			return new Cherries();
-		}else if(percentChance(5)){
+		}else if(percentChance(10)){
 			return new Sword4();
 		}
-		else if(percentChance(5)){
+		else if(percentChance(25)){
 			return new Arrow();
 		}
 		else if(percentChance(1)){
