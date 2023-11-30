@@ -31,17 +31,17 @@ public class Player {
     static private String PLAYERIMGPATH = "media/Characters/Blurby/";
     static private int ATTACKCOOLDOWN = 25;
     private int invurnerableCooldown = 0;
-
+    private Game game;
     //0 is up, 1 is down, 2 is left, 3 is right
     int facing = 0;
 
     GRect collisionRect;
     GRect collisionRect2;
     private GImage playerBody;
-    public Player(int spawnx, int spawny, int screenWidth, int screenHeight) {
+    public Player(int spawnx, int spawny, int screenWidth, int screenHeight, Game game) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
-        //remove after testing
+        this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
         for (int i = 0; i < 10; i++) {
@@ -91,9 +91,39 @@ public class Player {
         speed = 5;
         health = 20;
     }
-    public boolean checkCollisionX(double moveX, ArrayList<GLine> colliders){
-        for(GLine col : colliders){
+    public boolean checkCollisionDoor(double moveX, GLine door){
             for(i = 1; i < Math.abs(moveX); i++){
+                if(moveX < 0){
+                    if(door.contains(getPlayerCenter().getX()-i, getPlayerCenter().getY())){
+                        return true;
+                    }
+                }else{
+                    if(door.contains(getPlayerCenter().getX()+i, getPlayerCenter().getY())){
+                        return true;
+                    }
+                }
+            
+        }
+        return false;
+    }
+    public boolean checkCollisionX(double moveX, ArrayList<GLine> colliders){
+        ArrayList<GLine> colliders2 = new ArrayList<GLine>();
+        for(GLine col : colliders){
+            colliders2.add(col);
+        }
+        if(game.isInCastle()){
+            //add lines for the top bottom left and right of screen
+            //screen is 1000x500
+            colliders2.add(new GLine(0, 0, 1000, 0));
+            colliders2.add(new GLine(0, 500, 1000, 500));
+            colliders2.add(new GLine(0, 0, 0, 500));
+            colliders2.add(new GLine(1000, 0, 1000, 500));
+
+            
+            
+        }
+        for(GLine col : colliders2){
+            for(i = 1; i < Math.abs(moveX)+5; i++){
                 if(moveX < 0){
                     if(col.contains(getPlayerCenter().getX()-i, getPlayerCenter().getY())){
                         return false;
@@ -119,8 +149,20 @@ public class Player {
         }
     }
     public boolean checkCollisionY(double moveY, ArrayList<GLine> colliders){
-    for(GLine col : colliders){
-        for(i = 1; i < Math.abs(moveY); i++){
+        ArrayList<GLine> colliders2 = new ArrayList<GLine>();
+        for(GLine col : colliders){
+            colliders2.add(col);
+        }
+        if(game.isInCastle()){
+            //add lines for the top bottom left and right of screen
+            //screen is 1000x500
+            colliders2.add(new GLine(0, 0, 1000, 0));
+            colliders2.add(new GLine(0, 500, 1000, 500));
+            colliders2.add(new GLine(0, 0, 0, 500));
+            colliders2.add(new GLine(1000, 0, 1000, 500));
+        }
+    for(GLine col : colliders2){
+        for(i = 1; i < Math.abs(moveY)+5; i++){
             if(moveY < 0){
                 if(col.contains(getPlayerCenter().getX(), getPlayerCenter().getY()-i)){
                     return false;
@@ -226,6 +268,16 @@ public class Player {
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBody());
     }
     public void moveX(double val, Game game) {
+        if (game.getCurrentTile().getDoor() != null && !game.isInCastle()) {
+            if(checkCollisionDoor(val, game.getCurrentTile().getDoor())){
+                game.enterCastle(game.getCastle());
+            }  
+        }
+        if(game.isInCastle()){
+            if(checkCollisionDoor(val, game.getCastle().getCastleTile().getDoor())){
+                game.exitCastle();
+            }
+        }
     	if(checkCollisionX(val, game.getCurrentTile().getColliders())) {
 
             if (val > 0) {
