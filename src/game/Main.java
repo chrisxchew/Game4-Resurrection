@@ -4,7 +4,6 @@ import java.util.*;
 
 import javax.swing.Timer;
 
-import acm.console.SystemConsole;
 import acm.graphics.*;
 import acm.program.*;
 import items.*;
