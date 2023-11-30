@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import acm.graphics.GCompound;
+import acm.graphics.GImage;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import game.Item;
@@ -14,8 +15,9 @@ public class Inventory {
 	private GCompound Interface = new GCompound();
 	private int inventorySize;
 	private int screenHeight;
-	
+	GImage trashcan = new GImage("media/UI/trashcan.png");
 	public Inventory(int inventorySize, int screenHeight) {
+
 		this.screenHeight = screenHeight;
 		this.inventorySize = inventorySize;
 		this.inventory = new ArrayList<Item>();
@@ -39,6 +41,7 @@ public class Inventory {
 				Interface.add(box);
 			}
 		}
+
 	}
 	public void updateGraphicalInterface() {
 		this.Interface.removeAll();
@@ -63,6 +66,9 @@ public class Inventory {
 						Interface.add(itemtoAdd);
 					}
 				}
+
+				trashcan.setLocation(5, screenHeight-450);
+				trashcan.setSize(100, 100);
 
 				Interface.add(box);
 			}
@@ -118,5 +124,8 @@ public class Inventory {
 	}
 	public GCompound getInterface(){
 		return this.Interface;
+	}
+	public GImage getTrashcan() {
+		return trashcan;
 	}
 }

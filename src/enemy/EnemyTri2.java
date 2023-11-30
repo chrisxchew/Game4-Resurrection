@@ -24,7 +24,7 @@ public class EnemyTri2 extends Enemy{
 		//enemy 1 has a 10% chance of dropping a cherry, 5% chance of dropping a level 3 sword, 5% chance of dropping an arrow, 1% chance of dropping a level 4 sword
 		if(percentChance(10)){
 			return new Cherries();
-		}else if(percentChance(5)){
+		}else if(percentChance(10)){
 			return new Sword3();
 		}
 		else if(percentChance(5)){

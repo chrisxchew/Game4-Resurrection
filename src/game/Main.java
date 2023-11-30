@@ -176,6 +176,7 @@ public class Main extends GraphicsProgram{
     public void calculateDisplayingInventory() {
     	if(inventoryDisplayed && canChangeInventoryDisplayed) {
     		remove(this.game.getPlayer().getInventory().getGraphicalInterface());
+            remove(game.getPlayer().getInventory().getTrashcan());
             this.game.getHotbar().updateHotbar();
             add(this.game.getHotbar().getInterface());
     		inventoryDisplayed = false;
@@ -185,6 +186,8 @@ public class Main extends GraphicsProgram{
             remove(this.game.getHotbar().getInterface());
             this.game.getHotbar().updateHotbar();
             add(this.game.getPlayer().getInventory().getGraphicalInterface());
+            add(game.getPlayer().getInventory().getTrashcan());
+            game.getPlayer().getInventory().getTrashcan().sendForward();
             inventoryDisplayed = true;
             canChangeInventoryDisplayed = false;
             this.game.getPlayer().setMovementEnabled(false);
@@ -233,6 +236,18 @@ public class Main extends GraphicsProgram{
     public boolean checkInventoryInteraction(MouseEvent e){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
+        System.out.println("Pressed on: " + getElementAt(e.getX(), e.getY()));
+        if(inventoryDisplayed && getElementAt(e.getX(), e.getY()) == i.getTrashcan()){
+            System.out.println("pressed ont trashcan");
+            if(floatingItem != null){
+                i.remove(floatingItem);
+                remove(floatingItem.getItemBody());
+                this.floatingItem = null;
+                i.updateGraphicalInterface();
+                h.updateHotbar();
+            }
+            return true;
+        }
         if(inventoryDisplayed && e.getX() < 500 && e.getY() > 500-(50*i.getInventorySize()/10)){
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) == null){
                 i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), floatingItem);
@@ -240,6 +255,7 @@ public class Main extends GraphicsProgram{
                 remove(floatingItem.getItemBody());
                 this.floatingItem = null;
                 this.game.getHotbar().updateHotbar();
+            game.getPlayer().getInventory().getTrashcan().sendForward();
             }else
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
                 //swap the two items
@@ -251,7 +267,7 @@ public class Main extends GraphicsProgram{
                 i.remove(temp);
                 i.updateGraphicalInterface();
                 h.updateHotbar();
-                
+                game.getPlayer().getInventory().getTrashcan().sendForward();
             }else{
                 this.floatingItem = i.getClickedItem(e.getX(), e.getY());
                 if(floatingItem != null){
@@ -259,12 +275,14 @@ public class Main extends GraphicsProgram{
                 i.updateGraphicalInterface();
                 add(this.floatingItem.getItemBody());
                 h.updateHotbar();
-                
+                game.getPlayer().getInventory().getTrashcan().sendForward();
                 }
 
             }
             return true;
+            //else if user clicks on inventory.getTrashcan()
         }
+
         return false;
     }
     @Override

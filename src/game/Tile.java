@@ -40,9 +40,9 @@ public class Tile {
         this.key = key;
         Random r = new Random();
         biome = rollBiomes(knownNeighbors);
-        for (int i = 0; i < screenWidth / 10; i++) {
-            for (int k = 0; k < screenHeight / 10; k++) {
-                GRect rectToAdd = new GRect(10, 10);
+        for (int i = 0; i < screenWidth / 100; i++) {
+            for (int k = 0; k < screenHeight / 100; k++) {
+                GRect rectToAdd = new GRect(100, 100);
                 int rr = r.nextInt(biome.getColorRanges()[1] - biome.getColorRanges()[0]) + biome
                     .getColorRanges()[0];
                 int rg = r.nextInt(biome.getColorRanges()[3] - biome.getColorRanges()[2]) + biome
@@ -52,7 +52,7 @@ public class Tile {
                 rectToAdd.setFilled(true);
                 rectToAdd.setColor(new Color(rr, rg, rb));
                 rectToAdd.setFillColor(new Color(rr, rg, rb));
-                rectToAdd.setLocation(i * 10, k * 10);
+                rectToAdd.setLocation(i * 100, k * 100);
                 objects.add(rectToAdd);
             }
         }

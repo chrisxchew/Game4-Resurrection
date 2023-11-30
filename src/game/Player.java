@@ -167,11 +167,11 @@ public class Player {
         //if enemy is in the same direction as the player is facing and if the enemy is within 100 pixels of the player then return true
 
         if(facingRight){
-            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 75 && e.getY() < this.y +25){
+            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 100 && e.getY() < this.y +50){
                 return true;
             }
         }else{
-            if(e.getX() < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 75 && e.getY() < this.y + 25){
+            if(e.getX()-50 < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 100 && e.getY() < this.y + 50){
                 return true;
             }
         }

@@ -139,6 +139,8 @@ public class Saver {
                 
                 Inventory i = loadInventory(file, WINDOWHEIGHT);
                 game.getPlayer().setInventory(i);
+                game.getPlayer().getInventory().updateGraphicalInterface();
+                game.getHotbar().updateHotbar();
             }
             if(file.getName().contains("Tile")){
                 Tile tile = loadTile(file, game);

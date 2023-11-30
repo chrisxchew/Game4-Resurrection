@@ -81,7 +81,7 @@ public class EnemyRect1 extends Enemy{
 		if(percentChance(15)){
 			return new Cherries();
 		}
-		if(percentChance(50)){
+		if(percentChance(75)){
 			return new Arrow();
 		}
 
