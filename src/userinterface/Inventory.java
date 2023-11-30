@@ -67,8 +67,8 @@ public class Inventory {
 					}
 				}
 
-				trashcan.setLocation(5, screenHeight-450);
-				trashcan.setSize(100, 100);
+				trashcan.setLocation(10, screenHeight-450);
+				trashcan.setSize(120, 100);
 
 				Interface.add(box);
 			}
