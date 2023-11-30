@@ -87,6 +87,11 @@ public abstract class Enemy implements ActionListener {
 
     protected void deathEvent() {
         isDead = true;
+        if(damageImage!=null){
+            bodyCompound.remove(damageImage);
+            damageImageOn = false;
+        }
+
         for (int i = 0; i < bodyCompound.getElementCount(); i++) {
             this.bodyCompound.getElement(i).setVisible(false);
             this.isDead = true;
@@ -150,7 +155,7 @@ public abstract class Enemy implements ActionListener {
             if (damageImageOn) {
                 damageImageTimer--;
                 if (damageImageTimer <= 0) {
-                    this.bodyCompound.remove(this.bodyCompound.getElement(this.bodyCompound.getElementCount() - 1));
+                    bodyCompound.remove(damageImage);
                     damageImageOn = false;
                 }
             }
@@ -195,16 +200,24 @@ public abstract class Enemy implements ActionListener {
     public int getHealth() {
         return health;
     }
+    GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
     public void setHealth(int health) {
         this.health = health;
-        GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
+
         damageImage.setSize(50,50);
-        damageImage.setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
-        if (damageImageOn) {
-            this.bodyCompound.remove(this.bodyCompound.getElement(this.bodyCompound.getElementCount() - 1));
+        if(!isDead && !isUnloaded()){
+            if(this.bodyCompound.getElement(0) != null){
+                damageImage.setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
+            }   
+        }
+     
+        if (damageImageOn && !isDead) {
+            this.bodyCompound.remove(damageImage);
+        }else if(!isDead){
+            this.bodyCompound.add(damageImage);
         }
         damageImageTimer = 50;
-        this.bodyCompound.add(damageImage);
+
         damageImageOn = true;
     }
     public double getX() {
