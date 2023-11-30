@@ -9,7 +9,7 @@ import javax.swing.Timer;
 import acm.graphics.*;
 import statuseffects.StatusEffect;
 
-public abstract class Enemy implements ActionListener {
+public abstract class Enemy{
     protected ArrayList < Item > drops = new ArrayList < Item > ();
     protected GCompound bodyCompound;
     private double x;
@@ -32,7 +32,6 @@ public abstract class Enemy implements ActionListener {
         this.y = y;
         this.game = game;
         addObjectsToCompound(x, y);
-        this.timer = new Timer(10, this);
         drop = calculateDrop();
         this.drops.add(drop);
     }
@@ -63,20 +62,9 @@ public abstract class Enemy implements ActionListener {
     public void knockback(double mulitplier) {
 
         velocityMultiplier = velocityMultiplier * mulitplier;
-        if (timer != null) {
-            this.timer.stop();
-        }
 
-        timer.start();
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        velocityMultiplier -= 0.5;
-        if (velocityMultiplier <= -2) {
-            this.timer.stop();
-            velocityMultiplier = -2;
-        }
-    }
+
     protected boolean percentChance(int percent) {
         int chance = (int)(Math.random() * 100);
         if (chance < percent) {
@@ -153,6 +141,10 @@ public abstract class Enemy implements ActionListener {
     }
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
+            velocityMultiplier -= 0.5;
+            if (velocityMultiplier <= -2) {
+                velocityMultiplier = -2;
+            }
             if (damageImageOn) {
                 damageImageTimer--;
                 if (damageImageTimer <= 0) {
