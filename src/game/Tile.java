@@ -15,11 +15,11 @@ public class Tile {
     int screenWidth;
     int screenHeight;
     private Biome biome;
-    private List < Integer > key;
-    private ArrayList < GObject > objects = new ArrayList < GObject > ();
-    private ArrayList < Structure > structures = new ArrayList < Structure > ();
-    private ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
-    private ArrayList < GLine > colliders = new ArrayList < GLine > ();
+    protected List < Integer > key;
+    protected ArrayList < GObject > objects = new ArrayList < GObject > ();
+    protected ArrayList < Structure > structures = new ArrayList < Structure > ();
+    protected ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
+    protected ArrayList < GLine > colliders = new ArrayList < GLine > ();
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -31,10 +31,13 @@ public class Tile {
         this.game = game;
         this.key = key;
     }
+    public Tile(Castle castle){}
+    public Tile(){System.out.println("empty constructor");}
     public Tile(int screenWidth, int screenHeight, List < Integer > key, ArrayList < Tile > knownNeighbors, Game game) {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.game = game;
+        this.key = key;
         Random r = new Random();
         biome = rollBiomes(knownNeighbors);
         for (int i = 0; i < screenWidth / 10; i++) {
@@ -135,6 +138,9 @@ public class Tile {
 
         
     }
+    public Game getGame() {
+        return game;
+    }
     public boolean percentChance(int percent) {
         Random r = new Random();
         if (r.nextInt(100) < percent) {
@@ -154,6 +160,7 @@ public class Tile {
     	}
     }
     public void generateStrutures() {
+        boolean castleExists = false;
         for (int i = 0; i < 50; i++) {
             Random rnd = new Random();
             if (percentChance(1)) {
@@ -175,11 +182,13 @@ public class Tile {
                     addObjects(objects, cactus.getObjects());
             	}
             }
-            if (percentChance(1)) {
-                Castle castle = new Castle(200, 60);
+            
+            if (percentChance(1) && !castleExists) {
+                Castle castle = new Castle(200, 60, this);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
                 addColliders(colliders, castle.getColliders());
+                castleExists = true;
             }
             if (percentChance(2)) {
                 if(biome.getTemp() < 21){
@@ -198,6 +207,14 @@ public class Tile {
 
             }
         }
+    }
+    public GLine getDoor() {
+        for (Structure structure: structures) {
+            if (structure.getDoor() != null) {
+                return structure.getDoor();
+            }
+        }
+        return null;
     }
     public List < Integer > getKey() {
         return key;

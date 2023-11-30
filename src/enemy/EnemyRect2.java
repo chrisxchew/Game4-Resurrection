@@ -4,16 +4,16 @@ package enemy;
 import acm.graphics.GImage;
 import game.*;
 import items.*;
-public class EnemyRect1 extends Enemy{
-	public EnemyRect1(int x, int y, Game game) {
+public class EnemyRect2 extends Enemy{
+	public EnemyRect2(int x, int y, Game game) {
 		super(x, y, game);
-		this.setHealth(20);
+		this.setHealth(40);
 		this.isRanged = true;
 	}
 	
 	@Override
 	protected void addObjectsToCompound(int x, int y) {
-		GImage body = new GImage("media/Characters/Blocka/Blocka_FaceFront.png");
+		GImage body = new GImage("media/Characters/Blocka/Blocka2_FaceFront.png");
 		body.setSize(50,50);
 		this.bodyCompound.add(body,x-25,y-25);
 	}
@@ -38,21 +38,21 @@ public class EnemyRect1 extends Enemy{
 		if(deltaTick%5==0){
 			if(!finishedAnimation){
 				if(animationStage == 1){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk1.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk1.png");
 					animationStage = 2;
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 				}else if(animationStage == 2){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk2.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk2.png");
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 					animationStage = 3;
 				}else if(animationStage == 3){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront_Walk3.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk3.png");
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 					animationStage = 1;
 					finishedAnimation = true;
 				}
 			}else{
-				((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront.png");
+				((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront2.png");
 				((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 			}
 		}
@@ -75,12 +75,12 @@ public class EnemyRect1 extends Enemy{
 
 	@Override
 	protected Item calculateDrop() {
-		if(percentChance(15)){
+		if(percentChance(7)){
 			return new Cherries();
-		}else if(percentChance(15)){
+		}else if(percentChance(7)){
 			return new Arrow();
 		}
-		else if(percentChance(5)){
+		else if(percentChance(1)){
 			return new Bow();
 		}
 		else{

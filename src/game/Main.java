@@ -55,8 +55,10 @@ public class Main extends GraphicsProgram{
         add(game.getPlayer().getHealthPoints().getHealthPointsIcons());
     }
     int ticknumber = 0;
+    boolean drawnCastle = false;
     @Override
     public void actionPerformed(ActionEvent e) {
+
             ticknumber++;
         	if (checkTileCrossing()) {
                 removeAll();
@@ -66,6 +68,27 @@ public class Main extends GraphicsProgram{
                 for (Enemy enemy: game.getCurrentTile().getEnemies()) {
                     add(enemy.getBody());
                 }
+            }
+            if(game.isInCastle() && !drawnCastle){
+                removeAll();
+                drawTiles();
+                add(game.getPlayer().getPlayerGCompound());
+                drawUI();
+                for (Enemy enemy: game.getCurrentTile().getEnemies()) {
+                    add(enemy.getBody());
+                }
+                drawnCastle = true;
+            }else if(!game.isInCastle() && drawnCastle){
+                removeAll();
+                drawTiles();
+                add(game.getPlayer().getPlayerGCompound());
+                drawUI();
+                for (Enemy enemy: game.getCurrentTile().getEnemies()) {
+                    add(enemy.getBody());
+                }
+                game.getPlayer().setX(250);
+                game.getPlayer().setY(250);
+                drawnCastle = false;
             }
             for (Enemy enemy: game.getCurrentTile().getEnemies()) {
             	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
@@ -96,7 +119,7 @@ public class Main extends GraphicsProgram{
             if(ticknumber%2==0){
                 this.game.getPlayer().friction();
             }
-        
+                
     }
     public void handleKeyStrokes() {
         if(!inventoryDisplayed){
@@ -143,11 +166,21 @@ public class Main extends GraphicsProgram{
     	}
     }
     public void drawTiles() {
-        for (GObject object: game.getCurrentTile().getObjects()) {
-            add(object);
+        if(game.isInCastle()){
+                for (GObject object: game.getCastle().getCastleTile().getObjects()) {
+                    add(object);
+                }
+        }else{
+            for (GObject object: game.getCurrentTile().getObjects()) {
+                add(object);
+            }
         }
+
     }
     public boolean checkTileCrossing() {
+        if(game.isInCastle()){
+            return false;
+        }
         //remove tile label lines for production
         if (game.getPlayer().getX() > windowWidth - game.getPlayer().getPlayerWidth()) {
             game.moveTiles(1, 0);
