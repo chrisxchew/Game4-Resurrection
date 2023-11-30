@@ -29,7 +29,7 @@ public class Player {
     private int velX = 0;
     private int velY = 0;
     static private String PLAYERIMGPATH = "media/Characters/Blurby/";
-    static private int ATTACKCOOLDOWN = 25;
+    static private int ATTACKCOOLDOWN = 10;
     private int invurnerableCooldown = 0;
     private Game game;
     //0 is up, 1 is down, 2 is left, 3 is right
@@ -167,11 +167,11 @@ public class Player {
         //if enemy is in the same direction as the player is facing and if the enemy is within 100 pixels of the player then return true
 
         if(facingRight){
-            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
+            if(e.getX() > this.x && e.getX() < this.x + 100 && e.getY() > this.y - 75 && e.getY() < this.y +25){
                 return true;
             }
         }else{
-            if(e.getX() < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 50 && e.getY() < this.y + 50){
+            if(e.getX() < this.x && e.getX() > this.x - 100 && e.getY() > this.y - 75 && e.getY() < this.y + 25){
                 return true;
             }
         }
@@ -191,6 +191,21 @@ public class Player {
         return attackCooldown;
     }
     public void attackPressed(Game game) {
+        if(this.currentlyEquippedItem != null){
+            if(this.currentlyEquippedItem instanceof Cherries){
+                if(this.health < 20 ){
+                    if(this.health <= 16){
+                        this.health = this.health + 4;
+                    }else{
+                        this.health = 20;
+                    }
+                    this.healthPoints.updateHealthPointsIcons(this.health);
+                    this.inventory.remove(this.currentlyEquippedItem);
+                    this.inventory.updateGraphicalInterface();
+                    this.game.getHotbar().updateHotbar();
+                }
+            }
+        }
         if (attackCooldown == 0) {
             if (this.getCurrentlyEquippedItem() instanceof Melee) {
                 SwordSlash slash = new SwordSlash(-playerWidth*2, 0, this);

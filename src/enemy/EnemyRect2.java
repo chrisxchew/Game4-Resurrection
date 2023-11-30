@@ -13,7 +13,7 @@ public class EnemyRect2 extends Enemy{
 	
 	@Override
 	protected void addObjectsToCompound(int x, int y) {
-		GImage body = new GImage("media/Characters/Blocka/Blocka2_FaceFront.png");
+		GImage body = new GImage("media/Characters/Blocka/Blocka_FaceFront2.png");
 		body.setSize(50,50);
 		this.bodyCompound.add(body,x-25,y-25);
 	}

@@ -172,6 +172,7 @@ public abstract class Enemy implements ActionListener {
                         }
                     }
                     this.game.getPlayer().getInventory().updateGraphicalInterface();
+                    this.game.getHotbar().updateHotbar();
                     this.bodyCompound.removeAll();
                     this.unloaded = true;
                 }
