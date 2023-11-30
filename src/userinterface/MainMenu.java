@@ -23,7 +23,7 @@ public class MainMenu implements ActionListener{
     GImage saveButton3 = new GImage("media/UI/MainMenu/save_button3.png");
     GImage backButton = new GImage("media/UI/MainMenu/back_button.png");
     GImage title = new GImage("media/UI/MainMenu/Game_4_Title.png");
-
+    Timer timer = new Timer(10, this);
     public MainMenu(Main main) {
         this.main = main;
         loadButton.setSize(225,75);
@@ -35,7 +35,7 @@ public class MainMenu implements ActionListener{
         backButton.setSize(225,75);
         title.setSize(900,300);
         title.setLocation(100,-300);
-        Timer timer = new Timer(10, this);
+
         timer.start();
         startButton.setLocation(500-startButton.getWidth()/2, 300-startButton.getHeight()/2);
         loadButton.setLocation(500-loadButton.getWidth()/2, 375-loadButton.getHeight()/2);
@@ -57,18 +57,22 @@ public class MainMenu implements ActionListener{
             title.move(0, 2);
         }
     }
+
     public void keyPressed(MouseEvent e) {
         //buttosn are 225 width
 
         if(loadScreen){
             if(main.getElementAt(e.getX(), e.getY()) == saveButton1){
                 main.loadGame("save1");
+                timer.stop();
                 return;
             }else if(main.getElementAt(e.getX(), e.getY()) == saveButton2){
                 main.loadGame("save2");
+                timer.stop();
                 return;
             }else if(main.getElementAt(e.getX(), e.getY()) == saveButton3){
                 main.loadGame("save3");
+                timer.stop();
                 return;
             }else if(main.getElementAt(e.getX(), e.getY()) == backButton){
                 remakeMainMenu();
@@ -78,8 +82,8 @@ public class MainMenu implements ActionListener{
         }
         if(!loadScreen){
             if(main.getElementAt(e.getX(), e.getY()) == startButton && !loadScreen){
-                System.out.println("start");
                 main.startGame();
+                timer.stop();
                 return;
             }else if(main.getElementAt(e.getX(), e.getY()) == quitButton){
                 System.exit(0);

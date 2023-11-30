@@ -15,6 +15,7 @@ public class Main extends GraphicsProgram{
     static int windowWidth = 1000;
     double mouseX=0;
     double mouseY=0;
+    PauseMenu pause = new PauseMenu(this);
     boolean mainMenuOn = true;
     private boolean inventoryDisplayed = false;
     private boolean canChangeInventoryDisplayed = true;
@@ -22,9 +23,6 @@ public class Main extends GraphicsProgram{
     private MainMenu mainMenu = new MainMenu(this);
     Window window = new Window(windowWidth, windowHeight);
     Saver saver = new Saver();
-    
-    //loads game from save if uncommented
-    
     Game game;
 
     private ArrayList < String > key_manager = new ArrayList < String > ();
@@ -38,17 +36,22 @@ public class Main extends GraphicsProgram{
         }
         addMouseListeners();
     }
+    public void removeMainMenu(){
+        for (GObject object: mainMenu.getObjects()) {
+            remove(object);
+        }
+    }
     //Hi...
     @Override
     public void run() {
         loadMainMenu();
     }
     public void startGame(){
+        removeMainMenu();
         game = new Game(windowWidth, windowHeight, this);
         mainMenuOn = false;
         removeAll();
         addKeyListeners();
-        addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
         addEnemySprites();
@@ -56,11 +59,11 @@ public class Main extends GraphicsProgram{
         runTimer.start();
     }
     public void loadGame(String saveName){
+        removeMainMenu();
         game = saver.load(saveName, this);
         mainMenuOn = false;
         removeAll();
         addKeyListeners();
-        addMouseListeners();
         drawTiles();
         add(game.getPlayer().getPlayerGCompound());
         addEnemySprites();
@@ -268,11 +271,13 @@ public class Main extends GraphicsProgram{
     public void mousePressed(MouseEvent e) {
         if(mainMenuOn && e.getButton() == 1){
             mainMenu.keyPressed(e);
-        }else{
-            if(!checkInventoryInteraction(e)){
-                this.game.getPlayer().attackPressed(this.game);
-            }
         }
+        else if(e.getButton() == 1 && isPaused){
+            pause.keyPressed(e);
+        }else if(!checkInventoryInteraction(e)){
+            this.game.getPlayer().attackPressed(this.game);
+        }
+        
     }
     @Override
     public void	mouseMoved(MouseEvent e){
@@ -280,10 +285,34 @@ public class Main extends GraphicsProgram{
         	this.mouseY = e.getY();
 
     }
+    public void addPauseMenuObjects(PauseMenu pauseMenu){
+        for(GObject object: pauseMenu.getObjects()){
+            add(object);
+        }
+    }
+    public void removePauseMenuObjects(PauseMenu pauseMenu){
+        for(GObject object: pauseMenu.getObjects()){
+            remove(object);
+        }
+    }
+    boolean isPaused = false;
+
     @Override
     public void keyPressed(KeyEvent e) {
         //key is left click
-
+        //if key is esc
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !mainMenuOn) {
+            if(!isPaused){
+                isPaused = true;
+                this.runTimer.stop();
+                addPauseMenuObjects(pause);
+            }else{
+                pause.setSaveScreen(false);
+                isPaused = false;
+                this.runTimer.start();
+                removePauseMenuObjects(pause);
+            }
+        }
             int keyCode = e.getKeyCode();
             if (keyCode == KeyEvent.VK_W) {
                 if (!key_manager.contains("w")) {
@@ -334,6 +363,8 @@ public class Main extends GraphicsProgram{
         }
         
     }
+    
+
 
 
     public void keyReleased(KeyEvent e) {
