@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.swing.Timer;
 
+import acm.console.SystemConsole;
 import acm.graphics.*;
 import acm.program.*;
 import items.*;
@@ -31,10 +32,11 @@ public class Main extends GraphicsProgram{
         requestFocus();
     }
     public void loadMainMenu(){
+
         for (GObject object: mainMenu.getObjects()) {
             add(object);
         }
-        addMouseListeners();
+
     }
     public void removeMainMenu(){
         for (GObject object: mainMenu.getObjects()) {
@@ -44,6 +46,7 @@ public class Main extends GraphicsProgram{
     //Hi...
     @Override
     public void run() {
+        addMouseListeners();
         loadMainMenu();
     }
     public void gameOver(){
@@ -52,7 +55,7 @@ public class Main extends GraphicsProgram{
     }
     public void startGame(){
         removeMainMenu();
-        game = new Game(windowWidth, windowHeight, this);
+        game = new Game(windowWidth, windowHeight, this, false);
         mainMenuOn = false;
         removeAll();
         addKeyListeners();
@@ -63,9 +66,9 @@ public class Main extends GraphicsProgram{
         runTimer.start();
     }
     public void loadGame(String saveName){
+        mainMenuOn = false;
         removeMainMenu();
         game = saver.load(saveName, this);
-        mainMenuOn = false;
         removeAll();
         addKeyListeners();
         drawTiles();
@@ -125,7 +128,6 @@ public class Main extends GraphicsProgram{
                 enemy.calculateEnemyPlayerCollision(game.getPlayer());
             }
             handleKeyStrokes();
-
             if(this.floatingItem != null) {
             	this.floatingItem.getItemBody().setLocation(mouseX, mouseY);
             }
@@ -150,6 +152,9 @@ public class Main extends GraphicsProgram{
             }
             if(this.game.getPlayer().getHealth() <= 0){
                 gameOver();
+            }
+            if(game.getHotbar() != null){
+                game.getHotbar().updateHotbar();
             }
                 
     }
@@ -241,10 +246,10 @@ public class Main extends GraphicsProgram{
         }
     }
     public boolean checkInventoryInteraction(MouseEvent e){
+        if(e.getButton() == 1){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
         if(inventoryDisplayed && getElementAt(e.getX(), e.getY()) == i.getTrashcan()){
-            System.out.println("pressed ont trashcan");
             if(floatingItem != null){
                 i.remove(floatingItem);
                 remove(floatingItem.getItemBody());
@@ -261,10 +266,10 @@ public class Main extends GraphicsProgram{
                 remove(floatingItem.getItemBody());
                 this.floatingItem = null;
                 this.game.getHotbar().updateHotbar();
-            game.getPlayer().getInventory().getTrashcan().sendForward();
+                game.getPlayer().getInventory().getTrashcan().sendForward();
+                return true;
             }else
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
-                //swap the two items
                 Item temp = i.getClickedItem(e.getX(), e.getY());
                 i.getInventory().set(i.getInventory().indexOf(temp), this.floatingItem);
                 remove(floatingItem.getItemBody());
@@ -274,6 +279,7 @@ public class Main extends GraphicsProgram{
                 i.updateGraphicalInterface();
                 h.updateHotbar();
                 game.getPlayer().getInventory().getTrashcan().sendForward();
+                return true;
             }else{
                 this.floatingItem = i.getClickedItem(e.getX(), e.getY());
                 if(floatingItem != null){
@@ -282,14 +288,16 @@ public class Main extends GraphicsProgram{
                 add(this.floatingItem.getItemBody());
                 h.updateHotbar();
                 game.getPlayer().getInventory().getTrashcan().sendForward();
+                return true;
                 }
 
             }
             return true;
-            //else if user clicks on inventory.getTrashcan()
         }
 
         return false;
+    }
+    return false;
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -376,18 +384,8 @@ public class Main extends GraphicsProgram{
                 game.getHotbar().updateHotbar();
                 game.getPlayer().changeFacingRightAnimation(game.getPlayer().isFacingRight());
         }
-        if(keyCode == KeyEvent.VK_P){
-            Saver saver = new Saver();
-            saver.save(this.game, "save1");
-        }
-        if(keyCode == KeyEvent.VK_L){
-            Saver saver = new Saver();
-            Game newGame = saver.load("save1", this);
-            System.out.println(newGame.getPlayer().getInventory().getInventory());
-        }
         
     }
-    
 
 
 

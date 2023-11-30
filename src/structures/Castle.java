@@ -8,17 +8,40 @@ import game.Tile;
 public class Castle extends Structure {
 	private Tile parentTile;
 	private CastleTile castleTile;
-	private boolean bossCastle = true;
+	private boolean bossCastle = false;
 	public Castle(int x, int y, Tile parentTile) {
 		super(x, y);
+		//boss castle cant spawn within 15 difficulty of spawn
+		//after that boss castle has a 1%-10% chance to spawn increasing by a bit every 5 difficulty
+		//lmao this solution sucks but ive been coding all week let me take the easy route for once
+		if(parentTile.getDifficulty() >= 15) {
+			int chance = (int) (Math.random() * 100);
+			if(parentTile.getDifficulty() >= 50){
+				if(chance <= 10){
+					bossCastle = true;
+				}
+			}else if(parentTile.getDifficulty() >= 40){
+				if(chance <= 8){
+					bossCastle = true;
+				}
+			}else if(parentTile.getDifficulty() >= 30){
+				if(chance <= 7){
+					bossCastle = true;
+				}
+			}else if(parentTile.getDifficulty() >= 20){
+				if(chance <= 3){
+					bossCastle = true;
+				}
+			}else{
+				if(chance <= 1){
+					bossCastle = true;
+				}
+			}
+
+		}
 		this.parentTile = parentTile;
 		this.castleTile = new CastleTile(this);
-		//has tile difficulty (capped at 15%) to be boss tile
-		if((double)parentTile.getTileDifficulty(parentTile.getKey())> 15){
-			bossCastle = true;
-		}else if(Math.random() < (double)parentTile.getTileDifficulty(parentTile.getKey())){
-			bossCastle = true;
-		}
+
 		this.castleTile.setParentCastle(this);
 		GImage castle = new GImage("media/Buildings/Castle2.0-1.png.png");
 		castle.setLocation(x,y);

@@ -3,6 +3,9 @@ package items;
 import game.Enemy;
 
 import java.util.ArrayList;
+
+import enemy.Boss;
+import enemy.BossSummon;
 public class BossSummonItemProjectile extends Projectile{
 
     public BossSummonItemProjectile(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
@@ -33,13 +36,26 @@ public class BossSummonItemProjectile extends Projectile{
             for(Enemy e : enemies){
                 //if fireball is a certain distance from enemies center
                 if(!e.isDead()){
-                    if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
-                        e.setHealth(e.getHealth() - 7);
+                    //if the projectile hit the boss shield
+                    //we can check this by seeing 200 radius around the boss
+                    if(e instanceof Boss){
+                        if(Math.abs(x - e.getX()) < 200 && Math.abs(y - e.getY()) < 200){
+                            Boss b = (Boss) e;
+                            b.setShieldHealth(b.getShieldHealth() - 1);
+                            image.setVisible(false);
+                            loaded = false;
+                        }
+                    }
 
-                        e.knockback(-5);
-                        image.setVisible(false);
-                        loaded = false;
-                }
+                    if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
+                            if(!(e instanceof BossSummon)){
+                                e.setHealth(e.getHealth() - 1);
+                                image.setVisible(false);
+                                loaded = false;
+                            
+
+                        }
+                    }
                 }
                 
             }

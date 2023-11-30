@@ -12,9 +12,10 @@ public class BossSummonItem extends Item implements Ranged{
 
         GImage image = new GImage("media/Items/Weapons/BossSummonItemRight.png");
         GImage imageRight = new GImage("media/Items/Weapons/BossSummonItem.png");
-        image.setSize(75,75);
-        imageRight.setSize(75,75);
-        image.setLocation(image.getLocation().getX(),image.getLocation().getY());
+        image.setSize(50,50);
+        imageRight.setSize(50,50);
+        image.setLocation(image.getLocation().getX()+30,image.getLocation().getY()+10);
+        imageRight.setLocation(imageRight.getLocation().getX()-20,imageRight.getLocation().getY()+10);
         this.getItemBody().add(image);
         this.getItemBodyRight().add(imageRight);
         
@@ -30,10 +31,11 @@ public class BossSummonItem extends Item implements Ranged{
 		game.getProjectiles().add(ice_gem);
 		game.getGraphicsProgram().add(ice_gem.getImage());
         game.getPlayer().removeItemInHand();
-        game.getPlayer().setCurrentlyEquippedItem(null);
         game.getPlayer().getInventory().getInventory().remove(this);
         game.getPlayer().getInventory().updateGraphicalInterface();
+        game.getPlayer().updateCurrentItemInHand();
         game.getHotbar().updateHotbar();
+    
 
     }
 }

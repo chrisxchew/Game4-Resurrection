@@ -15,7 +15,7 @@ public abstract class Enemy implements ActionListener {
     private double x;
     private double y;
     protected boolean isDead = false;
-    protected int health = 14;
+    protected int health;
     protected Game game;
 	protected boolean isRanged = false;
     protected StatusEffect statusEffect;

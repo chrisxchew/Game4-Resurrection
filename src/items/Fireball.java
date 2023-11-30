@@ -4,6 +4,8 @@ import game.Enemy;
 import statuseffects.StatusEffectFire;
 
 import java.util.ArrayList;
+
+import enemy.Boss;
 public class Fireball extends Projectile{
 
     public Fireball(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
@@ -35,6 +37,12 @@ public class Fireball extends Projectile{
                 //if fireball is a certain distance from enemies center
                 if(!e.isDead()){
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
+                        if(e instanceof Boss){
+                            if(((Boss) e).isShielded()){
+                                return;
+                            }
+                            }
+                        
                         e.setHealth(e.getHealth() - 3);
                         e.addStatusEffect(new StatusEffectFire(e));
                         e.knockback(-5);

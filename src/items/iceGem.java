@@ -4,6 +4,8 @@ import game.Enemy;
 import statuseffects.StatusEffectIce;
 
 import java.util.ArrayList;
+
+import enemy.Boss;
 public class iceGem extends Projectile{
 
     public iceGem(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
@@ -35,6 +37,12 @@ public class iceGem extends Projectile{
                 //if the iceGem is a certain distance from enemies center
                 if(!e.isDead()){
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
+                        if(e instanceof Boss){
+                            if(((Boss) e).isShielded()){
+                                return;
+                            }
+                            }
+                        }                        
                         e.setHealth(e.getHealth() - 3);
                         e.knockback(-5);
                         image.setVisible(false);
@@ -47,4 +55,4 @@ public class iceGem extends Projectile{
         }
 
     }
-}
+

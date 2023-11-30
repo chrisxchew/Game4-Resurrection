@@ -38,28 +38,35 @@ public class Player {
     GRect collisionRect;
     GRect collisionRect2;
     private GImage playerBody;
-    public Player(int spawnx, int spawny, int screenWidth, int screenHeight, Game game) {
+    public Player(int spawnx, int spawny, int screenWidth, int screenHeight, Game game, boolean load) {
         playerGCompound = new GCompound();
         this.inventory = new Inventory(40, screenHeight);
         this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
-        Item item = new Sword1();
-        this.inventory.add(item);
-        for (int i = 0; i < 3; i++) {
-            Item item2 = new Cherries();
-            this.inventory.add(item2);
-        }
-        this.inventory.updateGraphicalInterface();
-        this.healthPoints = new HealthPoints();
+
+            Item item = new Sword1();
+            this.inventory.add(item);
+            for (int i = 0; i < 3; i++) {
+                Item item2 = new Cherries();
+                this.inventory.add(item2);
+            }
+
+
+        
+
+            this.inventory.updateGraphicalInterface();
+            this.healthPoints = new HealthPoints();
         if(this.inventory.getInventory().get(0) != null){
             this.currentlyEquippedItem = inventory.getInventory().get(0);
             playerGCompound.add(playerBody);
             playerGCompound.add(currentlyEquippedItem.getItemBody());
         }
+        if(this.currentlyEquippedItem != null){
+            this.getCurrentlyEquippedItem().getItemBody().setLocation(-50, -15);
+            this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500, -15);
+        }
 
-        this.getCurrentlyEquippedItem().getItemBody().setLocation(-50, -15);
-        this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500, -15);
 
         collisionRect = new GRect(50, 50);
         collisionRect2 = new GRect(50, 50);
@@ -568,6 +575,9 @@ public class Player {
     }
     public GObject getPlayerBody() {
         return playerBody;
+    }
+    public void updateCurrentItemInHand() {
+        currentlyEquippedItem = inventory.getInventory().get(selectedHotbarSlot);
     }
 
 }

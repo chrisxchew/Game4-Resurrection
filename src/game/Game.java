@@ -1,7 +1,6 @@
 package game;
 import java.util.*;
 
-import items.Projectile;
 import structures.Castle;
 import userinterface.*;
 import acm.graphics.GObject;
@@ -18,9 +17,9 @@ public class Game {
     private ArrayList<EnemyProjectile> enemyProjectiles = new ArrayList<EnemyProjectile>();
     private GraphicsProgram graphicsProgram;
     private Castle castle = null;
-    public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram) {
+    public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram, boolean load) {
         this.graphicsProgram = graphicsProgram;
-        player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight, this);
+        player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight, this, load);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         List < Integer > id = Arrays.asList(new Integer[] {
@@ -35,6 +34,7 @@ public class Game {
                 castle = (Castle) structure;
             }
         }
+
     }
     public GraphicsProgram getGraphicsProgram() {
         return graphicsProgram;
@@ -134,5 +134,10 @@ public class Game {
     public boolean isInCastle() {
         return inCastle;
     }
-
+    public void setHotBar(Hotbar hotbar) {
+        this.hotbar = hotbar;
+    }
+    public void setInventory(Inventory i) {
+        this.player.setInventory(i);
+    }
 }

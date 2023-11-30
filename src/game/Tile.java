@@ -161,7 +161,7 @@ public class Tile {
     }
     public void generateStrutures() {
         boolean castleExists = false;
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 10; i++){
             if (percentChance(1) && !castleExists && key.get(0) != 0 && key.get(1) != 0) {
                 Castle castle = new Castle(200, 60, this);
                 structures.add(castle);
@@ -280,5 +280,8 @@ public class Tile {
             }
         }
         return biome;
+    }
+    public int getDifficulty() {
+        return getTileDifficulty(key);
     }
 }	

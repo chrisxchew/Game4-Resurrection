@@ -3,6 +3,8 @@ package items;
 import game.Enemy;
 
 import java.util.ArrayList;
+
+import enemy.Boss;
 public class ArrowProjectile extends Projectile{
 
     public ArrowProjectile(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
@@ -34,6 +36,12 @@ public class ArrowProjectile extends Projectile{
                 //if fireball is a certain distance from enemies center
                 if(!e.isDead()){
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
+                                                if(e instanceof Boss){
+                            if(((Boss) e).isShielded()){
+                                return;
+                            }
+                            }
+                        
                         e.setHealth(e.getHealth() - 7);
 
                         e.knockback(-5);

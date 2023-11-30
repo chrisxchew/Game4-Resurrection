@@ -11,6 +11,8 @@ import java.util.Scanner;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
+import structures.Castle;
+import userinterface.Hotbar;
 import userinterface.Inventory;
 
 public class Saver {
@@ -133,14 +135,17 @@ public class Saver {
 
         //for file in saves folder
         int WINDOWHEIGHT = 500;
-        Game game = new Game(1000, 500, graphicsProgram);
+        Game game = new Game(1000, 500, graphicsProgram, true);
         for(File file : new File(PATHNAME + "/" + saveName).listFiles()){
             if(file.getName().equals("Inventory")){
                 
                 Inventory i = loadInventory(file, WINDOWHEIGHT);
                 game.getPlayer().setInventory(i);
                 game.getPlayer().getInventory().updateGraphicalInterface();
+                game.setInventory(i);
+                game.setHotBar(new Hotbar(i, game.getPlayer()));
                 game.getHotbar().updateHotbar();
+                game.getPlayer().setSelectedHotbarSlot(0);
             }
             if(file.getName().contains("Tile")){
                 Tile tile = loadTile(file, game);
@@ -271,10 +276,18 @@ public class Saver {
                     Class<?> structureClass = Class.forName(className);
                     //param types are int, int
 
+                    if(structureClass != Castle.class){
                     Object[] params = new Object[] {Integer.parseInt(structureRaw.split("\\[")[1].split(",")[0]), Integer.parseInt(structureRaw.split("\\[")[1].split(",")[1].split("\\]")[0])};
                     Class<?>[] paramTypes = new Class[] {int.class, int.class};
                     Structure structure = (Structure) structureClass.getDeclaredConstructor(paramTypes).newInstance(params);
                     structures.add(structure);
+                    }else{
+                    Object[] params = new Object[] {Integer.parseInt(structureRaw.split("\\[")[1].split(",")[0]), Integer.parseInt(structureRaw.split("\\[")[1].split(",")[1].split("\\]")[0]), tile};
+                    Class<?>[] paramTypes = new Class[] {int.class, int.class, Tile.class};
+                    Structure structure = (Structure) structureClass.getDeclaredConstructor(paramTypes).newInstance(params);
+                    structures.add(structure);
+                    }
+
                 }catch(Exception e) {
                     System.out.println("Error: " + e.getMessage() + " : " + e.getStackTrace() + " : "  +"class name: " + className);
                 }
