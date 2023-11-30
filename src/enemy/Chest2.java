@@ -41,7 +41,7 @@ public class Chest2 extends Enemy{
                 statusEffect.tick();
             }
             if (this.isDead) {
-                if (checkCollision(targetx, targety) || !game.getPlayer().getInventory().isFull()) {
+                if (checkCollision(targetx, targety) && !game.getPlayer().getInventory().isFull()) {
                     for (Item i: drops) {
                         if (i != null) {
                             game.getPlayer().getInventory().add(i);
