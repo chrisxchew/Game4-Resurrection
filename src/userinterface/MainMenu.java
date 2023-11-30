@@ -112,15 +112,24 @@ public class MainMenu implements ActionListener{
         objects.clear();
         objects.add(background);
 
+        Saver saver = new Saver();
+        //check if save exist before adding button
+
 
         saveButton1.setLocation(500-saveButton1.getWidth()/2, 300-saveButton1.getHeight()/2);
         saveButton2.setLocation(500-saveButton2.getWidth()/2, 375-saveButton2.getHeight()/2);
         saveButton3.setLocation(500-saveButton3.getWidth()/2, 450-saveButton3.getHeight()/2);
         //put back button at top left
         backButton.setLocation(10,10);
-        objects.add(saveButton1);
-        objects.add(saveButton2);
-        objects.add(saveButton3);
+        if(saver.checkIfSaveExists("save1")){
+            objects.add(saveButton1);
+        }
+        if(saver.checkIfSaveExists("save2")){
+            objects.add(saveButton2);
+        }
+        if(saver.checkIfSaveExists("save3")){
+            objects.add(saveButton3);
+        }
         objects.add(backButton);
         main.loadMainMenu();
         loadScreen  = true;

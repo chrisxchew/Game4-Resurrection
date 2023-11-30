@@ -44,33 +44,20 @@ public class Player {
         this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
-        for (int i = 0; i < 10; i++) {
-            Item item = new Cherries();
-            this.inventory.add(item);
+        Item item = new Sword1();
+        this.inventory.add(item);
+        for (int i = 0; i < 3; i++) {
+            Item item2 = new Cherries();
+            this.inventory.add(item2);
         }
-        for (int i = 0; i < 1; i++) {
-            Item item = new Sword1();
-            this.inventory.add(item);
-
-        }
-        for (int i = 0; i < 10; i++) {
-            Item arrow = new Arrow();
-            this.inventory.add(arrow);
-
-        }
-        FireStaff staff = new FireStaff();
-        IceStaff staff2 = new IceStaff();
-        this.inventory.add(staff2);
-
-        this.inventory.add(staff);
-        this.inventory.add(new Bow());
         this.inventory.updateGraphicalInterface();
         this.healthPoints = new HealthPoints();
+        if(this.inventory.getInventory().get(0) != null){
+            this.currentlyEquippedItem = inventory.getInventory().get(0);
+            playerGCompound.add(playerBody);
+            playerGCompound.add(currentlyEquippedItem.getItemBody());
+        }
 
-        this.currentlyEquippedItem = inventory.getInventory().get(0);
-        playerGCompound.add(playerBody);
-        
-        playerGCompound.add(currentlyEquippedItem.getItemBody());
         this.getCurrentlyEquippedItem().getItemBody().setLocation(-50, -15);
         this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(500, -15);
 
