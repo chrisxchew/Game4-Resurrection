@@ -16,9 +16,18 @@ public class HealthPoints {
     public GCompound getHealthPointsIcons(){
         return healthPointsIcons;
     }
+    public int calculateEmptyHearts(int health){
+        return 5-(health+health%4)/4;
+    }
     public void updateHealthPointsIcons(int health){
         //player starts with 20 health, 19 health is 4 hearts and one 3/4 heart and so on
         healthPointsIcons.removeAll();
+        for(int i = 0; i < calculateEmptyHearts(health); i++){
+            GImage healthPoint = new GImage("media/UI/Heart/Heart_Empty.png");
+            healthPoint.setSize(healthPoint.getWidth()*2, healthPoint.getHeight()*2);
+            healthPoint.setLocation(1000-healthPoint.getWidth()*(5-i), 500-healthPoint.getHeight());
+            healthPointsIcons.add(healthPoint);
+        } 
         for(int i = 0; i < health/4; i++){
             GImage healthPoint = new GImage("media/UI/Heart/Heart.png");
             healthPoint.setSize(healthPoint.getWidth()*2, healthPoint.getHeight()*2);
@@ -43,6 +52,8 @@ public class HealthPoints {
             healthPoint.setLocation(1000-healthPoint.getWidth()*(health/4+1), 500-healthPoint.getHeight());
             healthPointsIcons.add(healthPoint);
         }
+       //add empty hearts
+
     }
 
 }
