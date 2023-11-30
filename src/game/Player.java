@@ -83,7 +83,7 @@ public class Player {
         playerWidth = 50;
         playerHeight = 50;
         speed = 5;
-        health = 1;
+        health = 20;
     }
     public boolean checkCollisionDoor(double moveX, GLine door){
             for(i = 1; i < Math.abs(moveX); i++){
