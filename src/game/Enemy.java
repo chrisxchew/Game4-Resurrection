@@ -24,6 +24,8 @@ public abstract class Enemy implements ActionListener {
     private double velocityMultiplier = -2;
     protected boolean unloaded = false;
     protected Item drop;
+    boolean damageImageOn = false;
+    int damageImageTimer = 0;
     public Enemy(int x, int y, Game game) {
         bodyCompound = new GCompound();
         this.x = x;
@@ -145,6 +147,13 @@ public abstract class Enemy implements ActionListener {
     }
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
+            if (damageImageOn) {
+                damageImageTimer--;
+                if (damageImageTimer <= 0) {
+                    this.bodyCompound.remove(this.bodyCompound.getElement(this.bodyCompound.getElementCount() - 1));
+                    damageImageOn = false;
+                }
+            }
             if(statusEffect != null){
                 statusEffect.tick();
             }
@@ -188,6 +197,15 @@ public abstract class Enemy implements ActionListener {
     }
     public void setHealth(int health) {
         this.health = health;
+        GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
+        damageImage.setSize(50,50);
+        damageImage.setLocation(this.bodyCompound.getElement(0).getX(), this.bodyCompound.getElement(0).getY());
+        if (damageImageOn) {
+            this.bodyCompound.remove(this.bodyCompound.getElement(this.bodyCompound.getElementCount() - 1));
+        }
+        damageImageTimer = 50;
+        this.bodyCompound.add(damageImage);
+        damageImageOn = true;
     }
     public double getX() {
         return x;

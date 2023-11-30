@@ -212,6 +212,7 @@ public class Player {
                 for (Enemy e: game.getCurrentTile().getEnemies()) {
                     if (collidingWithEnemy(e)) {
                         e.knockback(((Melee) this.getCurrentlyEquippedItem()).getKnockback() * -1);
+                        //knockback enemy away from player
                         int SwordDamage = ((Melee) this.getCurrentlyEquippedItem()).getDamage();
                         e.setHealth(e.getHealth() - SwordDamage);
 
