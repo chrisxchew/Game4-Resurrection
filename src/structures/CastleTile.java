@@ -40,7 +40,10 @@ public class CastleTile extends Tile{
     }
     public void generateEnemies(){
         if(parentCastle.isBossCastle()){
-            //ADD BOSS
+           Boss b = new Boss(900,250,parentCastle.getParentTile().getGame());
+            enemies.add(b);
+            ChestBoss c = new ChestBoss(900,250,parentCastle.getParentTile().getGame());
+            enemies.add(c);
         }else{
             //if tile difficulty is greater than 20 make the enemies enemy rect 2, else make them enemy rect 1
             if((double)parentCastle.getParentTile().getTileDifficulty(parentCastle.getParentTile().getKey()) > 20){

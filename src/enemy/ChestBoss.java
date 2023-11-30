@@ -9,9 +9,9 @@ import game.Item;
 import game.Player;
 import items.*;
 
-public class Chest2 extends Enemy{
+public class ChestBoss extends Enemy{
 
-    public Chest2(int x, int y, Game game) {
+    public ChestBoss(int x, int y, Game game) {
         super(x, y, game);
         
         GImage bodyImage = new GImage("media/Items/chest.png");
@@ -70,17 +70,13 @@ public class Chest2 extends Enemy{
         //and 10% chance of dropping sword 2
         //and 45 percent chance of dropping arrow
         //and then drops cherries 100% of the time
-        if(percentChance(15)){
-            return new Sword5();
-        }else if(percentChance(10)){
-            return new Sword6();
-        }else if(percentChance(45)){
-            return new Arrow();
-        }else if(percentChance(2)){
+        if(percentChance(25)){
+            return new Sword7();
+         } else if(percentChance(25)){
             return new FireStaff();
         
         }else{
-            return new Cherries();
+            return new Arrow();
         }
     }
     @Override

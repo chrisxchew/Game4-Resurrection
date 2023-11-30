@@ -8,7 +8,7 @@ import game.Tile;
 public class Castle extends Structure {
 	private Tile parentTile;
 	private CastleTile castleTile;
-	private boolean bossCastle = false;
+	private boolean bossCastle = true;
 	public Castle(int x, int y, Tile parentTile) {
 		super(x, y);
 		this.parentTile = parentTile;

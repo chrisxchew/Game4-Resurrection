@@ -216,7 +216,6 @@ public class Saver {
         ArrayList<Enemy> enemies = new ArrayList<Enemy>();
         ArrayList<Structure> structures = new ArrayList<Structure>();
 
-        //split the file text by the Groud{}, Enemies{}, Structures{}, Colliders{}
         String ground = fileText.split("Ground\\{")[1].split("\\}")[0];
         String[] groundRects = ground.split("Rect\\[");
         for(String rect : groundRects){

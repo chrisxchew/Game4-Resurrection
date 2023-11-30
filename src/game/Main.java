@@ -119,7 +119,7 @@ public class Main extends GraphicsProgram{
                 game.getPlayer().setY(250);
                 drawnCastle = false;
             }
-            for (Enemy enemy: game.getCurrentTile().getEnemies()) {
+            for (Enemy enemy: new ArrayList<Enemy> (game.getCurrentTile().getEnemies())) {
             	enemy.tickai(game.getPlayer().getPlayerCenter().getX(), game.getPlayer().getPlayerCenter()
                     .getY(), game.getCurrentTile().getEnemies(), ticknumber);
                 enemy.calculateEnemyPlayerCollision(game.getPlayer());
