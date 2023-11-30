@@ -46,6 +46,10 @@ public class Main extends GraphicsProgram{
     public void run() {
         loadMainMenu();
     }
+    public void gameOver(){
+        //TODO
+        System.exit(0);
+    }
     public void startGame(){
         removeMainMenu();
         game = new Game(windowWidth, windowHeight, this);
@@ -144,6 +148,9 @@ public class Main extends GraphicsProgram{
             if(ticknumber%2==0){
                 this.game.getPlayer().friction();
             }
+            if(this.game.getPlayer().getHealth() <= 0){
+                gameOver();
+            }
                 
     }
     public void handleKeyStrokes() {
@@ -236,7 +243,6 @@ public class Main extends GraphicsProgram{
     public boolean checkInventoryInteraction(MouseEvent e){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
-        System.out.println("Pressed on: " + getElementAt(e.getX(), e.getY()));
         if(inventoryDisplayed && getElementAt(e.getX(), e.getY()) == i.getTrashcan()){
             System.out.println("pressed ont trashcan");
             if(floatingItem != null){
@@ -319,8 +325,6 @@ public class Main extends GraphicsProgram{
     }
     @Override
     public void keyPressed(KeyEvent e) {
-        //key is left click
-        //if key is esc
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !mainMenuOn) {
             if(!isPaused){
                 isPaused = true;

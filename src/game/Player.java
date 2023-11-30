@@ -201,6 +201,8 @@ public class Player {
                     }
                     this.healthPoints.updateHealthPointsIcons(this.health);
                     this.inventory.remove(this.currentlyEquippedItem);
+                    removeItemInHand();
+                    this.currentlyEquippedItem=null;
                     this.inventory.updateGraphicalInterface();
                     this.game.getHotbar().updateHotbar();
                 }
@@ -242,18 +244,22 @@ public class Player {
         return output;
     }
     public void changeFacingRightAnimation(boolean isFacingRight) {
+
         if (isFacingRight == true) {
-            if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
-                this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
-                this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
-                this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40, -15);
-            } else {
-                this.getCurrentlyEquippedItem().getItemBody().setLocation(40, 0);
+            if(currentlyEquippedItem != null){
+                if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
+                    this.playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+                    this.playerGCompound.add(this.getCurrentlyEquippedItem().getItemBodyRight());
+                    this.getCurrentlyEquippedItem().getItemBodyRight().setLocation(40, -15);
+                } else {
+                    this.getCurrentlyEquippedItem().getItemBody().setLocation(40, 0);
+                }
             }
             facing = 3;
             this.playerGCompound.add(playerBody);
         }
         if (isFacingRight == false) {
+                    if(currentlyEquippedItem != null){
             if (this.getCurrentlyEquippedItem() instanceof Melee || this.getCurrentlyEquippedItem() instanceof Ranged) {
                 this.playerGCompound.add(this.currentlyEquippedItem.getItemBody());
                 this.getCurrentlyEquippedItem().getItemBody().setLocation(-40, -15);
@@ -261,14 +267,19 @@ public class Player {
             } else {
                 this.getCurrentlyEquippedItem().getItemBody().setLocation(-30, 0);
             }
+        }
             facing = 2;
             this.playerGCompound.add(playerBody);
         }
     }
+
+    
     //moves player G Compound to player x and player y
     public void removeItemInHand(){
+        if(currentlyEquippedItem != null){
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBodyRight());
                 this.playerGCompound.remove(this.getCurrentlyEquippedItem().getItemBody());
+        }
     }
     public void moveX(double val, Game game) {
         if (game.getCurrentTile().getDoor() != null && !game.isInCastle()) {

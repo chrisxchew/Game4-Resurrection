@@ -97,7 +97,13 @@ public class Inventory {
 		this.updateGraphicalInterface();
 	}
 	public void remove(Item item) {
-		this.inventory.remove(item);
+		//find where item is in inventory and set it to null
+		for(int i = 0; i < this.inventory.size(); i++) {
+			if(this.inventory.get(i) == item) {
+				this.inventory.set(i, null);
+				break;
+			}
+		}
 		this.updateGraphicalInterface();
 	}
 	public void addAll(ArrayList<Item> items) {
@@ -127,5 +133,13 @@ public class Inventory {
 	}
 	public GImage getTrashcan() {
 		return trashcan;
+	}
+	public boolean isFull() {
+		for(Item item: inventory) {
+			if(item == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

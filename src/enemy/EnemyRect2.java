@@ -38,15 +38,15 @@ public class EnemyRect2 extends Enemy{
 		if(deltaTick%5==0){
 			if(!finishedAnimation){
 				if(animationStage == 1){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk1.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront2_Walk1.png");
 					animationStage = 2;
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 				}else if(animationStage == 2){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk2.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront2_Walk2.png");
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 					animationStage = 3;
 				}else if(animationStage == 3){
-					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka2_FaceFront_Walk3.png");
+					((GImage)this.bodyCompound.getElement(0)).setImage("media/Characters/Blocka/Blocka_FaceFront2_Walk3.png");
 					((GImage) this.bodyCompound.getElement(0)).setSize(50,50);
 					animationStage = 1;
 					finishedAnimation = true;

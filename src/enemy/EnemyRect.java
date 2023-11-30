@@ -1,6 +1,8 @@
 package enemy;
 
 
+import java.util.ArrayList;
+
 import acm.graphics.GImage;
 import game.*;
 import items.Cherries;
@@ -20,7 +22,7 @@ public class EnemyRect extends Enemy{
 	}
 	
 	@Override
-	protected void deathEvent() {
+	protected void deathEvent(ArrayList<Enemy> enemies) {
 		isDead = true;
 		for(int i = 0; i < bodyCompound.getElementCount(); i++) {
 				this.bodyCompound.getElement(i).setVisible(false);	

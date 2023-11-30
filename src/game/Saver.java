@@ -234,7 +234,7 @@ public class Saver {
             if(allEmpty){
                 continue;
             }
-            GRect rectToAdd = new GRect(Double.parseDouble(rectInfo[0]), Double.parseDouble(rectInfo[1]), 10, 10);
+            GRect rectToAdd = new GRect(Double.parseDouble(rectInfo[0]), Double.parseDouble(rectInfo[1]), 100, 100);
             rectToAdd.setColor(new Color(Integer.parseInt(rectInfo[2]), Integer.parseInt(rectInfo[3]), Integer.parseInt(rectInfo[4])));
             Color color = new Color(Integer.parseInt(rectInfo[2]), Integer.parseInt(rectInfo[3]), Integer.parseInt(rectInfo[4]));
             rectToAdd.setFillColor(color);

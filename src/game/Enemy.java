@@ -16,7 +16,7 @@ public abstract class Enemy implements ActionListener {
     private double y;
     protected boolean isDead = false;
     private double speed = 1;
-    private int health = 14;
+    protected int health = 14;
     protected Game game;
 	protected boolean isRanged = false;
     protected StatusEffect statusEffect;
@@ -24,8 +24,8 @@ public abstract class Enemy implements ActionListener {
     private double velocityMultiplier = -2;
     protected boolean unloaded = false;
     protected Item drop;
-    boolean damageImageOn = true;
-    int damageImageTimer = 0;
+    protected boolean damageImageOn = true;
+    protected int damageImageTimer = 0;
     public Enemy(int x, int y, Game game) {
         bodyCompound = new GCompound();
         
@@ -86,7 +86,7 @@ public abstract class Enemy implements ActionListener {
         return false;
     }
 
-    protected void deathEvent() {
+    protected void deathEvent(ArrayList<Enemy> enemies) {
         isDead = true;
         if(damageImage!=null){
             bodyCompound.remove(damageImage);
@@ -103,6 +103,7 @@ public abstract class Enemy implements ActionListener {
             } else {
                 this.bodyCompound.removeAll();
                 this.unloaded = true;
+                //enemies.remove(this);
             }
 
 
@@ -165,10 +166,13 @@ public abstract class Enemy implements ActionListener {
             }
             if (this.isDead) {
 
-                if (checkCollision(targetx, targety)) {
+                if (checkCollision(targetx, targety) && !game.getPlayer().getInventory().isFull()) {
                     for (Item i: drops) {
                         if (i != null) {
-                            game.getPlayer().getInventory().add(i);
+
+                                game.getPlayer().getInventory().add(i);
+                            
+   
                         }
                     }
                     this.game.getPlayer().getInventory().updateGraphicalInterface();
@@ -177,7 +181,7 @@ public abstract class Enemy implements ActionListener {
                     this.unloaded = true;
                 }
             } else if (this.health <= 0) {
-                deathEvent();
+                deathEvent(enemies);
 
             } else {
 				attackPlayer(targetx, targety, deltaTick);
@@ -202,7 +206,7 @@ public abstract class Enemy implements ActionListener {
     public int getHealth() {
         return health;
     }
-    GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
+    protected GImage damageImage = new GImage("media/StatusEffects/takingDamage.png");
     public void setHealth(int health) {
         this.health = health;
 
