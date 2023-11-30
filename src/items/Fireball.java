@@ -34,7 +34,6 @@ public class Fireball extends Projectile{
         super.tick();
         if(loaded){
             for(Enemy e : enemies){
-                //if fireball is a certain distance from enemies center
                 if(!e.isDead()){
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
                         if(e instanceof Boss){
@@ -42,12 +41,13 @@ public class Fireball extends Projectile{
                                 return;
                             }
                             }
-                        
-                        e.setHealth(e.getHealth() - 3);
+                                                e.setHealth(e.getHealth() - 3);
                         e.addStatusEffect(new StatusEffectFire(e));
                         e.knockback(-5);
                         image.setVisible(false);
                         loaded = false;
+                        }    
+
                 }
                 }
                 
@@ -55,4 +55,4 @@ public class Fireball extends Projectile{
         }
 
     }
-}
+

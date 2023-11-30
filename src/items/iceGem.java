@@ -42,12 +42,13 @@ public class iceGem extends Projectile{
                                 return;
                             }
                             }
-                        }                        
-                        e.setHealth(e.getHealth() - 3);
+                                                    e.setHealth(e.getHealth() - 3);
                         e.knockback(-5);
                         image.setVisible(false);
                         loaded = false;
                         e.addStatusEffect(new StatusEffectIce(e));
+                        }                        
+
                 }
                 }
                 
