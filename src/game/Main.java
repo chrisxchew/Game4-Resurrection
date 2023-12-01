@@ -270,6 +270,7 @@ public class Main extends GraphicsProgram{
                 this.floatingItem = null;
                 i.updateGraphicalInterface();
                 h.updateHotbar();
+                game.getPlayer().updateCurrentItemInHand();
             }
             return true;
         }
@@ -281,6 +282,7 @@ public class Main extends GraphicsProgram{
                 this.floatingItem = null;
                 this.game.getHotbar().updateHotbar();
                 game.getPlayer().getInventory().getTrashcan().sendForward();
+                    game.getPlayer().updateCurrentItemInHand();
                 return true;
             }else
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
@@ -293,6 +295,7 @@ public class Main extends GraphicsProgram{
                 i.updateGraphicalInterface();
                 h.updateHotbar();
                 game.getPlayer().getInventory().getTrashcan().sendForward();
+                game.getPlayer().updateCurrentItemInHand();
                 return true;
             }else{
                     this.floatingItem = i.getClickedItem(e.getX(), e.getY());
@@ -302,6 +305,7 @@ public class Main extends GraphicsProgram{
                     add(this.floatingItem.getItemBody());
                     h.updateHotbar();
                     game.getPlayer().getInventory().getTrashcan().sendForward();
+                    game.getPlayer().updateCurrentItemInHand();
                     return true;
                 }
 
