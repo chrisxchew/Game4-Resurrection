@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -71,6 +72,7 @@ public class Saver {
         	makeSaveFolder(saveName);
         }
         saveInventory(saveName ,game);
+        savePosition(saveName, game);
         for(List < Integer > key : game.getTiles().keySet()) {
         	Tile currentTile = game.getTiles().get(key);
             File currentFile = makeFile("Tile"+key.get(0)+"_"+key.get(1)+"_"+game.getTiles().get(key).getBiome().getClass().getName(), PATHNAME, saveName);
@@ -106,6 +108,23 @@ public class Saver {
             }
         }
         
+    }
+    public void savePosition(String saveName, Game game){
+        //save this 
+        game.getCurrentTile().getKey();
+
+        File currentFile = makeFile("Position", PATHNAME, saveName);
+        String position = "Position{\n";
+        position += game.getCurrentTile().getKey().get(0) + "\n";
+        position += game.getCurrentTile().getKey().get(1) + "\n";
+        position += "}";
+        try {
+            writeToFile(currentFile, position);
+            //print entire file path
+            System.out.println("Saved: " + currentFile.getAbsolutePath());
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
     }
     public void saveInventory(String saveName, Game game){
             File currentFile = makeFile("Inventory", PATHNAME, saveName);
@@ -151,6 +170,8 @@ public class Saver {
                 Tile tile = loadTile(file, game);
                 game.getTiles().put(tile.getKey(), tile);
             }
+            game.getPlayer().setTile(loadCurrentTile(makeFile("Position", PATHNAME, saveName), game));
+            
         }
         recalculateNeighbors(game);
         return game;
@@ -195,7 +216,18 @@ public class Saver {
         }
         return inventory;
     }
-
+    public List<Integer> loadCurrentTile(File positionFile, Game game){
+        String fileText = "";
+        try{
+            fileText = readFile(positionFile);
+        }catch(IOException e){
+            System.out.println("Error reading file: " + e.getMessage());
+            return null;
+        }
+        int x = Integer.parseInt(fileText.split("\n")[1]);
+        int y = Integer.parseInt(fileText.split("\n")[2]);
+        return new ArrayList<Integer>(Arrays.asList(x,y));
+    }
     public Tile loadTile(File tileFile, Game game){
         String fileText = "";
         try{
