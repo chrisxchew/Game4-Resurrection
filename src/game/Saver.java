@@ -171,9 +171,10 @@ public class Saver {
                 game.getTiles().put(tile.getKey(), tile);
             }
             game.getPlayer().setTile(loadCurrentTile(makeFile("Position", PATHNAME, saveName), game));
-            
+            game.getPlayer().setX(100);
         }
         recalculateNeighbors(game);
+        game.refreshCastle();
         return game;
     }
     

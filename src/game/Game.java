@@ -59,7 +59,13 @@ public class Game {
         }
 
     }
-    
+    public void refreshCastle(){
+        for(Structure s : getCurrentTile().getStructures()){
+            if(s instanceof Castle){
+                castle = (Castle) s;
+            }
+        }
+    }
     public ArrayList < Tile > getNeighbors(List < Integer > tile) {
         ArrayList < Tile > output = new ArrayList < Tile > ();
         int index0 = tile.get(0);
