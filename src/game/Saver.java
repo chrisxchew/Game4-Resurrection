@@ -29,31 +29,6 @@ public class Saver {
         }
         
     }
-    /*
-     * Save File will look like:
-     * 
-     * 
-     * Ground{
-     * Rect{posX,posY,r,g,b}
-     * Rect{posX,posY,r,g,b}
-     * Rect{posX,posY,r,g,b}
-     * Rect{posX,posY,r,g,b}
-     * etc...
-     * }
-     * Enemies{
-     * Enemy{posX,posY}
-     * EnemyRect{posX,posY}
-     * 
-     * }
-     * Structures{
-     * Tree{posX,posY}
-     * Tree{posX,posY}
-     * boulder_1{posX,posY}
-     * Castle{posX,posY}
-     * etc...
-     * }
-     * 
-     */
     public void removeAllInSaveDirectory(String saveName){
         //if files exist:
 

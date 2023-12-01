@@ -128,12 +128,13 @@ public class MainMenu implements ActionListener{
         objects.clear();
 
         //make a new font
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("Arial", Font.BOLD, 10);
 
         GImage w = new GImage("media/UI/Keyboard/Letters/Key_W.png");
         GImage a = new GImage("media/UI/Keyboard/Letters/Key_A.png");
         GImage s = new GImage("media/UI/Keyboard/Letters/Key_S.png");
         GImage d = new GImage("media/UI/Keyboard/Letters/Key_D.png");
+        GImage e = new GImage("media/UI/Keyboard/Letters/Key_E.png");
         GImage mouse = new GImage("media/UI/Mouse/Mouse_LeftClick.png");
         GImage zero = new GImage("media/UI/Keyboard/Numbers/Key_0.png");
         GImage one = new GImage("media/UI/Keyboard/Numbers/Key_1.png");
@@ -148,10 +149,11 @@ public class MainMenu implements ActionListener{
         GLabel move = new GLabel("Move");
         GLabel use = new GLabel("Use");
         GLabel selectItem = new GLabel("Select Item");
+        GLabel inventory = new GLabel("Inventory");
         GLabel samLabel = new GLabel("Sam");
-        GLabel chrisLabel = new GLabel("Chris: Made the castle");
-        GLabel andrewLabel = new GLabel("Andrew: Made most of the characters and weapons");
-        GLabel juanLabel = new GLabel("Juan: Made that insane cactus");
+        GLabel chrisLabel = new GLabel("Chris: I still dont really know what a rave is");
+        GLabel andrewLabel = new GLabel("Andrew: Keeps going to those cult meetings");
+        GLabel juanLabel = new GLabel("Juan: Told me the green salsa wasnt spicy");
 
         GImage Sam = new GImage("media/UI/Sam.jpg");
         GImage Chris = new GImage("media/UI/Chris.png");
@@ -161,16 +163,19 @@ public class MainMenu implements ActionListener{
         move.setFont(font);
         use.setFont(font);
         selectItem.setFont(font);
+        inventory.setFont(font);
         samLabel.setFont(font);
         chrisLabel.setFont(font);
         andrewLabel.setFont(font);
         juanLabel.setFont(font);
+
 
         mouse.setSize(100,100);
         w.setSize(50,50);
         a.setSize(50,50);
         s.setSize(50,50);
         d.setSize(50,50);
+        e.setSize(50,50);
         Sam.setSize(100,125);
         Chris.setSize(100,100);
         Andrew.setSize(100,100);
@@ -191,6 +196,7 @@ public class MainMenu implements ActionListener{
         a.setLocation(50, 150);
         s.setLocation(100, 150);
         d.setLocation(150, 150);
+        e.setLocation(500,250);
         mouse.setLocation(100, 250);
 
         move.setLocation(225, 150);
@@ -215,7 +221,7 @@ public class MainMenu implements ActionListener{
         juanLabel.setLocation(775, 450);
         Andrew.setLocation(650, 300);
         Juan.setLocation(650, 400);
-
+        inventory.setLocation(450,275);
 
 
         objects.add(background);
@@ -226,6 +232,7 @@ public class MainMenu implements ActionListener{
         objects.add(a);
         objects.add(s);
         objects.add(d);
+        objects.add(e);
         objects.add(mouse);
         objects.add(zero);
         objects.add(one);
@@ -246,6 +253,7 @@ public class MainMenu implements ActionListener{
         objects.add(Andrew);
         objects.add(juanLabel);
         objects.add(Juan);
+        objects.add(inventory);
 
         main.loadMainMenu();
     }
