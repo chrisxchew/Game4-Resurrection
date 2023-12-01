@@ -51,9 +51,9 @@ public class CastleTile extends Tile{
                 for(int i = 0; i < 3; i++){
                     EnemyRect2 e = new EnemyRect2((int)(Math.random()*1000),(int)(Math.random()*500),parentCastle.getParentTile().getGame());
                     enemies.add(e);
+                    EnemyTri4 e2 = new EnemyTri4((int)(Math.random()*1000),(int)(Math.random()*500),parentCastle.getParentTile().getGame());
+                    enemies.add(e2);
                 }
-                //add 1 chest level 2
-
                 Chest2 c = new Chest2(900,250,parentCastle.getParentTile().getGame());
                 enemies.add(c);
             }else{
@@ -61,6 +61,8 @@ public class CastleTile extends Tile{
                 for(int i = 0; i < 3; i++){
                     EnemyRect1 e = new EnemyRect1((int)(Math.random()*1000),(int)(Math.random()*500),parentCastle.getParentTile().getGame());
                     enemies.add(e);
+                    EnemyTri2 e2 = new EnemyTri2((int)(Math.random()*1000),(int)(Math.random()*500),parentCastle.getParentTile().getGame());
+                    enemies.add(e2);
                 }
                 //add 1 chest
                 //make the chest spawn at the middle right of the screen\

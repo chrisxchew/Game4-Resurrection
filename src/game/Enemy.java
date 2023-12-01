@@ -10,8 +10,8 @@ import statuseffects.StatusEffect;
 public abstract class Enemy{
     protected ArrayList < Item > drops = new ArrayList < Item > ();
     protected GCompound bodyCompound;
-    private double x;
-    private double y;
+    protected double x;
+    protected double y;
     protected boolean isDead = false;
     protected int health;
     protected Game game;

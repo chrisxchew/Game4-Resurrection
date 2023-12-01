@@ -39,10 +39,10 @@ public class ArrowProjectile extends Projectile{
                                                 if(e instanceof Boss){
                             if(((Boss) e).isShielded()){
                                 return;
-                            }
+                                }
                             }
                         
-                        e.setHealth(e.getHealth() - 7);
+                        e.setHealth(e.getHealth() - 10);
 
                         e.knockback(-5);
                         image.setVisible(false);
