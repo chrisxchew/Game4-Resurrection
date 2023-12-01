@@ -7,7 +7,7 @@ import items.BossSummonItem;
 public class BossSummon extends Enemy{
 	public BossSummon(int x, int y, Game game) {
 		super(x, y, game);
-		this.setHealth(16);
+		this.setHealth(52);
 	}
 	
 	@Override
@@ -22,7 +22,6 @@ public class BossSummon extends Enemy{
 	@Override
 	protected Item calculateDrop() {
 		return new BossSummonItem();
-		
 	}
 
 }

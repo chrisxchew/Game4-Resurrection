@@ -76,8 +76,8 @@ public class Chest2 extends Enemy{
             return new Sword6();
         }else if(percentChance(45)){
             return new Arrow();
-        }else if(percentChance(2)){
-            return new FireStaff();
+        }else if(percentChance(10)){
+            return new IceStaff();
         
         }else{
             return new Cherries();

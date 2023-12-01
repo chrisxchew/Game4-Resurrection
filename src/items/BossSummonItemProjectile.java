@@ -49,7 +49,7 @@ public class BossSummonItemProjectile extends Projectile{
 
                     if(Math.abs(x - e.getX()) < 50 && Math.abs(y - e.getY()) < 50){
                             if(!(e instanceof BossSummon)){
-                                e.setHealth(e.getHealth() - 1);
+                                e.setHealth(e.getHealth() - 8);
                                 image.setVisible(false);
                                 loaded = false;
                             

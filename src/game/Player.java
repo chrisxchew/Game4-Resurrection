@@ -29,7 +29,7 @@ public class Player {
     private int velX = 0;
     private int velY = 0;
     static private String PLAYERIMGPATH = "media/Characters/Blurby/";
-    static private int ATTACKCOOLDOWN = 10;
+    static private int ATTACKCOOLDOWN = 25;
     private int invurnerableCooldown = 0;
     private Game game;
     //0 is up, 1 is down, 2 is left, 3 is right

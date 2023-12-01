@@ -74,7 +74,6 @@ public class ChestBoss extends Enemy{
             return new Sword7();
          } else if(percentChance(25)){
             return new FireStaff();
-        
         }else{
             return new Arrow();
         }
