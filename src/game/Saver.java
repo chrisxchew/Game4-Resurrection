@@ -13,6 +13,7 @@ import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import structures.Castle;
+import structures.CastleTile;
 import userinterface.Hotbar;
 import userinterface.Inventory;
 
@@ -90,8 +91,15 @@ public class Saver {
 
         File currentFile = makeFile("Position", PATHNAME, saveName);
         String position = "Position{\n";
-        position += game.getCurrentTile().getKey().get(0) + "\n";
-        position += game.getCurrentTile().getKey().get(1) + "\n";
+        if(game.isInCastle()){
+            CastleTile t = ((CastleTile) game.getCurrentTile());
+            position += t.getParentTile().getKey().get(0) + "\n";
+            position += t.getParentTile().getKey().get(1) + "\n";
+        }else{
+            position += game.getCurrentTile().getKey().get(0) + "\n";
+            position += game.getCurrentTile().getKey().get(1) + "\n";
+        }
+
         position += "}";
         try {
             writeToFile(currentFile, position);

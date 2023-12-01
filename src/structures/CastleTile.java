@@ -72,4 +72,7 @@ public class CastleTile extends Tile{
             }
         }
     }
+    public Tile getParentTile() {
+        return parentCastle.getParentTile();
+    }
 }

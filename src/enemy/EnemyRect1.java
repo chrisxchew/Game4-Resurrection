@@ -7,7 +7,7 @@ import items.*;
 public class EnemyRect1 extends Enemy{
 	public EnemyRect1(int x, int y, Game game) {
 		super(x, y, game);
-		this.setHealth(100);
+		this.setHealth(16);
 		this.isRanged = true;
 	}
 	
