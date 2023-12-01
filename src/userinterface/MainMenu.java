@@ -146,10 +146,12 @@ public class MainMenu implements ActionListener{
         GImage seven = new GImage("media/UI/Keyboard/Numbers/Key_7.png");
         GImage eight = new GImage("media/UI/Keyboard/Numbers/Key_8.png");
         GImage nine = new GImage("media/UI/Keyboard/Numbers/Key_9.png");
+        GImage esc = new GImage("media/UI/Keyboard/Special/Key_Escape.png");
         GLabel move = new GLabel("Move");
         GLabel use = new GLabel("Use");
         GLabel selectItem = new GLabel("Select Item");
         GLabel inventory = new GLabel("Inventory");
+        GLabel pause = new GLabel("Pause");
         GLabel samLabel = new GLabel("Sam");
         GLabel chrisLabel = new GLabel("Chris: I still dont really know what a rave is");
         GLabel andrewLabel = new GLabel("Andrew: Keeps going to those cult meetings");
@@ -168,6 +170,7 @@ public class MainMenu implements ActionListener{
         chrisLabel.setFont(font);
         andrewLabel.setFont(font);
         juanLabel.setFont(font);
+        pause.setFont(font);
 
 
         mouse.setSize(100,100);
@@ -180,6 +183,7 @@ public class MainMenu implements ActionListener{
         Chris.setSize(100,100);
         Andrew.setSize(100,100);
         Juan.setSize(100,100);
+
 
         zero.setSize(50,50);
         one.setSize(50,50);
@@ -198,6 +202,8 @@ public class MainMenu implements ActionListener{
         d.setLocation(150, 150);
         e.setLocation(500,250);
         mouse.setLocation(100, 250);
+        esc.setLocation(500, 300);
+        pause.setLocation(500, 350);
 
         move.setLocation(225, 150);
         use.setLocation(225, 300);
@@ -222,9 +228,11 @@ public class MainMenu implements ActionListener{
         Andrew.setLocation(650, 300);
         Juan.setLocation(650, 400);
         inventory.setLocation(450,275);
-
-
+        esc.setSize(50,50);
+        pause.setLocation(450,325);
         objects.add(background);
+        objects.add(pause);
+        objects.add(esc);
         objects.add(samLabel);
         objects.add(Sam);
         objects.add(backButton);
