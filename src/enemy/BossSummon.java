@@ -22,7 +22,6 @@ public class BossSummon extends Enemy{
 	@Override
 	protected Item calculateDrop() {
 		return new BossSummonItem();
-		
 	}
 
 }

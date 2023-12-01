@@ -31,7 +31,7 @@ public class BossSummonItem extends Item implements Ranged{
 		game.getProjectiles().add(ice_gem);
 		game.getGraphicsProgram().add(ice_gem.getImage());
         game.getPlayer().removeItemInHand();
-        game.getPlayer().getInventory().getInventory().remove(this);
+        game.getPlayer().getInventory().remove(this);
         game.getPlayer().getInventory().updateGraphicalInterface();
         game.getPlayer().updateCurrentItemInHand();
         game.getHotbar().updateHotbar();

@@ -184,7 +184,7 @@ public class Boss extends Enemy {
             }
             if (deltaTick % 20 == 0) {
                 int chance = (int)(Math.random() * 100);
-                if (chance == 1) {
+                if (chance == 3) {
                     this.summonEnemy();
                 }
             }
