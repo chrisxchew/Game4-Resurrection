@@ -45,7 +45,7 @@ public class Player {
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
 
-            Item item = new Sword1();
+            Item item = new IceStaff();
             this.inventory.add(item);
             for (int i = 0; i < 3; i++) {
                 Item item2 = new Cherries();
@@ -572,7 +572,15 @@ public class Player {
         return playerBody;
     }
     public void updateCurrentItemInHand() {
+        if (this.currentlyEquippedItem != null) {
+            playerGCompound.remove(this.currentlyEquippedItem.getItemBody());
+            playerGCompound.remove(this.currentlyEquippedItem.getItemBodyRight());
+        }
         currentlyEquippedItem = inventory.getInventory().get(selectedHotbarSlot);
+        if (currentlyEquippedItem != null) {
+            playerGCompound.add(currentlyEquippedItem.getItemBody());
+        }
+        changeFacingRightAnimation(facingRight);
     }
 
 }

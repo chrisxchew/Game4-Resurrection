@@ -1,0 +1,11 @@
+
+
+Wood Sword : 2 Damage
+Stone Sword : 5 Damage
+Silver Sword : 8 Damage
+Ruby Sword : 11 Damage
+Emerald Sword : 14 Damage
+Void Sword : 17 Damage
+Heaven's Swordf : 20 Damage
+
+FireBall : 3 Damage + 4 ticks of damage over timeLeft

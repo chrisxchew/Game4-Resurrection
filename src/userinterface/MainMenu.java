@@ -262,7 +262,6 @@ public class MainMenu implements ActionListener{
         objects.add(juanLabel);
         objects.add(Juan);
         objects.add(inventory);
-
         main.loadMainMenu();
     }
     public void makeLoadScreen(){

@@ -10,7 +10,6 @@ public class Cherries extends Item{
         cherriesImage.setSize(cherriesImage.getWidth()*3, cherriesImage.getHeight()*3);
         cherriesImage.setLocation(cherriesImage.getLocation().getX(),cherriesImage.getLocation().getY());
         this.getItemBody().add(cherriesImage);
-        
     }
 
     public GImage getCherriesImage() {
