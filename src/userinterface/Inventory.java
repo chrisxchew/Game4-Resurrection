@@ -104,6 +104,7 @@ public class Inventory {
 		for(int i = 0; i < this.inventory.size(); i++) {
 			if(this.inventory.get(i) == null) {
 				this.inventory.set(i, item);
+				
 				break;
 			}
 		}

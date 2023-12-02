@@ -214,6 +214,9 @@ public class Main extends GraphicsProgram{
             this.game.getHotbar().updateHotbar();
             add(this.game.getHotbar().getInterface());
     		inventoryDisplayed = false;
+            if(currentToolTip != null){
+                        remove(currentToolTip.getInterface());
+            }
     		canChangeInventoryDisplayed = false;
             this.game.getPlayer().setMovementEnabled(true);
     	}else if(canChangeInventoryDisplayed){
@@ -382,7 +385,10 @@ public class Main extends GraphicsProgram{
     public void	mouseMoved(MouseEvent e){
         	this.mouseX = e.getX();
         	this.mouseY = e.getY();
+            if(inventoryDisplayed){
             showToolTip(e.getX(), e.getY());
+            }
+
     }
     public void addPauseMenuObjects(PauseMenu pauseMenu){
         for(GObject object: pauseMenu.getObjects()){

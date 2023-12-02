@@ -160,6 +160,7 @@ public abstract class Enemy{
                         if (i != null) {
 
                                 game.getPlayer().getInventory().add(i);
+                                game.getPlayer().updateCurrentItemInHand();
                             
    
                         }
