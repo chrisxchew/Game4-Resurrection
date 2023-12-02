@@ -119,6 +119,22 @@ public class Boss extends Enemy {
             }
 
         }
+        if (this.isDead) {
+            if (checkCollision(targetx, targety) && !game.getPlayer().getInventory().isFull() && !unloaded) {
+                for (Item i: drops) {
+                    if (i != null) {
+                            game.getPlayer().getInventory().add(i);
+                    }
+                }
+                this.game.getPlayer().getInventory().updateGraphicalInterface();
+                this.game.getHotbar().updateHotbar();
+                this.bodyCompound.removeAll();
+                this.unloaded = true;
+            }
+        } else if (this.health <= 0) {
+            deathEvent(enemies);
+
+        }
     }
     public void flash(int cooldown) {
         if (cooldown < 250) {

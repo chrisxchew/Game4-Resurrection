@@ -30,11 +30,21 @@ public class BossSummonItem extends Item implements Ranged{
     @Override
     public void attackEvent(ArrayList<Enemy> enemies, boolean isRight, double x, double y, Game game) {
 		BossSummonItemProjectile ice_gem = new BossSummonItemProjectile(x, y, isRight, enemies);
+    
 		game.getProjectiles().add(ice_gem);
 		game.getGraphicsProgram().add(ice_gem.getImage());
         game.getPlayer().removeItemInHand();
         game.getPlayer().getInventory().remove(this);
         game.getPlayer().getInventory().updateGraphicalInterface();
+        //if another boss summon item is in the hotbar, switch to it
+        //for the first 10 slots in the hotbar
+        for(int i = 0; i < 10; i++){
+            if(game.getPlayer().getInventory().getInventory().get(i) instanceof BossSummonItem){
+            game.getPlayer().removeItemInHand();
+            game.getPlayer().setSelectedHotbarSlot(i);
+            }
+        }
+
         game.getPlayer().updateCurrentItemInHand();
         game.getHotbar().updateHotbar();
     

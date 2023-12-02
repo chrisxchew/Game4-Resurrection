@@ -47,6 +47,7 @@ public class Player {
 
 
             Item item = new Sword1();
+            item.setLabel("50");
             this.inventory.add(item);
             for (int i = 0; i < 3; i++) {
                 Item item2 = new Cherries();
