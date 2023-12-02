@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import acm.graphics.GCompound;
 import acm.graphics.GImage;
+import acm.graphics.GLabel;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import game.Item;
@@ -62,8 +63,11 @@ public class Inventory {
 						GCompound itemtoAdd = (GCompound) (((Item) (inventory.get((i*10) + j))).getItemBody()).clone();
 						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize));
 						itemtoAdd.scale(0.7);
-						
+						Item item = (Item) (inventory.get((i*10) + j));
+						GLabel label = item.label;
+						label.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize)+20);
 						Interface.add(itemtoAdd);
+						Interface.add(label);
 					}
 				}
 

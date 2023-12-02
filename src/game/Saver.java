@@ -114,7 +114,7 @@ public class Saver {
         	String inventory = "Inventory{\n";
         	for(Item item : game.getPlayer().getInventory().getInventory()) {
                 if(item != null){
-        		    inventory += item.getClass().getName() + "\n";
+        		    inventory += item.getClass().getName()+ ":" + item.label.getLabel()+ "\n";
                 }else{
                     inventory += "null\n";
                 }
@@ -179,14 +179,26 @@ public class Saver {
 
         int inventorySize = fileText.split("\n").length - 1;
         Inventory inventory = new Inventory(inventorySize, screenHeight);
-        for(String className : fileText.split("\n")){
+        for(String classNameB : fileText.split("\n")){
+            String className = classNameB.split(":")[0];
 
-            
             if(className.equals("Inventory{") || className.equals("}")){
                 continue;
             }
             if(className.equals("null")){
                 inventory.add(null);
+            }else if(classNameB.split(":").length > 1){
+                String label = classNameB.split(":")[1];
+                try {
+                    Class<?> itemClass = Class.forName(className);
+                    Item item = (Item) itemClass.getDeclaredConstructor().newInstance();
+                    item.label.setLabel(label);
+                    inventory.add(item);
+                }catch(Exception e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
+                continue;
+            
             }else{
                 try {
                     Class<?> itemClass = Class.forName(className);

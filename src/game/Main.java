@@ -26,7 +26,6 @@ public class Main extends GraphicsProgram{
     Window window = new Window(windowWidth, windowHeight);
     Saver saver = new Saver();
     Game game;
-
     private ArrayList < String > key_manager = new ArrayList < String > ();
     public void init() {
         setSize(windowWidth, windowHeight);
@@ -52,7 +51,7 @@ public class Main extends GraphicsProgram{
     }
     GameOver gameOver = new GameOver(this);
     public void gameOver(){
-
+        
         isGameOver = true;
         removeAll();
         for(GObject object: gameOver.getObjects()){
@@ -286,17 +285,33 @@ public class Main extends GraphicsProgram{
                 return true;
             }else
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
-                Item temp = i.getClickedItem(e.getX(), e.getY());
-                i.getInventory().set(i.getInventory().indexOf(temp), this.floatingItem);
-                remove(floatingItem.getItemBody());
-                this.floatingItem = temp;
-                add(floatingItem.getItemBody());
-                i.remove(temp);
-                i.updateGraphicalInterface();
-                h.updateHotbar();
-                game.getPlayer().getInventory().getTrashcan().sendForward();
-                game.getPlayer().updateCurrentItemInHand();
-                return true;
+                Item item = i.getClickedItem(e.getX(), e.getY());
+                if(item.getClass() == floatingItem.getClass() && item instanceof Melee && floatingItem instanceof Melee && item.combinable && floatingItem.combinable){
+                    item.label.setLabel(String.valueOf(Integer.parseInt(item.label.getLabel()) + Integer.parseInt(floatingItem.label.getLabel())));
+                    i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), item);
+                    i.updateGraphicalInterface();
+                    game.getHotbar().updateHotbar();
+                    remove(floatingItem.getItemBody());
+                    this.floatingItem = null;
+                    //convert label to int
+                   
+                    game.getPlayer().getInventory().getTrashcan().sendForward();
+                    game.getPlayer().updateCurrentItemInHand();
+                    return true;   
+                }else{
+                    Item temp = i.getClickedItem(e.getX(), e.getY());
+                    i.getInventory().set(i.getInventory().indexOf(temp), this.floatingItem);
+                    remove(floatingItem.getItemBody());
+                    this.floatingItem = temp;
+                    add(floatingItem.getItemBody());
+                    i.remove(temp);
+                    i.updateGraphicalInterface();
+                    h.updateHotbar();
+                    game.getPlayer().getInventory().getTrashcan().sendForward();
+                    game.getPlayer().updateCurrentItemInHand();
+                    return true;
+                }
+
             }else{
                     this.floatingItem = i.getClickedItem(e.getX(), e.getY());
                     if(floatingItem != null){

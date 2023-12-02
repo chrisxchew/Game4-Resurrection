@@ -8,10 +8,11 @@ import game.Item;
 
 public class Sword2 extends Item implements Melee{
 	public Sword2() {
-
+		this.damage = 5;
 		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left2.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right2.png");
-
+		this.combinable = true;
+		this.label.setLabel("1");
 		image.setSize(75,75);
 		imageRight.setSize(75,75);
 		this.getItemBody().add(image);
@@ -29,6 +30,6 @@ public class Sword2 extends Item implements Melee{
 	}
 	@Override
 	public int getDamage() {
-		return 5;
+		return this.damage;
 	}
 }

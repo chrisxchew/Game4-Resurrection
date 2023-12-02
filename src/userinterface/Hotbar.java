@@ -1,6 +1,7 @@
 package userinterface;
 
 import acm.graphics.GCompound;
+import acm.graphics.GLabel;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import game.*;
@@ -14,17 +15,19 @@ public class Hotbar {
         this.player = player;
         //hotbar is just the first 10 items in the inventory
         for(int i = 0; i < 10; i++){
-            GRect box = new GRect(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize), inventoryInterfaceBoxSize, inventoryInterfaceBoxSize);
-            if(inventory.getInventory().get(i) != null){
-            GObject j = (GObject) inventory.getInventory().get(i).getItemBody().clone();
-            j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
-                        j.scale(0.7);
-            Interface.add(j);
-
+                GRect box = new GRect(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize), inventoryInterfaceBoxSize, inventoryInterfaceBoxSize);
+                if(inventory.getInventory().get(i) != null){
+                GObject j = (GObject) inventory.getInventory().get(i).getItemBody().clone();
+                j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
+                j.scale(0.7);
+                Interface.add(j);
+                Item item = inventory.getInventory().get(i);
+                GLabel label = item.label;
+                label.setLocation(i*inventoryInterfaceBoxSize, 500-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize)+20);
+                Interface.add(label);
             }
             Interface.add(box);
         }
-        
     }
     public void updateHotbar(){
         Interface.removeAll();
@@ -49,9 +52,13 @@ public class Hotbar {
         for(int i = 0; i < 10; i++){
                 if(inventory.getInventory().get(i) != null){
                 GObject j = (GObject) inventory.getInventory().get(i).getItemBody().clone();    
+                Item item = inventory.getInventory().get(i);
                 j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
                 j.scale(0.7);
                 Interface.add(j);
+                GLabel label = item.label;
+			    label.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize)+20);
+				Interface.add(label);
             }
         }
     }

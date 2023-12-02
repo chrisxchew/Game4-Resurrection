@@ -1,5 +1,6 @@
 package items;
 
+import java.awt.Label;
 import java.util.ArrayList;
 
 import acm.graphics.*;
@@ -8,10 +9,11 @@ import game.Item;
 
 public class Sword1 extends Item implements Melee{
 	public Sword1() {
-
+		this.damage = 2;
+		this.combinable = true;
 		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left1.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right1.png");
-
+		this.label.setLabel("1");
 		image.setSize(75,75);
 		imageRight.setSize(75,75);
 		this.getItemBody().add(image);
@@ -29,6 +31,7 @@ public class Sword1 extends Item implements Melee{
 	}
 	@Override
 	public int getDamage() {
-		return 2;
+		return this.damage + Integer.parseInt(this.label.getLabel());
 	}
+
 }
