@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import acm.graphics.*;
 import game.Enemy;
 import game.Item;
+import userinterface.ToolTip;
 
 public class Sword7 extends Item implements Melee{
 	public Sword7() {
+		this.name = "Heaven's Sword";
 		this.damage = 20;
 		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left7.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right7.png");
@@ -17,6 +19,7 @@ public class Sword7 extends Item implements Melee{
 		imageRight.setSize(75,75);
 		this.getItemBody().add(image);
 		this.getItemBodyRight().add(imageRight);
+		updateToolTip();
 	}
 
 	@Override
@@ -31,5 +34,14 @@ public class Sword7 extends Item implements Melee{
 	@Override
 	public int getDamage() {
 		return this.damage;
+	}
+	@Override
+	public void updateToolTip() {
+		this.toolTip = new ToolTip("A Sword from the Heavens. Damage: " + String.valueOf(damage) + " +"+this.label.getLabel() + " damage per hit. Combine with another sword to upgrade it.", this);
+	}
+	@Override
+	public void setLabel(String label) {
+		super.setLabel(label);
+		updateToolTip();
 	}
 }

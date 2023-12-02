@@ -6,10 +6,12 @@ import acm.graphics.GImage;
 import game.Enemy;
 import game.Game;
 import game.Item;
+import userinterface.ToolTip;
 public class BossSummonItem extends Item implements Ranged{
     private GImage image;
     public BossSummonItem() {
-
+        this.name = "Cold Stone Pentagon";
+        this.toolTip = new ToolTip("A pentagon that, when launched, damages the bosses shield.", this);
         GImage image = new GImage("media/Items/Weapons/BossSummonItemRight.png");
         GImage imageRight = new GImage("media/Items/Weapons/BossSummonItem.png");
         image.setSize(50,50);

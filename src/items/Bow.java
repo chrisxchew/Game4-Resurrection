@@ -7,10 +7,12 @@ import game.Enemy;
 import game.Game;
 import game.Item;
 import userinterface.Inventory;
+import userinterface.ToolTip;
 
 public class Bow extends Item implements Ranged{
 	public Bow() {
-
+		this.name = "Bow";
+		this.toolTip = new ToolTip("A bow that shoots arrows. Does 10 damage per hit.", this);
 		GImage image = new GImage("media/Items/Weapons/Bow/Bow_FaceLeft.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Bow/Bow_FaceRight.png");
 

@@ -12,6 +12,7 @@ import java.util.Scanner;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
+import items.Melee;
 import structures.Castle;
 import structures.CastleTile;
 import userinterface.Hotbar;
@@ -194,6 +195,8 @@ public class Saver {
                     Item item = (Item) itemClass.getDeclaredConstructor().newInstance();
                     item.label.setLabel(label);
                     inventory.add(item);
+                    Melee m = (Melee) item;
+                    m.updateToolTip();
                 }catch(Exception e) {
                     System.out.println("Error: " + e.getMessage());
                 }

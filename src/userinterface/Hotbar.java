@@ -1,10 +1,13 @@
 package userinterface;
 
+import java.awt.Font;
+
 import acm.graphics.GCompound;
 import acm.graphics.GLabel;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
-import game.*;
+import game.Item;
+import game.Player;
 public class Hotbar {
     private GCompound Interface = new GCompound();
     static int inventoryInterfaceBoxSize = 50;
@@ -56,9 +59,15 @@ public class Hotbar {
                 j.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize));
                 j.scale(0.7);
                 Interface.add(j);
-                GLabel label = item.label;
+                if(item.label.getLabel() != ""){
+				String text = "+"+item.label.getLabel();
+				GLabel label = new GLabel(text);
+                Font font = new Font("Arial", Font.BOLD, 20);
+                label.setFont(font);
 			    label.setLocation(i*inventoryInterfaceBoxSize, inventory.getScreenHeight()+inventoryInterfaceBoxSize-inventoryInterfaceBoxSize-(inventoryInterfaceBoxSize)+20);
 				Interface.add(label);
+                }
+
             }
         }
     }

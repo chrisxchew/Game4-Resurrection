@@ -1,13 +1,22 @@
 package game;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-import acm.graphics.*;
-import acm.program.*;
-import items.*;
-import userinterface.*;
+import acm.graphics.GObject;
+import acm.program.GraphicsProgram;
+import items.EnemyProjectile;
+import items.Melee;
+import items.Projectile;
+import userinterface.GameOver;
+import userinterface.Hotbar;
+import userinterface.Inventory;
+import userinterface.MainMenu;
+import userinterface.PauseMenu;
+import userinterface.ToolTip;
 
 public class Main extends GraphicsProgram{
     String save = "";
@@ -51,7 +60,7 @@ public class Main extends GraphicsProgram{
     }
     GameOver gameOver = new GameOver(this);
     public void gameOver(){
-        
+
         isGameOver = true;
         removeAll();
         for(GObject object: gameOver.getObjects()){
@@ -259,6 +268,7 @@ public class Main extends GraphicsProgram{
         }
     }
     public boolean checkInventoryInteraction(MouseEvent e){
+
         if(e.getButton() == 1){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
@@ -287,13 +297,13 @@ public class Main extends GraphicsProgram{
             if(floatingItem != null && i.getClickedItem(e.getX(), e.getY()) != null){
                 Item item = i.getClickedItem(e.getX(), e.getY());
                 if(item.getClass() == floatingItem.getClass() && item instanceof Melee && floatingItem instanceof Melee && item.combinable && floatingItem.combinable){
-                    item.label.setLabel(String.valueOf(Integer.parseInt(item.label.getLabel()) + Integer.parseInt(floatingItem.label.getLabel())));
+                    item.setLabel(String.valueOf(Integer.parseInt(item.label.getLabel()) + Integer.parseInt(floatingItem.label.getLabel())));
                     i.setSpecificItem(i.getClickedIndex(e.getX(), e.getY()), item);
+                    showToolTip(e.getX(), e.getY());
                     i.updateGraphicalInterface();
                     game.getHotbar().updateHotbar();
                     remove(floatingItem.getItemBody());
                     this.floatingItem = null;
-                    //convert label to int
                    
                     game.getPlayer().getInventory().getTrashcan().sendForward();
                     game.getPlayer().updateCurrentItemInHand();
@@ -347,11 +357,32 @@ public class Main extends GraphicsProgram{
         }
         
     }
+    ToolTip currentToolTip = null;
+    public void showToolTip(int eX, int eY){
+        //when the user hovers over an item in the inventory or hotbar, show a tooltip
+        if(this.game != null){
+            if(eX < 500 && eY > 500-(50*game.getPlayer().getInventory().getInventorySize()/10)){
+                if(game.getPlayer().getInventory().getClickedItem(eX, eY) != null){
+                    Item item = game.getPlayer().getInventory().getClickedItem(eX, eY);
+                    if(currentToolTip != null){
+                        remove(currentToolTip.getInterface());
+                    }
+                    currentToolTip = item.toolTip;
+                    currentToolTip.getInterface().setLocation(eX, eY-100);
+                    add(currentToolTip.getInterface());
+                }else{
+                    if(currentToolTip != null){
+                        remove(currentToolTip.getInterface());
+                    }
+                }
+            }
+        }
+    }
     @Override
     public void	mouseMoved(MouseEvent e){
         	this.mouseX = e.getX();
         	this.mouseY = e.getY();
-
+            showToolTip(e.getX(), e.getY());
     }
     public void addPauseMenuObjects(PauseMenu pauseMenu){
         for(GObject object: pauseMenu.getObjects()){

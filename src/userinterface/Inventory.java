@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import acm.graphics.GCompound;
@@ -64,10 +65,18 @@ public class Inventory {
 						itemtoAdd.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize));
 						itemtoAdd.scale(0.7);
 						Item item = (Item) (inventory.get((i*10) + j));
-						GLabel label = item.label;
-						label.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize)+20);
 						Interface.add(itemtoAdd);
+						if(item.label.getLabel() != ""){
+						String text = "+"+item.label.getLabel();
+						Font font = new Font("Arial", Font.BOLD, 20);
+
+						GLabel label = new GLabel(text);
+						label.setFont(font);
+						label.setLocation(j*inventoryInterfaceBoxSize, screenHeight-inventoryInterfaceBoxSize-(i*inventoryInterfaceBoxSize)+20);
+						
 						Interface.add(label);
+						}
+
 					}
 				}
 
@@ -122,7 +131,11 @@ public class Inventory {
 	public Item getClickedItem(int x, int y) {
 		int xIndex = x/inventoryInterfaceBoxSize;
 		int yIndex = (screenHeight-y)/inventoryInterfaceBoxSize;
-		return this.inventory.get((yIndex*10) + xIndex);
+		if(this.inventory.size() > (yIndex*10) + xIndex) {
+			return this.inventory.get((yIndex*10) + xIndex);
+		}else{
+			return null;
+		}
 	}
 	public int getClickedIndex(int x,int y){
 		int xIndex = x/inventoryInterfaceBoxSize;

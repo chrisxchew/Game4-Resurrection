@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import acm.graphics.*;
+import userinterface.ToolTip;
 
 public abstract class Item {
 	private GCompound itemBody;
@@ -13,8 +14,11 @@ public abstract class Item {
 	public int damage;
 	public boolean combinable = false;
 	public GLabel label = new GLabel("");
-
+	public ToolTip toolTip;
+	public String name;
 	public Item() {
+		this.name = this.getClass().getSimpleName();
+		this.toolTip = new ToolTip("Empty tooltip", this);
 		Font font = new Font("Arial", Font.BOLD, 20);
 		//make the color of the label white
 		Color c = new Color(0, 0, 0);
@@ -28,5 +32,8 @@ public abstract class Item {
 	}
 	public GCompound getItemBodyRight() {
 		return itemBodyRight;
+	}
+	public void setLabel(String label) {
+		this.label.setLabel(label);
 	}
 }
