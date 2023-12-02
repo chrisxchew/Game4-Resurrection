@@ -101,7 +101,7 @@ public class Boss extends Enemy {
         super.tickai(targetx, targety, enemies, deltaTick);
         updateHealthBar();
         updateShield();
-        if (shieldHealth == 0 && !isDead) {
+        if (shieldHealth <= 0 && !isDead) {
             shielded = false;
             flash(shieldCooldown);
 
