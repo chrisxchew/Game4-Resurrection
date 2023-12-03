@@ -71,12 +71,10 @@ public class ChestBoss extends Enemy{
         //and 45 percent chance of dropping arrow
         //and then drops cherries 100% of the time
         if(percentChance(25)){
-            return new Sword7();
-         } else if(percentChance(25)){
             return new FireStaff();
-        }else{
-            return new Arrow();
-        }
+         }else{
+            return new Sword7();
+         }
     }
     @Override
     public void knockback(double mulitplier) {

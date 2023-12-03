@@ -10,11 +10,11 @@ import userinterface.ToolTip;
 public class Sword7 extends Item implements Melee{
 	public Sword7() {
 		this.name = "Heaven's Sword";
-		this.damage = 19;
+		this.damage = 1;
 		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left7.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right7.png");
 		this.combinable = true;
-		this.label.setLabel("3");
+		this.label.setLabel("21");
 		image.setSize(75,75);
 		imageRight.setSize(75,75);
 		this.getItemBody().add(image);
@@ -33,7 +33,7 @@ public class Sword7 extends Item implements Melee{
 	}
 	@Override
 	public int getDamage() {
-		return this.damage;
+		return this.damage + Integer.parseInt(this.label.getLabel());
 	}
 	@Override
 	public void updateToolTip() {
