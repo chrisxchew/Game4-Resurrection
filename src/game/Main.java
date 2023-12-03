@@ -275,6 +275,7 @@ public class Main extends GraphicsProgram{
         if(e.getButton() == 1){
         Inventory i = this.game.getPlayer().getInventory();
         Hotbar h = this.game.getHotbar();
+        i.getTrashcan().sendForward();
         if(inventoryDisplayed && getElementAt(e.getX(), e.getY()) == i.getTrashcan()){
             if(floatingItem != null){
                 i.remove(floatingItem);
