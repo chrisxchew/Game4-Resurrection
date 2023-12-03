@@ -152,7 +152,7 @@ public class MainMenu implements ActionListener{
         GLabel selectItem = new GLabel("Select Item");
         GLabel inventory = new GLabel("Inventory");
         GLabel pause = new GLabel("Pause");
-        GLabel samLabel = new GLabel("Sam");
+        GLabel samLabel = new GLabel("Sam: I spent 250+ hours on this game");
         GLabel chrisLabel = new GLabel("Chris: I still dont really know what a rave is");
         GLabel andrewLabel = new GLabel("Andrew: Keeps going to those cult meetings");
         GLabel juanLabel = new GLabel("Juan: Told me the green salsa wasnt spicy");
