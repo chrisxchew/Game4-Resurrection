@@ -29,15 +29,15 @@ public class EnemyTri4 extends Enemy{
 
 	@Override
 	protected Item calculateDrop() {
-		if(percentChance(10)){
+		if(percentChance(20)){
 			return new Cherries();
-		}else if(percentChance(10)){
+		}else if(percentChance(15)){
 			return new Sword5();
 		}
-		else if(percentChance(5)){
+		else if(percentChance(2)){
 			return new Arrow();
 		}
-		else if(percentChance(1)){
+		else if(percentChance(3)){
 			return new Sword6();
 		}
 		else{
