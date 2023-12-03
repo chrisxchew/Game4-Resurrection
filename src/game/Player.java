@@ -44,10 +44,7 @@ public class Player {
         this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
-
-
             Item item = new Sword1();
-            
             this.inventory.add(item);
             for (int i = 0; i < 3; i++) {
                 Item item2 = new Cherries();

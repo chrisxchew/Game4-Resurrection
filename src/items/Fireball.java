@@ -41,7 +41,7 @@ public class Fireball extends Projectile{
                                 return;
                             }
                             }
-                                                e.setHealth(e.getHealth() - 3);
+                        e.setHealth(e.getHealth() - 3);
                         e.addStatusEffect(new StatusEffectFire(e));
                         e.knockback(-5);
                         image.setVisible(false);

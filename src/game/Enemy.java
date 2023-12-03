@@ -135,7 +135,10 @@ public abstract class Enemy{
 		player.setVelY((int)((player.getPlayerCenter().getY() - this.y) / 7));
 	}
     public void addStatusEffect(StatusEffect effect) {
-        statusEffect = effect;
+        if(statusEffect == null || effect == null){
+            statusEffect = effect;
+        }
+
     }
     public void tickai(double targetx, double targety, ArrayList < Enemy > enemies, int deltaTick) {
         if (!this.unloaded) {
