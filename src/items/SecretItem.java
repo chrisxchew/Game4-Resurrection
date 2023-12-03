@@ -1,7 +1,6 @@
 package items;
 
 import acm.graphics.GImage;
-import acm.graphics.GLabel;
 import game.Item;
 import userinterface.ToolTip;
 public class SecretItem extends Item{

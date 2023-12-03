@@ -1,6 +1,5 @@
 package items;
 
-import java.awt.Label;
 import java.util.ArrayList;
 
 import acm.graphics.*;

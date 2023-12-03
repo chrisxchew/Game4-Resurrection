@@ -10,12 +10,12 @@ import userinterface.ToolTip;
 
 public class Sword6 extends Item implements Melee{
 	public Sword6() {
-		this.damage = 17;
+		this.damage = 9;
 		this.name = "Void Sword";
 		GImage image = new GImage("media/Items/Weapons/Sword/Sword_Left6.png");
 		GImage imageRight = new GImage("media/Items/Weapons/Sword/Sword_Right6.png");
 		this.combinable = true;
-		this.label.setLabel("1");
+		this.label.setLabel("9");
 		this.label.setColor(Color.white);
 		image.setSize(75,75);
 		imageRight.setSize(75,75);
