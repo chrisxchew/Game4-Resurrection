@@ -7,6 +7,8 @@ import acm.graphics.GObject;
 import acm.program.GraphicsProgram;
 import items.*;
 public class Game {
+	
+	// Program Variables
     private Player player;
     private int screenWidth;
     private int screenHeight;
@@ -18,13 +20,13 @@ public class Game {
     private GraphicsProgram graphicsProgram;
     private Castle castle = null;
     
-    
+    // Main Program Function
     public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram, boolean load) {
         this.graphicsProgram = graphicsProgram;
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight, this, load);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-        List < Integer > id = Arrays.asList(new Integer[] {
+        List <Integer> id = Arrays.asList(new Integer[] {
             0,
             0
         });
@@ -38,6 +40,8 @@ public class Game {
         }
 
     }
+    
+    // Getter Functions ---------------------------------------------------------------------------------------------
     
     /**
 	 * Gets the 'GraphicsProgram' class object of the program.
@@ -57,6 +61,16 @@ public class Game {
 	 */
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
+    }
+    
+    /**
+	 * Gets an ArrayList of projectiles created by the enemy currently in-game.
+	 * 
+	 * @return enemyProjectiles
+	 *            ArrayList of all currently instantiated projectiles created by enemies.
+	 */
+    public ArrayList<EnemyProjectile> getEnemyProjectiles() {
+        return enemyProjectiles;
     }
     
     /**
@@ -80,13 +94,33 @@ public class Game {
     }
     
     /**
-	 * Sets the current Player variable of the program to a new instance of the Player class.
+	 * Gets the Castle class variable of this class within the program.
 	 * 
-	 * @param player
-	 *            New instance of the in-game character controlled by the player.
+	 * @return castle
+	 *            Current instance of a Castle object in-game.
 	 */
-    public void setPlayer(Player player) {
-        this.player = player;
+    public Castle getCastle(){
+        return castle;
+    }
+    
+    /**
+	 * Gets the status of the player currently existing inside a castle.
+	 * 
+	 * @return inCastle
+	 *            Boolean flag stating whether the player is within a castle currently.
+	 */
+    public boolean isInCastle() {
+        return inCastle;
+    }
+    
+    /**
+	 * Gets the entire list of tiles and currently in the program.
+	 * 
+	 * @return tiles
+	 *            List of tiles and their respective keys in the Map class variable.
+	 */
+    public Map <List<Integer>, Tile> getTiles() {
+        return tiles;
     }
     
     /**
@@ -109,15 +143,15 @@ public class Game {
         }
     }
     
-    public void refreshCastle(){
-        for (Structure s : getCurrentTile().getStructures()) {
-            if (s instanceof Castle) {
-                castle = (Castle) s;
-            }
-        }
-    }
-    
-    public ArrayList <Tile> getNeighbors(List<Integer> tile) {
+    /**
+	 * Gets tiles in the four cardinal directions of a given tile (normally the current tile stood on).
+	 * 
+	 * @param tile
+	 * 			  Key value of the current tile.
+	 * @return output
+	 *            ArrayList of surrounding tiles.
+	 */
+    public ArrayList<Tile> getNeighbors(List<Integer> tile) {
         ArrayList <Tile> output = new ArrayList<Tile> ();
         int index0 = tile.get(0);
         int index1 = tile.get(1);
@@ -134,29 +168,50 @@ public class Game {
         return output;
     }
     
-    public void enterCastle(Castle castle){
-        inCastle = true;
-        this.castle = castle;
-        this.player.setX(50);
-        this.player.setY(200);
-    }
+    // Setter Functions ---------------------------------------------------------------------------------------------
     
-    public void exitCastle(){
-        inCastle = false;
-        this.player.setX(10);
-        this.player.setY(275);
+    /**
+	 * Sets the current Player variable of the program to a new instance of the Player class.
+	 * 
+	 * @param player
+	 *            New instance of the in-game character controlled by the player.
+	 */
+    public void setPlayer(Player player) {
+        this.player = player;
+    }   
+    
+    /**
+	 * Sets a list of tile objects and their respective keys to the Map class variable
+	 * 
+	 * @param tiles
+	 *            List of tile objects and their respective keys.
+	 */
+    public void setTiles(Map<List<Integer>, Tile> tiles) {
+        this.tiles = tiles;
     }
     
     /**
-	 * Gets the Castle class variable of this class within the program.
+	 * Sets the Hotbar variable of the program to the instance of a given Hotbar object.
 	 * 
-	 * @return castle
-	 *            Current instance of a Castle object in-game.
+	 * @param hotbar
+	 *            Instance of a Hotbar class.
 	 */
-    public Castle getCastle(){
-        return castle;
+    public void setHotBar(Hotbar hotbar) {
+        this.hotbar = hotbar;
     }
-
+    
+    /**
+	 * Sets the Inventory variable of the program to the instance of a given Inventory object.
+	 * 
+	 * @param i
+	 *            Instance of a Inventory class.
+	 */
+    public void setInventory(Inventory i) {
+        this.player.setInventory(i);
+    }
+    
+    // Tile Movement Functions -------------------------------------------------------------------------------------
+    
     /**
 	 * Moves the player to adjacent tile on the x or y axis.
 	 * If a tile already exists at the specific location vector, move to that tile.
@@ -199,46 +254,58 @@ public class Game {
     }
     
     /**
-	 * Gets the entire list of tiles and currently in the program.
+	 * Has the player enter a castle object and positions them at the entrance of the castle tile.
 	 * 
-	 * @return tiles
-	 *            List of tiles and their respective keys in the Map class variable.
+	 * @param castle
+	 *            Castle object of current tile in-game.
 	 */
-    public Map <List<Integer>, Tile> getTiles() {
-        return tiles;
+    public void enterCastle(Castle castle){
+        inCastle = true;
+        this.castle = castle;
+        this.player.setX(50);
+        this.player.setY(200);
     }
     
     /**
-	 * Sets a list of tile objects and their respective keys to the Map class variable
-	 * 
-	 * @param tiles
-	 *            List of tile objects and their respective keys.
+	 * Exits the player out of a castle and positions them outside the doors of the structure on the tile
+	 * they entered from.
 	 */
-    public void setTiles(Map<List<Integer>, Tile> tiles) {
-        this.tiles = tiles;
+    public void exitCastle(){
+        inCastle = false;
+        this.player.setX(10);
+        this.player.setY(275);
     }
     
+    /**
+	 * Refreshes the instance of a castle on a current tile for continuity.
+	 */
+    public void refreshCastle() {
+        for (Structure s : getCurrentTile().getStructures()) {
+            if (s instanceof Castle) {
+                castle = (Castle) s;
+            }
+        }
+    }
+    
+    // Graphical Object Functions ----------------------------------------------------------------------------------
+    
+    /**
+	 * Adds a GraphicalObject(GObject) to the graphicsProgram. 
+	 * 
+	 * @param obj
+	 *            Instance of a GraphicalObject(GObject).
+	 */
     public void add(GObject obj){
         this.graphicsProgram.add(obj);
     }
     
+    /**
+	 * Removes a GraphicalObject(GObject) from the graphicsProgram.
+	 * 
+	 * @param obj
+	 *            Instance of a GraphicalObject(GObject) in-game.
+	 */
     public void remove(GObject obj){
         this.graphicsProgram.remove(obj);
-    }
-    
-    public ArrayList<EnemyProjectile> getEnemyProjectiles() {
-        return enemyProjectiles;
-    }
-    
-    public boolean isInCastle() {
-        return inCastle;
-    }
-    
-    public void setHotBar(Hotbar hotbar) {
-        this.hotbar = hotbar;
-    }
-    
-    public void setInventory(Inventory i) {
-        this.player.setInventory(i);
     }
 }
