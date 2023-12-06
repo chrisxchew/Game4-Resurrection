@@ -11,7 +11,7 @@ public class Game {
     private int screenWidth;
     private int screenHeight;
     private boolean inCastle = false;
-    private Map < List < Integer > , Tile > tiles = new Hashtable < > ();
+    private Map <List<Integer>, Tile> tiles = new Hashtable<>();
     private Hotbar hotbar;
     private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     private ArrayList<EnemyProjectile> enemyProjectiles = new ArrayList<EnemyProjectile>();
@@ -101,24 +101,27 @@ public class Game {
 	 * 			  player has not entered a Castle object in-game.
 	 */
     public Tile getCurrentTile() {
-        if(isInCastle()){
+        if (isInCastle()) {
             return castle.getCastleTile();
-        }else{
+        }
+        else {
             return tiles.get(player.getTile());
         }
-
     }
+    
     public void refreshCastle(){
-        for(Structure s : getCurrentTile().getStructures()){
-            if(s instanceof Castle){
+        for (Structure s : getCurrentTile().getStructures()) {
+            if (s instanceof Castle) {
                 castle = (Castle) s;
             }
         }
     }
-    public ArrayList < Tile > getNeighbors(List < Integer > tile) {
-        ArrayList < Tile > output = new ArrayList < Tile > ();
+    
+    public ArrayList <Tile> getNeighbors(List<Integer> tile) {
+        ArrayList <Tile> output = new ArrayList<Tile> ();
         int index0 = tile.get(0);
         int index1 = tile.get(1);
+        
         output.add(tiles.get(
             new ArrayList < Integer > (Arrays.asList(index0 + 1, index1))));
         output.add(tiles.get(
@@ -127,23 +130,39 @@ public class Game {
             new ArrayList < Integer > (Arrays.asList(index0, index1 + 1))));
         output.add(tiles.get(
             new ArrayList < Integer > (Arrays.asList(index0, index1 - 1))));
+        
         return output;
     }
+    
     public void enterCastle(Castle castle){
         inCastle = true;
         this.castle = castle;
         this.player.setX(50);
         this.player.setY(200);
     }
+    
     public void exitCastle(){
         inCastle = false;
         this.player.setX(10);
         this.player.setY(275);
     }
+    
+    /**
+	 * Gets the Castle class variable of this class within the program.
+	 * 
+	 * @return castle
+	 *            Current instance of a Castle object in-game.
+	 */
     public Castle getCastle(){
         return castle;
     }
 
+    /**
+	 * Moves the player to adjacent tile on the x or y axis.
+	 * If a tile already exists at the specific location vector, move to that tile.
+	 * Otherwise, if the tile doesn't already exist, instantiate the new tile to that
+	 * location vector and move the player to it.
+	 */
     public void moveTiles(int x, int y) {
         List < Integer > key = new ArrayList < Integer > ();
         key.add(this.player.getTile().get(0) + x);
@@ -154,44 +173,71 @@ public class Game {
             tiles.put(player.getTile(), new Tile(screenWidth, screenHeight, player.getTile(),
                 getNeighbors(player.getTile()), this));
         }
+        
+        // Determine the position of the player object based on where they exited the previous tile.
         if (x == 1) {
             this.player.setX(1);
-        } else if (x == -1) {
+        } 
+        else if (x == -1) {
             this.player.setX(screenWidth - player.getPlayerWidth() - 1);
-        } else if (y == -1) {
+        } 
+        else if (y == -1) {
             this.player.setY(1);
-        } else if (y == 1) {
+        } 
+        else if (y == 1) {
             this.player.setY(screenHeight - player.getPlayerHeight() - 1);
-        } else {
+        } 
+        else {
             System.out.println("moveTiles function usage: (0,1), (1,0)");
         }
-                for(Structure structure:tiles.get(key).getStructures()){
-            if(structure instanceof Castle){
+        
+        for(Structure structure:tiles.get(key).getStructures()) {
+            if (structure instanceof Castle) {
                 castle = (Castle) structure;
             }
         }
     }
-    public Map < List < Integer > , Tile > getTiles() {
+    
+    /**
+	 * Gets the entire list of tiles and currently in the program.
+	 * 
+	 * @return tiles
+	 *            List of tiles and their respective keys in the Map class variable.
+	 */
+    public Map <List<Integer>, Tile> getTiles() {
         return tiles;
     }
-    public void setTiles(Map < List < Integer > , Tile > tiles) {
+    
+    /**
+	 * Sets a list of tile objects and their respective keys to the Map class variable
+	 * 
+	 * @param tiles
+	 *            List of tile objects and their respective keys.
+	 */
+    public void setTiles(Map<List<Integer>, Tile> tiles) {
         this.tiles = tiles;
     }
+    
     public void add(GObject obj){
         this.graphicsProgram.add(obj);
     }
+    
     public void remove(GObject obj){
         this.graphicsProgram.remove(obj);
     }
+    
     public ArrayList<EnemyProjectile> getEnemyProjectiles() {
         return enemyProjectiles;
     }
+    
     public boolean isInCastle() {
         return inCastle;
     }
+    
     public void setHotBar(Hotbar hotbar) {
         this.hotbar = hotbar;
     }
+    
     public void setInventory(Inventory i) {
         this.player.setInventory(i);
     }
