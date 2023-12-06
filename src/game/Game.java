@@ -17,6 +17,8 @@ public class Game {
     private ArrayList<EnemyProjectile> enemyProjectiles = new ArrayList<EnemyProjectile>();
     private GraphicsProgram graphicsProgram;
     private Castle castle = null;
+    
+    
     public Game(int screenWidth, int screenHeight, GraphicsProgram graphicsProgram, boolean load) {
         this.graphicsProgram = graphicsProgram;
         player = new Player(screenWidth / 2, screenHeight / 2,screenWidth, screenHeight, this, load);
@@ -36,21 +38,68 @@ public class Game {
         }
 
     }
+    
+    /**
+	 * Gets the 'GraphicsProgram' class object of the program.
+	 * 
+	 * @return graphicsProgram
+	 *            Graphics program of the game.
+	 */
     public GraphicsProgram getGraphicsProgram() {
         return graphicsProgram;
     }  
+    
+    /**
+	 * Gets an ArrayList of 'Projectile' objects within the program.
+	 * 
+	 * @return projectiles
+	 *            ArrayList of projectiles currently active in-game.
+	 */
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
+    
+    /**
+	 * Gets the Hotbar class variable of the program.
+	 * 
+	 * @return hotbar
+	 *            Class object responsible for quickly accessing the first row of inventory.
+	 */
     public Hotbar getHotbar() {
         return hotbar;
     }
+    
+    /**
+	 * Gets the Player class object within the program.
+	 * 
+	 * @return player
+	 *            Main object controlled by the user in-game.
+	 */
     public Player getPlayer() {
         return player;
     }
+    
+    /**
+	 * Sets the current Player variable of the program to a new instance of the Player class.
+	 * 
+	 * @param player
+	 *            New instance of the in-game character controlled by the player.
+	 */
     public void setPlayer(Player player) {
         this.player = player;
     }
+    
+    /**
+	 * Gets the current tile being visited by the player in-game.
+	 * 
+	 * @return castle.getCastleTile()
+	 *            Returns an already instantiated castle-themed tile if the
+	 *            player has entered a Castle object in-game.
+	 *            
+	 * @return tiles.get(player.getTile())
+	 * 			  Returns an already instantiated biome-themed tile if the
+	 * 			  player has not entered a Castle object in-game.
+	 */
     public Tile getCurrentTile() {
         if(isInCastle()){
             return castle.getCastleTile();
