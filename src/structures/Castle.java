@@ -43,9 +43,11 @@ public class Castle extends Structure {
 		}
 		this.parentTile = parentTile;
 		this.castleTile = new CastleTile(this);
+		
 		type = t;
 
 		this.castleTile.setParentCastle(this);
+		
 		String pic1 = "media/Buildings/Castle2.0-1.png.png";
 		String pic2 = "media/Buildings/Sand Castle 2.0-1.png.png";
 		String pic3 = "media/Buildings/Castle 2.0 iced out-1.png.png";
@@ -59,6 +61,7 @@ public class Castle extends Structure {
 		if(type == 3) {
 			picture = pic3;
 		}
+		
 		GImage castle = new GImage(picture);
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
@@ -136,5 +139,11 @@ public class Castle extends Structure {
 	}
 	public Tile getParentTile() {
 		return parentTile;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int t) {
+		type = t;
 	}
 }
