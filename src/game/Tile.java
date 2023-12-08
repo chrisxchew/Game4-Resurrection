@@ -173,7 +173,7 @@ public class Tile {
             	else {
             		type = 3;
             	}
-                Castle castle = new Castle(200, 60, this);
+                Castle castle = new Castle(200, 60, this, type);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
                 addColliders(colliders, castle.getColliders());
