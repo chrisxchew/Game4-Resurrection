@@ -55,10 +55,10 @@ public class Castle extends Structure {
 		if(type == 1) {
 			picture = pic1;
 		}
-		if(type == 2) {
+		else if(type == 2) {
 			picture = pic2;
 		}
-		if(type == 3) {
+		else {
 			picture = pic3;
 		}
 		
