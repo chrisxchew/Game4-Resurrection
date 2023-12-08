@@ -10,7 +10,8 @@ public class Castle extends Structure {
 	private CastleTile castleTile;
 	private boolean bossCastle = false;
 	private int type = 1;
-	public Castle(int x, int y, Tile parentTile) {
+	private String picture;
+	public Castle(int x, int y, Tile parentTile, int t) {
 		super(x, y);
 		//boss castle cant spawn within 15 difficulty of spawn
 		//after that boss castle has a 1%-10% chance to spawn increasing by a bit every 5 difficulty
@@ -42,6 +43,7 @@ public class Castle extends Structure {
 		}
 		this.parentTile = parentTile;
 		this.castleTile = new CastleTile(this);
+		type = t;
 
 		this.castleTile.setParentCastle(this);
 		GImage castle = new GImage("media/Buildings/Castle2.0-1.png.png");
