@@ -20,6 +20,7 @@ public class Tile {
     protected ArrayList < Structure > structures = new ArrayList < Structure > ();
     protected ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
     protected ArrayList < GLine > colliders = new ArrayList < GLine > ();
+    protected int type;
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -163,6 +164,15 @@ public class Tile {
         boolean castleExists = false;
         for(int i = 0; i < 33; i++){
             if (percentChance(1) && !castleExists && key.get(0) != 0 && key.get(1) != 0) {
+            	if(biome.toString() == "moor") {
+            		type = 1;
+            	}
+            	else if(biome.toString() == "desert") {
+            		type = 2;
+            	}
+            	else {
+            		type = 3;
+            	}
                 Castle castle = new Castle(200, 60, this);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
