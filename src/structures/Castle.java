@@ -50,7 +50,16 @@ public class Castle extends Structure {
 		String pic2 = "media/Buildings/Sand Castle 2.0-1.png.png";
 		String pic3 = "media/Buildings/Castle 2.0 iced out-1.png.png";
 
-		GImage castle = new GImage("media/Buildings/Castle2.0-1.png.png");
+		if(type == 1) {
+			picture = pic1;
+		}
+		if(type == 2) {
+			picture = pic2;
+		}
+		if(type == 3) {
+			picture = pic3;
+		}
+		GImage castle = new GImage(picture);
 		castle.setLocation(x,y);
 		castle.setSize(600,400);
 		this.getObjects().add(castle);
