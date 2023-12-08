@@ -1,6 +1,7 @@
 package structures;
 
 import acm.graphics.GImage;
+
 import game.Structure;
 
 public class boulder_1 extends Structure{
