@@ -9,6 +9,7 @@ public class Castle extends Structure {
 	private Tile parentTile;
 	private CastleTile castleTile;
 	private boolean bossCastle = false;
+	private int type = 1;
 	public Castle(int x, int y, Tile parentTile) {
 		super(x, y);
 		//boss castle cant spawn within 15 difficulty of spawn
