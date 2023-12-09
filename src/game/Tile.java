@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.boulder_1;
+import structures.boulder_2;
 import structures.cactus_1;
 import structures.grassyBiomeRegularTree;
 import structures.iceBiomeHill;
@@ -184,6 +185,11 @@ public class Tile {
             Random rnd = new Random();
             if (percentChance(1)) {
                 boulder_1 rock = new boulder_1(rnd.nextInt(1000), rnd.nextInt(500));
+                structures.add(rock);
+                addObjects(objects, rock.getObjects());
+            }
+            if (percentChance(1)) {
+                boulder_2 rock = new boulder_2(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(rock);
                 addObjects(objects, rock.getObjects());
             }
