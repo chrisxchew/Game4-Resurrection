@@ -9,6 +9,7 @@ import structures.cactus_1;
 import structures.grassyBiomeRegularTree;
 import structures.iceBiomeHill;
 import structures.tree1;
+import structures.winter_cavern;
 import structures.Castle;
 import acm.graphics.*;
 import enemy.*;
@@ -189,9 +190,14 @@ public class Tile {
                 addObjects(objects, rock.getObjects());
             }
             if (percentChance(1)) {
-                boulder_2 rock = new boulder_2(rnd.nextInt(1000), rnd.nextInt(500));
-                structures.add(rock);
-                addObjects(objects, rock.getObjects());
+                boulder_2 rock2 = new boulder_2(rnd.nextInt(1000), rnd.nextInt(500));
+                structures.add(rock2);
+                addObjects(objects, rock2.getObjects());
+            }
+            if (percentChance(1)) {
+            	winter_cavern cavern = new winter_cavern(rnd.nextInt(1000), rnd.nextInt(500));
+            	structures.add(cavern);
+            	addObjects(objects, cavern.getObjects());
             }
             if (percentChance(1)) {
             	if(biome.getTemp() > 21) {
