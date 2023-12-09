@@ -16,3 +16,8 @@ More enemies
 More structures
 
 You can play the game by downloading the game4_final_final.zip folder, extracting it, and running the jar
+
+
+![alt text](https://github.com/comp55/final-project-team-4/blob/main/media/Screenshot1.png)
+![alt text](https://github.com/comp55/final-project-team-4/blob/main/media/Screenshot2.png)
+![alt text](https://github.com/comp55/final-project-team-4/blob/main/media/Screenshot3.png)
