@@ -38,9 +38,8 @@ public class EnemyTri4 extends Enemy{
 			return new Arrow();
 		}
 		else if(percentChance(1)){
- 			return new Sword6();
-		}
-		else{
+ 			return new Sword6();		
+		}else{
 			return null;
 		}
 	}
