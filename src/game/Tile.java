@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import structures.boulder_1;
+import structures.boulder_2;
 import structures.cactus_1;
 import structures.grassyBiomeRegularTree;
 import structures.iceBiomeHill;
 import structures.tree1;
+import structures.winter_cavern;
 import structures.Castle;
 import acm.graphics.*;
 import enemy.*;
@@ -20,6 +22,7 @@ public class Tile {
     protected ArrayList < Structure > structures = new ArrayList < Structure > ();
     protected ArrayList < Enemy > enemies = new ArrayList < Enemy > ();
     protected ArrayList < GLine > colliders = new ArrayList < GLine > ();
+    protected int type;
     public ArrayList < GObject > getObjects() {
         return objects;
     }
@@ -163,7 +166,16 @@ public class Tile {
         boolean castleExists = false;
         for(int i = 0; i < 33; i++){
             if (percentChance(1) && !castleExists && key.get(0) != 0 && key.get(1) != 0) {
-                Castle castle = new Castle(200, 60, this);
+            	if(biome.toString() == "moor") {
+            		type = 1;
+            	}
+            	else if(biome.toString() == "desert") {
+            		type = 2;
+            	}
+            	else {
+            		type = 3;
+            	}
+                Castle castle = new Castle(200, 60, this, type);
                 structures.add(castle);
                 addObjects(objects, castle.getObjects());
                 addColliders(colliders, castle.getColliders());
@@ -176,6 +188,16 @@ public class Tile {
                 boulder_1 rock = new boulder_1(rnd.nextInt(1000), rnd.nextInt(500));
                 structures.add(rock);
                 addObjects(objects, rock.getObjects());
+            }
+            if (percentChance(1)) {
+                boulder_2 rock2 = new boulder_2(rnd.nextInt(1000), rnd.nextInt(500));
+                structures.add(rock2);
+                addObjects(objects, rock2.getObjects());
+            }
+            if (percentChance(1)) {
+            	winter_cavern cavern = new winter_cavern(rnd.nextInt(1000), rnd.nextInt(500));
+            	structures.add(cavern);
+            	addObjects(objects, cavern.getObjects());
             }
             if (percentChance(1)) {
             	if(biome.getTemp() > 21) {
