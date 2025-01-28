@@ -37,16 +37,15 @@ public class Main extends GraphicsProgram{
     Game game;
     private ArrayList < String > key_manager = new ArrayList < String > ();
     
-    public static final String SOUND = "sounds";
-    public static final String MENU = "Matroda - Gimme Some Keys  Insomniac Records.mp3";
+    SoundManager soundManage = new SoundManager();
     
     public void init() {
+    	soundManage.init();
         setSize(windowWidth, windowHeight);
         requestFocus();
     }
     public void loadMainMenu(){
-    	AudioPlayer audio = AudioPlayer.getInstance();
-    	audio.playSound(SOUND, MENU, true);
+    	soundManage.repeatSound("menu");
         for (GObject object: mainMenu.getObjects()) {
             add(object);
         }
@@ -65,7 +64,6 @@ public class Main extends GraphicsProgram{
     }
     GameOver gameOver = new GameOver(this);
     public void gameOver(){
-
         isGameOver = true;
         removeAll();
         for(GObject object: gameOver.getObjects()){
@@ -80,6 +78,8 @@ public class Main extends GraphicsProgram{
         }
     }
     public void startGame(){
+    	soundManage.stopSound("menu");
+    	soundManage.repeatSound("game");
         removeMainMenu();
         game = new Game(windowWidth, windowHeight, this, false);
         mainMenuOn = false;
