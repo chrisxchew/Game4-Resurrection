@@ -56,4 +56,26 @@ Controls:
   Num Keys (0 - 9) - Select Item
 
   Escape - Pause Menu
-  
+
+Section 1: Overview
+The feature I will be adding is sound effects along with music. All things from getting hurt to swinging your sword everything will have a sound attached to it. MP3 files will be gathered from online and to make it modular I will be making a separate class along with the AudioPlayer class given by previous classes. Making it modular by only having to change either the string when using the playSound() function or changing the file in the new class. The sound files will be put into a separate “sounds” folder for organization purposes. The feature will be heavily relying on the JAVAFX library to function. The music that will be added are for the main menu, general game, and dungeons/castles. As for side effects, anything that can be interacted with within the in-game content. Enemies and certain items will have sounds on them. 
+
+Section 2: Pseudocode
+This routine is a class that plays or stops sounds based on the input parameter. The sound obtains a string that is then linked to a keyword. This is where the routine would interact with the AudioPlayer class to play the corresponding sound. This will take advantage of the switch statement that allows for a multitude of cases to be implemented.
+
+keywords along with corresponding sounds…
+
+initalize AudioPlayer
+
+playSound()
+check input sound keyword
+	if keyword is found
+		call AudioPlayer to play corresponding sound file
+	else 
+		do nothing
+
+stopSound()
+Check input sound keyword
+	if keyword is found
+		Call AudioPlayer to stop corresponding sound file
+
