@@ -45,8 +45,10 @@ public class Player {
         this.game = game;
         playerBody = new GImage(PLAYERIMGPATH + "Blurby_FaceFront.png");
         playerBody.scale(5);
-            Item item = new Sword1();
+            Item item = new Arrow();
             this.inventory.add(item);
+            Item item3 = new Bow();
+            this.inventory.add(item3);
             for (int i = 0; i < 3; i++) {
                 Item item2 = new Cherries();
                 this.inventory.add(item2);
@@ -198,6 +200,7 @@ public class Player {
                     }else{
                         this.health = 20;
                     }
+                    soundManage.shortSound("eat");
                     this.healthPoints.updateHealthPointsIcons(this.health);
                     this.inventory.remove(this.currentlyEquippedItem);
                     removeItemInHand();
@@ -209,6 +212,7 @@ public class Player {
         }
         if (attackCooldown == 0) {
             if (this.getCurrentlyEquippedItem() instanceof Melee) {
+            	soundManage.shortSound("swing");
                 SwordSlash slash = new SwordSlash(-playerWidth*2, 0, this);
                 this.playerGCompound.add(slash.getImage());
                 attackCooldown = ATTACKCOOLDOWN;
@@ -218,13 +222,14 @@ public class Player {
                         //knockback enemy away from player
                         int SwordDamage = ((Melee) this.getCurrentlyEquippedItem()).getDamage();
                         e.setHealth(e.getHealth() - SwordDamage);
-
+                        soundManage.shortSound("enemy");
                     }
                 }
 
                 ((Melee) this.getCurrentlyEquippedItem()).attackEvent(null);
             }
             if(this.getCurrentlyEquippedItem() instanceof Ranged){
+            	soundManage.shortSound("arrow");
                 ((Ranged) this.getCurrentlyEquippedItem()).attackEvent(
                         game.getCurrentTile().getEnemies(), 
                         isFacingRight(), 

@@ -1,4 +1,4 @@
-package game;
+package enemy;
 
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;

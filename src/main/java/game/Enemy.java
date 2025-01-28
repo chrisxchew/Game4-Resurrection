@@ -23,7 +23,9 @@ public abstract class Enemy{
     protected Item drop;
     protected boolean damageImageOn = true;
     protected int damageImageTimer = 0;
+    SoundManager soundManage = new SoundManager();
     public Enemy(int x, int y, Game game) {
+    	soundManage.init();
         bodyCompound = new GCompound();
         
         this.x = x;
@@ -128,6 +130,7 @@ public abstract class Enemy{
         
     }
 	public void attackEvent(Player player){
+		soundManage.shortSound("hit");
 		player.setHealth(player.getHealth()-1);
 		player.getHealthPoints().updateHealthPointsIcons(player.getHealth());
 		player.setInvurnerableCooldown(100);

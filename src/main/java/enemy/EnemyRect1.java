@@ -5,10 +5,12 @@ import acm.graphics.GImage;
 import game.*;
 import items.*;
 public class EnemyRect1 extends Enemy{
+	SoundManager soundManage = new SoundManager();
 	public EnemyRect1(int x, int y, Game game) {
 		super(x, y, game);
 		this.setHealth(16);
 		this.isRanged = true;
+		soundManage.init();
 	}
 	
 	@Override
@@ -21,6 +23,7 @@ public class EnemyRect1 extends Enemy{
 	@Override
 	public void shootProjectile(double targetx, double targety){
 		//shoots a projectile at the player
+		soundManage.shortSound("fire");
 		double x = this.getX();
 		double y = this.getY();
 		double dx = targetx - x;
