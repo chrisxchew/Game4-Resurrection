@@ -25,8 +25,6 @@ Of course, there can always be more things to add. For example:
 
   - More structures and locations to expand the identity of the world generated.
     
-  - Including SoundFx
-
   - Cleaner and more organized UI
 
   - More animations
@@ -57,6 +55,8 @@ Controls:
 
   Escape - Pause Menu
 
+Game4-Ressurection UPDATES
+
 Section 1: Overview
 The feature I will be adding is sound effects along with music. All things from getting hurt to swinging your sword everything will have a sound attached to it. MP3 files will be gathered from online and to make it modular I will be making a separate class along with the AudioPlayer class given by previous classes. Making it modular by only having to change either the string when using the playSound() function or changing the file in the new class. The sound files will be put into a separate “sounds” folder for organization purposes. The feature will be heavily relying on the JAVAFX library to function. The music that will be added are for the main menu, general game, and dungeons/castles. As for side effects, anything that can be interacted with within the in-game content. Enemies and certain items will have sounds on them. 
 
@@ -78,4 +78,7 @@ stopSound()
 Check input sound keyword
 	if keyword is found
 		Call AudioPlayer to stop corresponding sound file
+
+Section 3: Steps of Assurance
+Multiple steps were needed to provide the full feature and to make it fully operational. This is a result of the many problems that were faced during the construction process. One of those problems was that the sound would end after a certain amount of time. For example if you were in the menu and were idle, if the following mp3 file finished, it would stop playing. To fix this a new function was implemented called repeatSound() which took advantage of a function made by AudioPlayer that had a loop option parameter. Another problem I faced is that for some reason my computer was not able to play any mp3 files that had a less than a total time of 8 seconds. I counteracted this error by making a new function called shortSound(). It took clips that were playable (anything above 8 seconds) and shortened it to a set duration such as 1, 2 or 3 seconds. To do this I took advantage of more JAVAFX imports like Duration and PauseTransition. The last step I needed to take is to make the classes associated with the sounds available to folders that needed it. The original plan was to only put it into the game file, but after further investigation some behaviors were implemented in folders outside of the game folder. After copying the classes associated and importing it to the folders that needed it. The sound behaviors that were needed were implemented.
 
