@@ -362,6 +362,7 @@ public class Main extends GraphicsProgram{
         }
         if(mainMenuOn && e.getButton() == 1){
             mainMenu.keyPressed(e);
+            soundManage.shortSound("click");
         }
         else if(e.getButton() == 1 && isPaused){
             pause.keyPressed(e);

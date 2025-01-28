@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 import enemy.Boss;
 public class iceGem extends Projectile{
-
+SoundManager soundManage = new SoundManager();
     public iceGem(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
         super(x, y, isRight , enemies);
 
         image.scale(3);
         speed = 10;
+        soundManage.init();
+        soundManage.shortSound("fire");
     }
     @Override
     public void animate(){

@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import enemy.Boss;
 import enemy.BossSummon;
 public class BossSummonItemProjectile extends Projectile{
-
+SoundManager soundManage = new SoundManager();
     public BossSummonItemProjectile(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
         super(x, y, isRight , enemies);
 
         image.scale(5);
         speed = 10;
+        soundManage.init();
+        soundManage.shortSound("fire");
     }
     @Override
     public void animate(){

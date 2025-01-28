@@ -6,12 +6,15 @@ import java.util.ArrayList;
 
 import enemy.Boss;
 public class ArrowProjectile extends Projectile{
-
+SoundManager soundManage = new SoundManager();
     public ArrowProjectile(double x, double y, boolean isRight, ArrayList<Enemy> enemies) {
+    	
         super(x, y, isRight , enemies);
 
         image.scale(5);
         speed = 10;
+        soundManage.init();
+        soundManage.shortSound("arrow");
     }
     @Override
     public void animate(){
@@ -43,7 +46,7 @@ public class ArrowProjectile extends Projectile{
                             }
                         
                         e.setHealth(e.getHealth() - 10);
-
+                        soundManage.shortSound("enemy");
                         e.knockback(-5);
                         image.setVisible(false);
                         loaded = false;

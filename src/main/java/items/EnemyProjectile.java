@@ -23,6 +23,9 @@ public abstract class EnemyProjectile {
                     player.setInvurnerableCooldown(100);
                     game.remove(compound);
                     unloaded = true;
+                    SoundManager soundManage = new SoundManager();
+                    soundManage.init();
+                    soundManage.shortSound("hit");
                 }
 
             }

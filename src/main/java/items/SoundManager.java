@@ -1,4 +1,4 @@
-package game;
+package items;
 
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
