@@ -36,12 +36,15 @@ public class Main extends GraphicsProgram{
     Saver saver = new Saver();
     Game game;
     private ArrayList < String > key_manager = new ArrayList < String > ();
+    public static final String SOUND = "sounds";
+    public static final String MENU = "Matroda - Gimme Some Keys  Insomniac Records.mp3";
     public void init() {
         setSize(windowWidth, windowHeight);
         requestFocus();
     }
     public void loadMainMenu(){
-
+    	AudioPlayer audio = AudioPlayer.getInstance();
+    	audio.playSound(SOUND, MENU, true);
         for (GObject object: mainMenu.getObjects()) {
             add(object);
         }
