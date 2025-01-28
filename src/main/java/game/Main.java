@@ -422,11 +422,15 @@ public class Main extends GraphicsProgram{
                 isPaused = true;
                 this.runTimer.stop();
                 addPauseMenuObjects(pause);
+                soundManage.stopSound("game");
+                soundManage.repeatSound("menu");
             }else{
                 pause.setSaveScreen(false);
                 isPaused = false;
                 this.runTimer.start();
                 removePauseMenuObjects(pause);
+                soundManage.stopSound("menu");
+                soundManage.repeatSound("game");
             }
         }
             int keyCode = e.getKeyCode();
@@ -434,29 +438,35 @@ public class Main extends GraphicsProgram{
                 if (!key_manager.contains("w")) {
                     key_manager.add("w");
                 }
+                soundManage.playSound("walk");
             }
             if (keyCode == KeyEvent.VK_S) {
                 if (!key_manager.contains("s")) {
                     key_manager.add("s");
                 }
+                soundManage.playSound("walk");
+
             }
             if (keyCode == KeyEvent.VK_A) {
                 if (!key_manager.contains("a")) {
                     key_manager.add("a");
                 }
+                soundManage.playSound("walk");
+
             }
             if (keyCode == KeyEvent.VK_D) {
                 if (!key_manager.contains("d")) {
                     key_manager.add("d");
                 }
+                soundManage.playSound("walk");
+
             }
             if (keyCode == KeyEvent.VK_E) {
                 if (!key_manager.contains("e")) {
                     key_manager.add("e");
+                }
+                soundManage.playSound("walk");
             }
-            
-        
-        }
         //if key is between 0-9 change selected hot bar slot in player
         //1 is 0 and 0 is 10
         if(keyCode >= 48 && keyCode <= 57){
@@ -478,18 +488,22 @@ public class Main extends GraphicsProgram{
         if (keyCode == KeyEvent.VK_W) {
             key_manager.remove("w");
             this.game.getPlayer().setMovingY(false);
+            soundManage.pauseSound("walk");
         }
         if (keyCode == KeyEvent.VK_S) {
             key_manager.remove("s");
             this.game.getPlayer().setMovingY(false);
+            soundManage.pauseSound("walk");
         }
         if (keyCode == KeyEvent.VK_A) {
             key_manager.remove("a");
             this.game.getPlayer().setMovingX(false);
+            soundManage.pauseSound("walk");
         }
         if (keyCode == KeyEvent.VK_D) {
             key_manager.remove("d");
             this.game.getPlayer().setMovingX(false);
+            soundManage.pauseSound("walk");
         }
         if (keyCode == KeyEvent.VK_E) {
             key_manager.remove("e");
