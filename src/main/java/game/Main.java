@@ -129,6 +129,8 @@ public class Main extends GraphicsProgram{
                 }
             }
             if(game.isInCastle() && !drawnCastle){
+            	soundManage.stopSound("game");
+            	soundManage.repeatSound("dungeon");
                 removeAll();
                 drawTiles();
                 add(game.getPlayer().getPlayerGCompound());
@@ -138,6 +140,8 @@ public class Main extends GraphicsProgram{
                 }
                 drawnCastle = true;
             }else if(!game.isInCastle() && drawnCastle){
+            	soundManage.stopSound("dungeon");
+            	soundManage.repeatSound("game");
                 removeAll();
                 drawTiles();
                 add(game.getPlayer().getPlayerGCompound());
