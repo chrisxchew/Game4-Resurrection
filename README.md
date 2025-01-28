@@ -68,16 +68,29 @@ keywords along with corresponding sounds…
 initalize AudioPlayer
 
 playSound()
+
 check input sound keyword
-	if keyword is found
-		call AudioPlayer to play corresponding sound file
-	else 
-		do nothing
+
+if keyword is found
+ 
+call AudioPlayer to play corresponding sound file
+
+else 
+ 
+do nothing
 
 stopSound()
+
 Check input sound keyword
-	if keyword is found
-		Call AudioPlayer to stop corresponding sound file
+	
+if keyword is found
+		
+Call AudioPlayer to stop corresponding sound file
+
+else
+
+do nothing
+
 
 Section 3: Steps of Assurance
 Multiple steps were needed to provide the full feature and to make it fully operational. This is a result of the many problems that were faced during the construction process. One of those problems was that the sound would end after a certain amount of time. For example if you were in the menu and were idle, if the following mp3 file finished, it would stop playing. To fix this a new function was implemented called repeatSound() which took advantage of a function made by AudioPlayer that had a loop option parameter. Another problem I faced is that for some reason my computer was not able to play any mp3 files that had a less than a total time of 8 seconds. I counteracted this error by making a new function called shortSound(). It took clips that were playable (anything above 8 seconds) and shortened it to a set duration such as 1, 2 or 3 seconds. To do this I took advantage of more JAVAFX imports like Duration and PauseTransition. The last step I needed to take is to make the classes associated with the sounds available to folders that needed it. The original plan was to only put it into the game file, but after further investigation some behaviors were implemented in folders outside of the game folder. After copying the classes associated and importing it to the folders that needed it. The sound behaviors that were needed were implemented.
