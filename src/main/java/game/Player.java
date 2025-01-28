@@ -32,6 +32,7 @@ public class Player {
     static private int ATTACKCOOLDOWN = 25;
     private int invurnerableCooldown = 0;
     private Game game;
+    SoundManager soundManage = new SoundManager();
     //0 is up, 1 is down, 2 is left, 3 is right
     int facing = 0;
 
@@ -52,6 +53,7 @@ public class Player {
             }
             this.inventory.updateGraphicalInterface();
             this.healthPoints = new HealthPoints();
+            soundManage.init();
         if(this.inventory.getInventory().get(0) != null){
             this.currentlyEquippedItem = inventory.getInventory().get(0);
             playerGCompound.add(playerBody);

@@ -465,7 +465,6 @@ public class Main extends GraphicsProgram{
                 if (!key_manager.contains("e")) {
                     key_manager.add("e");
                 }
-                soundManage.playSound("walk");
             }
         //if key is between 0-9 change selected hot bar slot in player
         //1 is 0 and 0 is 10
